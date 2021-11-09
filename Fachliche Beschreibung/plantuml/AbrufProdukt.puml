@@ -1,0 +1,10 @@
+@startuml Abruf Produkt
+actor User
+control Webshop
+database Database
+
+User -> Webshop : produktid
+Webshop -> Database : produktid
+Database -> Webshop : Produkt P
+Webshop -> User : Produkt P
+@enduml
