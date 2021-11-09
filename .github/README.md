@@ -1,1 +1,1 @@
-Fachliche Beschreibung/Main.md
+/Fachliche Beschreibung/Main.md
