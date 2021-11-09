@@ -1,1 +1,1 @@
-~Studium/MAS/Fachliche Beschreibung/main.md
+./Fachliche Beschreibung/main.md
