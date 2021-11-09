@@ -1,1 +1,1 @@
-/home/gregor/Studium/MAS/Fachliche Beschreibung/Main.md
+Fachliche Beschreibung/Main.md
