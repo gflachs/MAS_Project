@@ -1,0 +1,27 @@
+@startuml User
+
+entity User{
+    * userid : number
+    --
+    * adressid : number
+    zahlungsdatenid : number
+    * vorname : varchar
+    * nachname : varhchar
+    * emailadresse : varchar
+    * passwort : varchar
+    * status : varchar
+    * registerDate : Date
+}
+
+entity Adresse{
+    * adressid : number
+    --
+    * Straße : varchar
+    * Hausnummer : String
+    * Postleitzahl : String
+    * Ort : String
+}
+
+User -- Adresse
+
+@enduml

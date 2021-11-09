@@ -56,6 +56,8 @@ Dieses Objekt beinhaltet folgende Daten:
 
 ![Produkt](http://www.plantuml.com/plantuml/svg/3SfHou8m583Xl_9z5zrw8hGWYD0e2b9AAwgRcFFabdEJxHpw-tdvlZp_sah33R8tVufe24i0BxvHgqbnpG6zT9RGKYHT3-tR2Aa2v6drEddtGKdG2srXDswZfSB9R9fXaCgZhjcsC1XXYNi38s-uesWOOqskGxjAgsDH5l4XcoVd-Bb8glnstUQNhDnlxeyV)
 
+Hat der Kunde während des Bestellprozesses Fragen zum Produkt oder zum Ablauf, so kann er jederzeit über die Infohotline den Kundenservice konaktieren.  
+
 Ist der Kunde mit dem Produkt <span style="color:#ff3300">P</span> zufrieden, und möchte dieses bestellen, so wählt er eine Menge und einen Lieferintervall und kann dieses nun seiner Abobox hinzufügen.  
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
 Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#Registriervorgang)).  
@@ -71,4 +73,23 @@ Hat der Kunde seine Änderungen bestätigt, so wird geprüft, ob in der Abobox i
 Sind 5 oder mehr Produkte vorhanden, so wird dem Kunden eine Bestellbestätigung ausgegeben und eine Aboänderung per Email zugeschickt. Zusätzlich wird die Abobox in der Datenbank aktualisiert und mit den entsprechenden Artikeln ergänzt.  
 Der Kunde wird anschließend zur Startseite zurückgeführt. 
 
-<span id='Registriervorgang'/>
+## Registrierungvorgang
+Der Nutzer wird auf das Registrierformular weitergeleitet. Dort gibt er folgende Daten an:  
+- Vorname
+- Name
+- Geburtsdatum
+- Straße
+- Hausnummer
+- Postleitzahl
+- Emailadresse
+- Passwort
+
+Nach Eingabe der Daten wird der Nutzer nochmals aufgefordert diese zu überprüfen. Anschließend kann er mit "Jetzt registrieren" den Vorgang abschließen.  
+Die Daten werden nun ans Backend übermittelt. Nun wird geprüft, ob bereits ein Nutzer mit dieser Emailadresse existiert. Ist dieser Fall, so wird eine Fehlermeldung an den Nutzer zurückgesendet. Er wird aufgefordert eine andere Emailadresse zu nutzen oder sich mit dem bereits existierenden Account einzuolggen ("Passwort vergessen?" - Hinweis).  
+Ist die E-Mail noch nicht vorhanden, so wird ein neues Userobject mit einer Userid, einer Adressid, einem Registrierungsdatum und einer Zahlungsdatenid (diese ist erstmal leer) erzeugt und in der Datenbank mit dem Status "pending" gespeichert.  
+
+![Userobjekt]()
+
+Dem Nutzer wird nun eine Verficationemail zugesandt. Er hat nun 30 Tage Zeit um seinen Account über diese zu verifizieren.  
+Sollte nach 30 Tagen der Status des Nutzers immer noch auf pending, so wird dieser aus der Datenbank gelöscht.  
+Aktiviert der Nutzer seinen Account über den Link, so wird der Status von diesem auf "active" gestellt. 
