@@ -42,6 +42,8 @@ Die Bestellung über den Webshop läuft im Regelfall folgendermaßen ab:
 Ein Kunde betritt den Webshop und informiert sich über die Produkte.  
 Nach einiger Suche wählt der Kunde ein Produkt <span style="color:#ff3300">P</span> mit der Produktid <span style=color:pink>ID</span> aus. Er kommt nun auf die Produktseite.  
 Nachfolgend fragt der Browser beim Webshop die <span style=color:pink>ID</span> and und erhält das Objekt <span style="color:#ff3300">P</span> zurück.  
+![Produktabruf](http://www.plantuml.com/plantuml/svg/5St1ge90583X_NsAUnTtwuasGH2baKYOY2PKcnZ7epCvpiZCEVJwsVQ3d_yGI7ZYoVpyQIiDTyZU_2gYEMm1l7X7WoR5BGVqqbb2Iv5q4moz4L85kCJri_JkXP9W4jf2kh3HKk7_UfLWaCgZRjaEC1jXloE8My_zqdGyKZGliYStejt5TLvKnQCvtTBiUAysTLucvp9FgYoxDXy0)
+
 Dieses Objekt beinhaltet folgende Daten:  
 - Produktbeschreibung <span style="color:#b3b3ff">PB</span>
 - Transparenzinformationen <span style="color:#8080ff">TI</span>
@@ -52,7 +54,6 @@ Dieses Objekt beinhaltet folgende Daten:
 - eine vorgeschlagene Menge <span style="color:#00cccc">M</span>
 
 ![Produkt](http://www.plantuml.com/plantuml/svg/3SfHou8m583Xl_9z5zrw8hGWYD0e2b9AAwgRcFFabdEJxHpw-tdvlZp_sah33R8tVufe24i0BxvHgqbnpG6zT9RGKYHT3-tR2Aa2v6drEddtGKdG2srXDswZfSB9R9fXaCgZhjcsC1XXYNi38s-uesWOOqskGxjAgsDH5l4XcoVd-Bb8glnstUQNhDnlxeyV)
-
 
 Der Kunde kann nun das Produkt <span style="color:#ff3300">P</span> seiner Abobox hinzufügen.  
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
