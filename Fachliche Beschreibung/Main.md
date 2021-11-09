@@ -93,3 +93,10 @@ Ist die E-Mail noch nicht vorhanden, so wird ein neues Userobject mit einer User
 Dem Nutzer wird nun eine Verficationemail zugesandt. Er hat nun 30 Tage Zeit um seinen Account über diese zu verifizieren.  
 Sollte nach 30 Tagen der Status des Nutzers immer noch auf pending, so wird dieser aus der Datenbank gelöscht.  
 Aktiviert der Nutzer seinen Account über den Link, so wird der Status von diesem auf "active" gestellt. 
+
+## Login
+Der Nutzer wird aufgefordert seine Emailadresse und sein Passwort einzugeben.  
+Diese Daten werden per POST Request (Passwort Userseitig in MD5 gehasht) an den Webshop-Server gesendet und dieser schaut in der Datenbank, ob ein Nutzer mit der Email vorhande ist.  
+Ist die Emailadresse nicht vorhanden ist, bekommt der Nutzer eine Fehlermeldung ausgegeben.  
+Ist der Nutzer vorhanden, so wird geprütft, ob das Passwort mit dem Passwort aus der Datenbank übereinstimmt.  
+Ist dies nicht der Fall, so wird eine Fehlermeldung ausgeben. Ansonsten wird eine Sessionid erzeugt und dem User zugesendet. Der Nutzer ist nun eingeloggt.
