@@ -1,0 +1,129 @@
+# Hallo und herzlich Willkommen zum Projekt **Name folgt**
+Wir, also Dounia Bouzadi, Florian Anthes und Gregor Flachs, Studenten der HTW-Berlin, werden uns nachfolgenden mit folgender Aufgabenstellung beschäftigen:
+
+## Aufgabenstellung
+>Sie wollen ein Unternehmen gründen.  
+Überlegen Sie sich dazu, welche/s Produkt/e und/oder Dienstleistungen Ihr Unternehmen am Markt anbieten soll.  
+Sie sollen im Rahmen der Projektarbeit 
+für jeden der folgenden Bereiche für Ihr Unternehmen mindestens einen Prozess umsetzen (d.h. 
+mindestens 3 Prozesse):  
+> - Prozess Auftrag/Bestellung: Wie beauftragt der Kunde Sie / bestellt etwas bei Ihnen? Wie läuft der Prozess dazu ab?  
+> - Prozess Wertschöpfung: Wie wird die Leistung in Ihrem Unternehmen erstellt. Wie läuft der Prozess dazu ab?  
+> - Prozess Service: Sobald Sie Ihre Leistung (Produkt/Dienstleistung) erbracht haben, welchen Service bietet Ihr Unternehmen bei Fragen, Reklamationen etc. an. Wie sieht der Prozess hierfür aus?
+>
+> *Quelle: Moodle - Aufgabenstellung zur Projektarbeit (beide Tools)*
+
+## Unternehmensdefintion
+In einem ersten Brainstorming legten wir folgende Unternehmenseigenschaften fest:  
+Unternehmensart:  
+- Webshop zum Erwerben von Naturprodukten aus nicht EU Ländern
+- Volle Transparenz bezüglich der Versorgungskette
+Dienstleistung: 
+-	Import und Verkauf von nicht EU Naturprodukten in einem Subscriptionmodel (ähnlich Hello Fresh Kochboxen).   
+-	Beratung zum Einsatz dieser Produkte
+-	Volle Transparenz (vom Feld bis zum Endprodukt) 
+-	Verarbeitung der Produkte zu weiteren Produkten
+
+## Unternehmensbeschreibung
+Die **Name folgt** hat es sich als Ziel gesetzt, der führende Anbieter von Naturprodukten aus Nicht-EU Ländern zu werden.  
+Der Vetrieb der Produkte erfolgt über einen Webshop. Kunden erhalten dabei volle Transparenz über die angebotenen Artikel, angefangen bei dem Feld, auf dem dieses gewachsen ist, über den Bauer, welcher dieses geerntet hat bis hin zum Importeur des Artikels. Diese Lieferkette muss zwingend nachvollziehbar sein, stellt diese doch für den Kunden sicher, dass es sich um ökologisch einwandfreie Produkte handelt.  
+
+Die angebotenen Dienstleistungen umfassen dabei vor allem den Erwerb sogeannter Aboboxen über den Webshop (eine Erläuterung hierzu erfolgt später), aber auch die Beratung zum korrekten Einsatz spezifischer Produkte, sowie die Verarbeitung von importierten Produkten.  
+
+Das Subscirptionmodel funktioniert wie folgt:  
+Kunden packen eine Box mit Produkten. Diese Box wird nun im gewählten Intervall geliefert (1 Monat, 2 Monate etc.). Dabei kann ein Kunde verschiedene Lieferintervalle bedienen, jedoch müssen zwingend mindestens 5 Produkte (gleich oder verschieden) in der Box vorhanden sein.  
+Wenn ein Kunde also bereits eine 1 Monatsbox hat, welche 5 Produkte umfasst und nun eine 2 Monatsbox mit 2 Artikeln befüllt, so wird er die 2 Monatsbox solange geliefert bekommen, wie die 1 Monatsbox auch geliefert wird, da hier aller 2 Monate dann einfach 7 statt 5 Artikel in der gelieferten Box enthalten sind.  
+
+Der Import der Ware erfolgt dabei so, dass es zu so wenig wie möglich Lagerdauer und zu verwendende Lagerfläche kommt. So wird 2 Wochen bevor die entsprechende Aboboxen versendet werden, eine Sammelbestellung bei den Lieferanten ausgelöst. Sobald diese Ware angekommen ist, wird diese in die Boxen verpackt und zum Abozeitpunkt T-2 Tage versendet. Dadurch entstehen ein sehr geringer Bedarf an Lagerkapazitäten. 
+
+## Prozesse
+### Bestellung über den Webshop
+Die Bestellung über den Webshop läuft im Regelfall folgendermaßen ab:  
+Ein Kunde betritt den Webshop und informiert sich über die Produkte.  
+Nach einiger Suche wählt der Kunde ein Produkt <span style="color:#ff3300">P</span> mit der Produktid <span style=color:pink>ID</span> aus. Er kommt nun auf die Produktseite.  
+Nachfolgend fragt der Browser beim Webshop die <span style=color:pink>ID</span> and und erhält das Objekt <span style="color:#ff3300">P</span> zurück.  
+Dieses Objekt beinhaltet folgende Daten:  
+- Produktbeschreibung <span style="color:#b3b3ff">PB</span>
+- Transparenzinformationen <span style="color:#8080ff">TI</span>
+- Tipps zur Verwendung <span style ="color:#e6e6ff">VT</span>
+- einen Preis <span style="color:#3333ff">G</span>
+- eine sessionale Verfügbarkeit <span style="color:#e600e6">V</span>
+- einen vorgeschlagenen Lieferintervall <span style="color:#4d9900">I</span>
+- eine vorgeschlagene Menge <span style="color:#00cccc">M</span>  
+```plantuml
+@startuml
+class Produkt as "P" {
+    PB : Produktbeschreibung
+    TI : Transparenzinformationen
+    VT : Verwendung
+    G : Preis
+    V : Verfuegbarkeit[*]
+    I : Lieferintervall
+    M : int
+}
+class Produktbeschreibung as "PB"{
+    name : String
+    inhalt : Inhalt
+    inhaltsstoffe : Inhaltsstoff[*]
+}
+class Inhaltsstoff {
+    id : int
+    anteil_in_prozent : int
+}
+class Transparenzinformationen as "TI" {
+    feld : String
+    bauer : String
+    anbauort : String
+    lieferanten : Lieferant[*]
+}
+class Lieferant{
+    name : String
+    startPunkt : String
+    endPunkt : String
+    lieferantenart : Lieferantenart
+}
+enum Lieferantenart{
+    LKW
+    Zug
+    Flugzeug
+    Schiff
+}
+class Verwendung as "VT" {
+    verwendungen : String[*]
+}
+class Preis as "G" {
+    preis_normal : int
+    rabatt : boolean
+    rabatt_prozent : int
+}
+class Verfuegbarkeit{
+    startDatum : Date
+    endDatum : Date
+}
+enum Lieferintervall as "I" {
+    1
+    2
+    3
+    4
+    5
+    6
+}
+Produkt o-- Produktbeschreibung
+Produkt o-- Transparenzinformationen
+Produkt o-- Verwendung
+Produkt o-- Preis
+Produkt o-- Verfuegbarkeit
+Produkt o-- Lieferintervall
+Produktbeschreibung o-- Inhaltsstoff
+Transparenzinformationen o-- Lieferant
+Lieferant o-- Lieferantenart
+@enduml
+```
+Der Kunde kann nun das Produkt <span style="color:#ff3300">P</span> seiner Abobox hinzufügen.  
+Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
+Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#Registriervorgang)).  
+Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff3300">P</span> der Abobox mit der Menge <span style="color:#00cccc">M</span> und dem gewünschten Lieferintervall <span style="color:#4d9900">I</span> hinzugefügt.       
+
+
+<span id='Registriervorgang'/>
+# MAS_Project

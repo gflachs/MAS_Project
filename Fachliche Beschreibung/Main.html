@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Main.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="hallo-und-herzlich-willkommen-zum-projekt-name-folgt">Hallo und herzlich Willkommen zum Projekt <strong>Name folgt</strong></h1>
+<p>Wir, also Dounia Bouzadi, Florian Anthes und Gregor Flachs, Studenten der HTW-Berlin, werden uns nachfolgenden mit folgender Aufgabenstellung beschäftigen:</p>
+<h2 id="aufgabenstellung">Aufgabenstellung</h2>
+<blockquote>
+<p>Sie wollen ein Unternehmen gründen.<br>
+Überlegen Sie sich dazu, welche/s Produkt/e und/oder Dienstleistungen Ihr Unternehmen am Markt anbieten soll.<br>
+Sie sollen im Rahmen der Projektarbeit
+für jeden der folgenden Bereiche für Ihr Unternehmen mindestens einen Prozess umsetzen (d.h.
+mindestens 3 Prozesse):</p>
+<ul>
+<li>Prozess Auftrag/Bestellung: Wie beauftragt der Kunde Sie / bestellt etwas bei Ihnen? Wie läuft der Prozess dazu ab?</li>
+<li>Prozess Wertschöpfung: Wie wird die Leistung in Ihrem Unternehmen erstellt. Wie läuft der Prozess dazu ab?</li>
+<li>Prozess Service: Sobald Sie Ihre Leistung (Produkt/Dienstleistung) erbracht haben, welchen Service bietet Ihr Unternehmen bei Fragen, Reklamationen etc. an. Wie sieht der Prozess hierfür aus?</li>
+</ul>
+<p><em>Quelle: Moodle - Aufgabenstellung zur Projektarbeit (beide Tools)</em></p>
+</blockquote>
+<h2 id="unternehmensdefintion">Unternehmensdefintion</h2>
+<p>In einem ersten Brainstorming legten wir folgende Unternehmenseigenschaften fest:<br>
+Unternehmensart:</p>
+<ul>
+<li>Webshop zum Erwerben von Naturprodukten aus nicht EU Ländern</li>
+<li>Volle Transparenz bezüglich der Versorgungskette
+Dienstleistung:</li>
+<li>Import und Verkauf von nicht EU Naturprodukten in einem Subscriptionmodel (ähnlich Hello Fresh Kochboxen).</li>
+<li>Beratung zum Einsatz dieser Produkte</li>
+<li>Volle Transparenz (vom Feld bis zum Endprodukt)</li>
+<li>Verarbeitung der Produkte zu weiteren Produkten</li>
+</ul>
+<h2 id="unternehmensbeschreibung">Unternehmensbeschreibung</h2>
+<p>Die <strong>Name folgt</strong> hat es sich als Ziel gesetzt, der führende Anbieter von Naturprodukten aus Nicht-EU Ländern zu werden.<br>
+Der Vetrieb der Produkte erfolgt über einen Webshop. Kunden erhalten dabei volle Transparenz über die angebotenen Artikel, angefangen bei dem Feld, auf dem dieses gewachsen ist, über den Bauer, welcher dieses geerntet hat bis hin zum Importeur des Artikels. Diese Lieferkette muss zwingend nachvollziehbar sein, stellt diese doch für den Kunden sicher, dass es sich um ökologisch einwandfreie Produkte handelt.</p>
+<p>Die angebotenen Dienstleistungen umfassen dabei vor allem den Erwerb sogeannter Aboboxen über den Webshop (eine Erläuterung hierzu erfolgt später), aber auch die Beratung zum korrekten Einsatz spezifischer Produkte, sowie die Verarbeitung von importierten Produkten.</p>
+<p>Das Subscirptionmodel funktioniert wie folgt:<br>
+Kunden packen eine Box mit Produkten. Diese Box wird nun im gewählten Intervall geliefert (1 Monat, 2 Monate etc.). Dabei kann ein Kunde verschiedene Lieferintervalle bedienen, jedoch müssen zwingend mindestens 5 Produkte (gleich oder verschieden) in der Box vorhanden sein.<br>
+Wenn ein Kunde also bereits eine 1 Monatsbox hat, welche 5 Produkte umfasst und nun eine 2 Monatsbox mit 2 Artikeln befüllt, so wird er die 2 Monatsbox solange geliefert bekommen, wie die 1 Monatsbox auch geliefert wird, da hier aller 2 Monate dann einfach 7 statt 5 Artikel in der gelieferten Box enthalten sind.</p>
+<p>Der Import der Ware erfolgt dabei so, dass es zu so wenig wie möglich Lagerdauer und zu verwendende Lagerfläche kommt. So wird 2 Wochen bevor die entsprechende Aboboxen versendet werden, eine Sammelbestellung bei den Lieferanten ausgelöst. Sobald diese Ware angekommen ist, wird diese in die Boxen verpackt und zum Abozeitpunkt T-2 Tage versendet. Dadurch entstehen ein sehr geringer Bedarf an Lagerkapazitäten.</p>
+<h2 id="prozesse">Prozesse</h2>
+<h3 id="bestellung-%C3%BCber-den-webshop">Bestellung über den Webshop</h3>
+<p>Die Bestellung über den Webshop läuft im Regelfall folgendermaßen ab:<br>
+Ein Kunde betritt den Webshop und informiert sich über die Produkte.<br>
+Nach einiger Suche wählt der Kunde ein Produkt <span style="color:#ff3300">P</span> mit der Produktid <span style=color:pink>ID</span> aus. Er kommt nun auf die Produktseite.<br>
+Nachfolgend fragt der Browser beim Webshop die <span style=color:pink>ID</span> and und erhält das Objekt <span style="color:#ff3300">P</span> zurück.<br>
+Dieses Objekt beinhaltet folgende Daten:</p>
+<ul>
+<li>Produktbeschreibung <span style="color:#b3b3ff">PB</span></li>
+<li>Transparenzinformationen <span style="color:#8080ff">TI</span></li>
+<li>Tipps zur Verwendung <span style ="color:#e6e6ff">VT</span></li>
+<li>einen Preis <span style="color:#3333ff">G</span></li>
+<li>eine sessionale Verfügbarkeit <span style="color:#e600e6">V</span></li>
+<li>einen vorgeschlagenen Lieferintervall <span style="color:#4d9900">I</span></li>
+<li>eine vorgeschlagene Menge <span style="color:#00cccc">M</span></li>
+</ul>
+<pre class="hljs"><code><div>@startuml
+class Produkt as P{
+    PB : Produktbeschreibung
+    TI : Transparenzinformationen
+    VT : Verwendung
+    G : Preis
+    V : Verfuegbarkeit
+    I : Lieferintervall
+    M : Menge
+}
+@enduml
+</div></code></pre>
+<p>Der Kunde kann nun das Produkt <span style="color:#ff3300">P</span> seiner Abobox hinzufügen.<br>
+Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.<br>
+Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess <a href="#Registriervorgang"><code>Registriervorgang</code></a>).<br>
+Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff3300">P</span> der Abobox mit der Menge <span style="color:#00cccc">M</span> und dem gewünschten Lieferintervall <span style="color:#4d9900">I</span> hinzugefügt.</p>
+<span id='Registriervorgang'/>
+
+</body>
+</html>
