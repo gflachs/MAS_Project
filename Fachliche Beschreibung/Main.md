@@ -88,7 +88,7 @@ Nach Eingabe der Daten wird der Nutzer nochmals aufgefordert diese zu überprüf
 Die Daten werden nun ans Backend übermittelt. Nun wird geprüft, ob bereits ein Nutzer mit dieser Emailadresse existiert. Ist dieser Fall, so wird eine Fehlermeldung an den Nutzer zurückgesendet. Er wird aufgefordert eine andere Emailadresse zu nutzen oder sich mit dem bereits existierenden Account einzuolggen ("Passwort vergessen?" - Hinweis).  
 Ist die E-Mail noch nicht vorhanden, so wird ein neues Userobject mit einer Userid, einer Adressid, einem Registrierungsdatum und einer Zahlungsdatenid (diese ist erstmal leer) erzeugt und in der Datenbank mit dem Status "pending" gespeichert.  
 
-![Userobjekt]()
+![Userobjekt](http://www.plantuml.com/plantuml/svg/5Sszgi90443X_Zx5jR3DYALLjB0J1B6MpMJChipEBlE3hszI7JZDDvedzQZyjok273E5ydzsxtO2qFGTbk8vfZ1IRE8aFc2hiBmvOJQudH-lkxOFeKDDHU2wRYwOQNyyNCWmAvKfP87EIJO8daOwz8qSIUQrFm00)
 
 Dem Nutzer wird nun eine Verficationemail zugesandt. Er hat nun 30 Tage Zeit um seinen Account über diese zu verifizieren.  
 Sollte nach 30 Tagen der Status des Nutzers immer noch auf pending, so wird dieser aus der Datenbank gelöscht.  
