@@ -42,6 +42,7 @@ Die Bestellung über den Webshop läuft im Regelfall folgendermaßen ab:
 Ein Kunde betritt den Webshop und informiert sich über die Produkte.  
 Nach einiger Suche wählt der Kunde ein Produkt <span style="color:#ff3300">P</span> mit der Produktid <span style=color:pink>ID</span> aus. Er kommt nun auf die Produktseite.  
 Nachfolgend fragt der Browser beim Webshop die <span style=color:pink>ID</span> and und erhält das Objekt <span style="color:#ff3300">P</span> zurück.  
+
 ![Produktabruf](http://www.plantuml.com/plantuml/svg/5St1ge90583X_NsAUnTtwuasGH2baKYOY2PKcnZ7epCvpiZCEVJwsVQ3d_yGI7ZYoVpyQIiDTyZU_2gYEMm1l7X7WoR5BGVqqbb2Iv5q4moz4L85kCJri_JkXP9W4jf2kh3HKk7_UfLWaCgZRjaEC1jXloE8My_zqdGyKZGliYStejt5TLvKnQCvtTBiUAysTLucvp9FgYoxDXy0)
 
 Dieses Objekt beinhaltet folgende Daten:  
@@ -55,10 +56,18 @@ Dieses Objekt beinhaltet folgende Daten:
 
 ![Produkt](http://www.plantuml.com/plantuml/svg/3SfHou8m583Xl_9z5zrw8hGWYD0e2b9AAwgRcFFabdEJxHpw-tdvlZp_sah33R8tVufe24i0BxvHgqbnpG6zT9RGKYHT3-tR2Aa2v6drEddtGKdG2srXDswZfSB9R9fXaCgZhjcsC1XXYNi38s-uesWOOqskGxjAgsDH5l4XcoVd-Bb8glnstUQNhDnlxeyV)
 
-Der Kunde kann nun das Produkt <span style="color:#ff3300">P</span> seiner Abobox hinzufügen.  
+Ist der Kunde mit dem Produkt <span style="color:#ff3300">P</span> zufrieden, und möchte dieses bestellen, so wählt er eine Menge und einen Lieferintervall und kann dieses nun seiner Abobox hinzufügen.  
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
 Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#Registriervorgang)).  
-Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff3300">P</span> der Abobox mit der Menge <span style="color:#00cccc">M</span> und dem gewünschten Lieferintervall <span style="color:#4d9900">I</span> hinzugefügt.       
+Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff3300">P</span> der Abobox mit der Menge <span style="color:#00cccc">M</span> und dem gewünschten Lieferintervall <span style="color:#4d9900">I</span> hinzugefügt.  
+Der Kunde kann nun weitere Produkte auswählen und diese zu seiner Abobox hinzufügen.    
 
+![Produkt zu Abobox hinzufügen]()       
+
+Hat der Kunde seine Auswahl beendet, muss er anschließend seine neue Auswahl bestätigten. Dazu werden ihm alle Artikel in seiner Abobox angezeigt (inklusive Preis, Lieferintervall und Menge), wobei hier die neuen Artikel hervorgehoben werden. Zusätzlich sieht der Kunde auf einen Blick, welche **zusätzlichen Kosten** auf ihn zukommen.  
+Der Kunde wird nun aufgefordter, seine Änderung zu prüfen und zu bestätigten.  
+
+Hat der Kunde seine Änderungen bestätigt, so wird geprüft, ob in der Abobox im kleinstmöglichen Lieferintervall mindestens 5 Produkte vorhanden sind. Ist dies nicht der Fall, so wird der Kunde darüber informiert und aufgefordter weitere Produkte zu seiner Abobox hinzuzufügen.  
+Sind 5 oder mehr Produkte vorhanden, so wird dem Kunden eine Bestellbestätigung ausgegeben und eine Aboänderung per Email zugeschickt. Zusätzlich wird die Abobox in der Datenbank aktualisiert und mit den entsprechenden Artikeln ergänzt. 
 
 <span id='Registriervorgang'/>

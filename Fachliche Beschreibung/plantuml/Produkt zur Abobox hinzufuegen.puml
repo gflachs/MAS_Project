@@ -1,0 +1,36 @@
+@startuml Produkt zur Abobox hinzufügen
+start
+:Bestellstatus = inProgress;
+while (Bestellstatus = inProgress oder Nutzer bricht nicht ab?) is (true)
+while(Nutzeraktion) is (wählt Produk aus)
+:Nutzer wählt Menge aus; 
+:Nutzer wählt Lieferintervall aus;
+:Produkt wird Abobox hinzugefügt;
+endwhile (Nutzer möchte Produkte bestellen)
+if (Nutzer ist eingeloggt?) then (Nein)
+    if (Nutzer ist registriert?) then (Ja)
+        :Nutzer einloggen;
+    else (Nein)
+        :Nutzer registrieren;
+        :Nutzer einloggen;
+    endif
+else (Ja)
+    
+endif
+while(Nutzer prüft Bestellung) is (prüft)
+if (Bestellung korrekt?) then (Nein)
+    :Bestellung ändern;
+else (Ja)
+    :Bestätigt Bestellung;
+endif
+endwhile (Bestätigt)
+if (Weniger als 5 Artikel in Abobox für Minimalzeitraum?) then (Nein)
+    :Bestellstatus = completed;
+else (Nein)
+    
+endif
+endwhile (false) 
+:Bestellbestätigung anzeigen;
+:Bestätigungsemail senden;
+stop
+@enduml
