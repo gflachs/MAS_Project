@@ -49,76 +49,10 @@ Dieses Objekt beinhaltet folgende Daten:
 - einen Preis <span style="color:#3333ff">G</span>
 - eine sessionale Verfügbarkeit <span style="color:#e600e6">V</span>
 - einen vorgeschlagenen Lieferintervall <span style="color:#4d9900">I</span>
-- eine vorgeschlagene Menge <span style="color:#00cccc">M</span>  
-```plantuml
-@startuml
-class Produkt as "P" {
-    PB : Produktbeschreibung
-    TI : Transparenzinformationen
-    VT : Verwendung
-    G : Preis
-    V : Verfuegbarkeit[*]
-    I : Lieferintervall
-    M : int
-}
-class Produktbeschreibung as "PB"{
-    name : String
-    inhalt : Inhalt
-    inhaltsstoffe : Inhaltsstoff[*]
-}
-class Inhaltsstoff {
-    id : int
-    anteil_in_prozent : int
-}
-class Transparenzinformationen as "TI" {
-    feld : String
-    bauer : String
-    anbauort : String
-    lieferanten : Lieferant[*]
-}
-class Lieferant{
-    name : String
-    startPunkt : String
-    endPunkt : String
-    lieferantenart : Lieferantenart
-}
-enum Lieferantenart{
-    LKW
-    Zug
-    Flugzeug
-    Schiff
-}
-class Verwendung as "VT" {
-    verwendungen : String[*]
-}
-class Preis as "G" {
-    preis_normal : int
-    rabatt : boolean
-    rabatt_prozent : int
-}
-class Verfuegbarkeit{
-    startDatum : Date
-    endDatum : Date
-}
-enum Lieferintervall as "I" {
-    1
-    2
-    3
-    4
-    5
-    6
-}
-Produkt o-- Produktbeschreibung
-Produkt o-- Transparenzinformationen
-Produkt o-- Verwendung
-Produkt o-- Preis
-Produkt o-- Verfuegbarkeit
-Produkt o-- Lieferintervall
-Produktbeschreibung o-- Inhaltsstoff
-Transparenzinformationen o-- Lieferant
-Lieferant o-- Lieferantenart
-@enduml
-```
+- eine vorgeschlagene Menge <span style="color:#00cccc">M</span>
+
+
+
 Der Kunde kann nun das Produkt <span style="color:#ff3300">P</span> seiner Abobox hinzufügen.  
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
 Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#Registriervorgang)).  
@@ -126,4 +60,3 @@ Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff330
 
 
 <span id='Registriervorgang'/>
-# MAS_Project

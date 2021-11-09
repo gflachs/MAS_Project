@@ -1,0 +1,67 @@
+@startuml Produkt
+class Produkt as "P" {
+    PB : Produktbeschreibung
+    TI : Transparenzinformationen
+    VT : Verwendung
+    G : Preis
+    V : Verfuegbarkeit[*]
+    I : Lieferintervall
+    M : int
+}
+class Produktbeschreibung as "PB"{
+    name : String
+    inhalt : Inhalt
+    inhaltsstoffe : Inhaltsstoff[*]
+}
+class Inhaltsstoff {
+    id : int
+    anteil_in_prozent : int
+}
+class Transparenzinformationen as "TI" {
+    feld : String
+    bauer : String
+    anbauort : String
+    lieferanten : Lieferant[*]
+}
+class Lieferant{
+    name : String
+    startPunkt : String
+    endPunkt : String
+    lieferantenart : Lieferantenart
+}
+enum Lieferantenart{
+    LKW
+    Zug
+    Flugzeug
+    Schiff
+}
+class Verwendung as "VT" {
+    verwendungen : String[*]
+}
+class Preis as "G" {
+    preis_normal : int
+    rabatt : boolean
+    rabatt_prozent : int
+}
+class Verfuegbarkeit{
+    startDatum : Date
+    endDatum : Date
+}
+enum Lieferintervall as "I" {
+    1
+    2
+    3
+    4
+    5
+    6
+}
+Produkt o-- Produktbeschreibung
+Produkt o-- Transparenzinformationen
+Produkt o-- Verwendung
+Produkt o-- Preis
+Produkt o-- Verfuegbarkeit
+Produkt o-- Lieferintervall
+Produktbeschreibung o-- Inhaltsstoff
+Transparenzinformationen o-- Lieferant
+Lieferant o-- Lieferantenart
+@enduml
