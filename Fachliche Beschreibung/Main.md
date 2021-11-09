@@ -51,6 +51,7 @@ Dieses Objekt beinhaltet folgende Daten:
 - einen vorgeschlagenen Lieferintervall <span style="color:#4d9900">I</span>
 - eine vorgeschlagene Menge <span style="color:#00cccc">M</span>
 
+![Produkt](http://www.plantuml.com/plantuml/svg/3SfHou8m583Xl_9z5zrw8hGWYD0e2b9AAwgRcFFabdEJxHpw-tdvlZp_sah33R8tVufe24i0BxvHgqbnpG6zT9RGKYHT3-tR2Aa2v6drEddtGKdG2srXDswZfSB9R9fXaCgZhjcsC1XXYNi38s-uesWOOqskGxjAgsDH5l4XcoVd-Bb8glnstUQNhDnlxeyV)
 
 
 Der Kunde kann nun das Produkt <span style="color:#ff3300">P</span> seiner Abobox hinzufügen.  
