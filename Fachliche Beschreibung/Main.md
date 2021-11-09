@@ -100,3 +100,22 @@ Diese Daten werden per POST Request (Passwort Userseitig in MD5 gehasht) an den 
 Ist die Emailadresse nicht vorhanden ist, bekommt der Nutzer eine Fehlermeldung ausgegeben.  
 Ist der Nutzer vorhanden, so wird geprütft, ob das Passwort mit dem Passwort aus der Datenbank übereinstimmt.  
 Ist dies nicht der Fall, so wird eine Fehlermeldung ausgeben. Ansonsten wird eine Sessionid erzeugt und dem User zugesendet. Der Nutzer ist nun eingeloggt.
+
+## Zahlungsdaten hinzufügen
+Der Nutzer wird aufgefordter sich für eine Zahlungsmethode zu entscheiden. 
+Je nach Zahlungsmethode werden verschiedne Sachen abgefragt:
+- Paypal
+    - Emailadresse
+    - Passwort
+- Kreditkarte:
+    - Kartenummer
+    - Inhaber
+    - Ablaufdatum
+    - CSV
+- Debitkarte (Lastschrift)
+    - Inhaber
+    - IBAN
+    - BIC
+
+Der Nutzer gibt nun, basierend auf seiner Wahl entsprechende Daten bei dem Dienstleister ein. Bei erfolgreicher Prüfung bekommt der Webshop einen Verficationtoken des Dienstleisters übermittelt. Diesen hinterlegt er nun mit entsprechender Zahlungsart in der Datenbank.  
+Der Nutzer kann jetzt noch auswählen, ob dies seine aktive Zahlungsart sein soll.
