@@ -70,7 +70,7 @@ Hat der Kunde seine Auswahl beendet, muss er anschließend seine neue Auswahl be
 Der Kunde wird nun aufgefordter, seine Änderung zu prüfen und zu bestätigten.  
 
 Hat der Kunde seine Änderungen bestätigt, so wird geprüft, ob in der Abobox im kleinstmöglichen Lieferintervall mindestens 5 Produkte vorhanden sind. Ist dies nicht der Fall, so wird der Kunde darüber informiert und aufgefordert weitere Produkte zu seiner Abobox hinzuzufügen.  
-Sind 5 oder mehr Produkte vorhanden, so wird dem Kunden eine Bestellbestätigung ausgegeben und eine Aboänderung per Email zugeschickt. Zusätzlich wird die Abobox in der Datenbank aktualisiert und mit den entsprechenden Artikeln ergänzt.  
+Sind 5 oder mehr Produkte vorhanden, wird geprüft, ob der Kunde bereits eine aktive Zahlungsmethode hinterlegt hat. Ist dies nicht der Fall, dann startet der Prozess [Zahlungsdaten hinzufügen](#Zahlungsdaten). Sobald Zahlungsdaten vorhanden sind, wird dem Kunden eine Bestellbestätigung ausgegeben und eine Aboänderung per Email zugeschickt. Zusätzlich wird die Abobox in der Datenbank aktualisiert und mit den entsprechenden Artikeln ergänzt.  
 Der Kunde wird anschließend zur Startseite zurückgeführt. 
 
 ## Registrierungvorgang
