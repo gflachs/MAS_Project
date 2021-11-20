@@ -59,7 +59,7 @@ Hat der Kunde während des Bestellprozesses Fragen zum Produkt oder zum Ablauf, 
 
 Ist der Kunde mit dem Produkt <span style="color:#ff3300">P</span> zufrieden, und möchte dieses bestellen, so wählt er eine Menge und einen Lieferintervall und kann dieses nun seiner Abobox hinzufügen.  
 
-![Abobox]()
+![Abobox](https://www.plantuml.com/plantuml/svg/5Ssn3W8X383XtQVGmPKQHwSx1pSJ4n_0GAy21WgXRVJnlPl-v5--ITGFjLfsXynORA5zKkro0HZ-wsBMPC641ZPMOdNOAiHtyPW4xlFpzHZjGwXGVMQuhRjaJ7Gydwuac0RbO1oX5y-R0dDeeVrStyI9U5dx1m00)
 
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
 Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#Registriervorgang)).  
@@ -111,6 +111,8 @@ Der Nutzer hat die Möglichkeit seine bereits eingepflegten Zahlungsdaten zu ver
 - Zahlungsart bearbeiten
 - Zahlungsart als aktiv kennzeichnen
 
+![User Zahlungsdaten](https://www.plantuml.com/plantuml/svg/5Ssn2i9G343HtQ_GmRKHHwVgu2O8uk8YQHgR9sbQaZpyVTlfmbrE6ucUTTJDhXXfxNahcNES01n_pL1IQbU3dIPBjcne6c7uA984tCwFzzsdBrF2YCNWkcmj9Bm_7YuS9CwbgpR0h6Yh0izWVw7eCgF7P6lc5M_P-gL_)
+
 ### Zahlungsdaten hinzufügen
 Der Nutzer wird aufgefordter sich für eine Zahlungsmethode zu entscheiden.  
 Je nach Zahlungsmethode werden verschiedne Sachen abgefragt:
@@ -127,30 +129,30 @@ Je nach Zahlungsmethode werden verschiedne Sachen abgefragt:
     - IBAN
     - BIC
 
-![Zahlungsarten]()
+![Zahlungsarten](https://www.plantuml.com/plantuml/svg/5Ssnhi8m343H_Nt5Os2j4IDJOM13Gc9ZGQvhwY3NYM97_3xfTAMxdD43QxHL_tR9IDlC_n9H_0HGyJiiAQHDpRbIjc2BWV8AorkHnE5sVhpkDN-O0bPC1jU-DP7m_dYui9DKJbEp1OgYRGeyKRGFx-XGDdPactj_)
 
 Der Nutzer gibt nun, basierend auf seiner Wahl entsprechende Daten bei dem Dienstleister ein. Bei erfolgreicher Prüfung bekommt der Webshop einen Verficationtoken des Dienstleisters übermittelt. Diesen hinterlegt er nun mit entsprechender Zahlungsart in der Datenbank.  
 Der Nutzer kann jetzt noch auswählen, ob dies seine aktive Zahlungsart sein soll.
 
-![Workflow Zahlungsarten hinzufügen]()
+![Workflow Zahlungsarten hinzufügen](https://www.plantuml.com/plantuml/svg/5Oun2y9034PtVuKEhequEbK7Dq5m45pacgQNqpHNxX8A_dhRwOFl3U-rrK8n7sMpIuhYFMtPRAedW1Bc9YPZxxnImQn6QWtc4U8W0Rd2xVnutql-41gC8IbSbriICksFXmjLv4AfSuqmIT3L0izSleFa-HLO5b3xOAISzEU3KoHjfhMb9UsN_GC0)
 
 ### Zahlungsart löschen
 Wählt der Nutzer den Button *Zahlungsart löschen* aus, so wird er nochmals gefragt, ob er die Zahlungsart tatsächlich löschen möchte. Wenn der Nutzer dies bestätigt, wird geprüft, ob wenigstens eine weitere Zahlungsart im Kundenkonto hinterlegt ist. Ist dies nicht der Fall und der Kunde hat eine aktive Abobox, so wird dem Benutzer ein Error ausgegeben, mit dem Hinweis, dass mindestens eine aktive Zahlungsart im Konto hinterlegt sein muss.  
 Ansonsten werden die Zahlungsdaten aus dem Kundenkonto gelöscht.
 
-![Workflow Zahlungsdaten löschen]()
+![Workflow Zahlungsdaten löschen](https://www.plantuml.com/plantuml/svg/5Ownoi9G38Nt_ob-1zT679sgWviWE0WkagPfxzKqjoIvzFLjfmFd7FY-rWCjwYH_kwmajUV_537x2S1mQSOSgNRLsQXei4P3PO9n4AJaS3i_tdSh7wQ02RF2TQqbK-BzyN1XfsISkweZp8AwKU1Px3j8MLwOP1syns2LidrPctaJQLdxDNy0)
 
 ### Zahlungsart bearbeiten
 Der Kunde bekommt die hinterlegten Zahlungsdaten angezeigt. Er hat nun die Möglichkeit, diese abzuändern und z.B. die Iban anzupassen. Nach erfolgter Änderung der Zahlungsdaten durchlaufen die einen erneuten Prüfungsprozess und bei erfolgreicher Verifikation wird die Zahlungsart mit dem entsprechend neu generierten Token in der Datenbank aktualisiert.  
 Schlägt die Prüfung fehlt, so wird der Kunde auf die fehlgeschlagene Prüfung aufmerksam gemacht und der Vorgang wird abgebrochen.
 
-![Workflow Zahlungsdaten bearbeiten]()
+![Workflow Zahlungsdaten bearbeiten](https://www.plantuml.com/plantuml/svg/5Ownpi8m38Jt_ob-1jOQCJ8L1ZOa90Oa5kIuRXDmdSfnrDSddUvqDtnVNnpDwon_kwGaTU3_wBwK4u3Xsat9Omsri55MP_MEyWpJA4YnmEtyUDyjVvWSPamArpPBeiZxu-72XQ9n2bKdM0Hrey0pstUKlBumIZlAWCuQ62rmQgrRDfMUTMZv0m00)
 
 ### Zahlungsart als aktiv kennzeichnen
 Der Nutzer hat die Möglichkeit, eine Zahlungsart auszuwählen und diese als aktive Zahlungsart auszuwählen. Aktiv bedeutet, dass ab jetzt von dieser Zahlungsart abgebucht werden wird.  
 Wählt der Nutzer eine Zahlungsart als aktiv, so wird in der Datenbank ein entsprechender Eintrag hinterlegt, die Zahlungsart, welche bereits als aktiv gekennzeichnet ist, wird als inaktiv gekennzeichnet.
 
-![Workflow Zahlungsdaten als aktiv kennzeichnen]()
+![Workflow Zahlungsdaten als aktiv kennzeichnen](https://www.plantuml.com/plantuml/svg/5Ownhi8m34NtznMFWRL6Z4o5WGq9YG691RcksuIwJXKxzFT9folTCvpJccFsCilVBYf9wVa_k2zs0iYuDcFqKBfYd2cfitf3QOPn4AHWS3i_tlUSFamECqQ5QxqbKk3zyN1Xev0vTaL7M0Hriy0pvMcGjBumI0NMexFYvF7RB5j5ozhN_G40)
 
 
 ## Wertschöpfungskette
@@ -198,10 +200,10 @@ Um einen neuen Lieferanten im Webshop anzulegen, muss dieser einen Fragebogen au
 
 Diese Daten werden nun in der Datenbank hinterlegt. Danach bekommt der Lieferant eine Email mit Zugangsdaten zum Webpanel, in welchem er seine Angebote einpflegen kann.
 
-### 2. [`Bestellung durch Kunde`](#Bestellung%20über%20Webshop)
+### 2. [`Bestellung durch Kunde`](#bestellung-über-den-Webshop)
 Diese kann immer und jederzeit erfolgen, siehe entsprechender Prozess
 
-### Bestellung bei Lieferanten
+### 3. Bestellung bei Lieferanten
 Immer zum 10. jeden Monats wird der Bedarf an Produkten ermittelt. Dazu wird jede Abobox überprüft und die darin enthaltenen Produkte mit entsprechender Menge addiert. Dies geschieht vollautomatisch und wird vom System übernommen.  
 Nachdem eine entsprechende BANF vom System generiert wurde, welche die zu bestellenden Mengen und den damit verbunden Einkaufspreis (welcher aus der Produktdatenbank ermittelt wurde) beinhaltet, muss ein Mitarbeiter des Einkaufes diese gegenprüfen.  
 Stell er Mängel fest, so korrigiert er diese per Hand, ansonsten bestätigt er die Korrektheit der BANF.  
@@ -209,27 +211,27 @@ Nun werden aus der BANF Anfragen an die einzelnen Händler generiert. Dies gesch
 Der Lieferant bekommt diese Anfrage nun im Webpanel angezeigt. Zusätzlich wird er per Email benachrichtigt. Er muss diese Anfrage nun im Webpanel bestätigten oder ablehnen. Nimmt der Lieferant die Anfrage nicht innerhalb von 2 Tagen an, so wird diese automatisch abgelehnt und den Kunden mit entsprechenden Artikeln wird mitgeteilt, dass diese leider in diesem Intervall nicht lieferbar sind.  
 Haben alle Lieferanten ihre Anfragen bestätigt, spätestens jedoch zum 15. wird der Zahlungsprozess beim Kunden eingeleitet. Eine Stornierung der Aboboxen ist zu diesem Zeitpunkt nicht mehr möglich. Gleichzeitig werden die generierten Anfragen bei den Händlern bestätigt und ein Lieferauftrag generiert, welcher an die Spedition geschickt wird.  
 
-### Lieferung abwickeln
+### 4. Lieferung abwickeln
 Damit die Produkte nach Deutschland ins Lager gelangen können, ist es notwendig diese zu transportieren. Da auch die Zollabwicklung durchgeführt werden muss, hat sich die **Name folgt** dazu entschlossen, eine Importfirma zubeauftragen. Diese kümmert sich nicht nur darum, dass die Produkte beim Händler abgeholt werden, sondern führt auch die Zollabfertigung durch. Nachdem alle Händler ihre Anfragen bestätigt haben bzw. diese abgelehnt wurden, wird der Importfirma eine Liste mit allen Produkten, deren Menge, sowie der Anschrift der entsprechenden Lieferanten übermittelt. Diese Liste wird automatisch aus den Anfragen erzeugt.  
 Der Importeur bearbeitet diese Liste nun und gibt Rückmeldung, wann welches Produkt abgeholt wird. Diese Daten werden nun in die entsprechenden Lieferantenaufträge eingepflegt, sodass der Lieferant nachvollziehen kann, wann der Spediteur eintrifft.  
 
-### Lagern der Waren
+### 5. Lagern der Waren
 Nachdem der Importeur die Produkte erfolgreich nach Deutschland gebracht hat, werden diese im Zentrallager angenommen. Dabei bekommt jede Lieferung des Importeurs den Status "Qualitätprüfung". Dies bedeutet, dass diese Lieferung erst auf vollständigkeit, Qualität und unbedenklichkeit untersucht werden muss, bevor diese weiterverarbeitet werden kann.  
 Die Prüfung nimmt das Qualitätsmanagement vor. Des weiteren, wird von jedem Produkt ein Muster an das Labor geschickt.  
 Wenn das Labor Rückmeldung gibt, dass das Produkt einwandfrei ist und auch die Qualitätsprüfung keine Beanstandung hat, wird das entsprechende Produkt freigegeben und bekommt den Status "zur freien Verwendung". Sollten Mängel auftreten, wird es mit dem Status "Sperrbestand" versehen und an die Einkaufsabteilung eskaliert. Diese muss sich nun mit Importeur und Lieferant auseinandersetzen, um die Mängel zu besprechen.  
 
-### Box packen
+### 6. Box packen
 Am 25. jeden Monats werden die sogenannten Picker damit beauftragt, die Aboboxen zu packen. Dafür bekommen diese jeweils eine Box zugeteilt. Nun sucht der Picker im Lager die entsprechenden Waren mit entsprechender Menge zusammen und bestätigt jede Ware in seiner Pickerapp.  
 Abschließend verpackt der Picker die Waren in der Abobox und bestätigt, dass diese vollständig gepackt ist. Nun wird ein Versandlabel ausgedruckt, welches der Picker auf die Box klebt. Nachdem dies geschehen ist, ruft der Picker den nächsten Auftrag ab.
 
-### Versand der Boxen
+### 7. Versand der Boxen
 Sind alle Boxen gepackt, jedoch spätestens zum 28. jeden Monats, werden diese zur Post gebracht und versand. Der Kunde erhält nun eine Versandbenachrichtung mit entsprechendem Link.
 
-### Zahlung
+### 8. Zahlung
 Sind alle Anfragen der Lieferanten bearbeitet, wird für jeden Kunden eine Rechnung generiert. Dabei werden momentan Rabatte, nicht verfügbare Produkte etc. berücksichtigt, sodass die ermittelte Rechnungssumme den Produkten entspricht, welche der Kunde in seiner Abobox finden wird. Der Kunde erhält nun eine Email mit der Rechnung und dem Hinweis, dass diese innerhalb der nächsten Tage von seinem Konto abgegbucht werden wird.  
 3 Tage nachdem die Email an den Kunden versendet wurde, werden die Zahlungen bei der Bank angewiesen.
 
-### Zahlung der Lieferanten
+### 9. Zahlung der Lieferanten
 Sind die Waren eingetroffen und haben den Status "freier Bestand" erhalten, so wird die Buchhaltung angewiesen, die entsprechende Rechnung des Lieferanten, welche er im Webpanel hochgeladen hat zu prüfen.  
 Bei fehlern auf der Rechnung wird der Lieferant kontaktiert und aufgefordert, seine Rechnung zu korrigieren.  
 Ist die Rechnung korrekt, weißt die Buchhaltung die Zahlung dieser an und gibt den Auftrag den Status "abgeschlossen".
