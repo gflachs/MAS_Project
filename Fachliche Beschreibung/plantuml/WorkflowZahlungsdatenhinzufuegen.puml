@@ -1,0 +1,39 @@
+@startuml zahlungsdaten_hinzufuegen
+
+    actor Nutzer
+    control Webshop
+    database Webshopdatenbank
+    database Zahlungsdienstleister
+
+    skinparam responseMessageBelowArrow true
+    autonumber
+    
+    loop Verification nicht erfolgreich
+        activate Nutzer
+        Nutzer -> Nutzer : Zahlungsdaten einpflegen
+        Nutzer -> Webshop : Zahlungsdaten übermitteln
+        activate Webshop
+        Webshop -> Zahlungsdienstleister : Zahlungsdaten überprüfen
+        activate Zahlungsdienstleister
+        autonumber stop
+        alt  
+            break
+                Zahlungsdienstleister --> Webshop : True
+                
+            end
+        else 
+            Zahlungsdienstleister --> Webshop : False    
+            deactivate Zahlungsdienstleister
+            Webshop --> Nutzer : Falsche Eingabe
+        end
+    end
+    autonumber resume
+    Webshop -> Webshopdatenbank : Update Zahlungsdaten
+    activate Webshopdatenbank
+    Webshopdatenbank --> Webshop : Änderung vorgenommen
+    deactivate Webshopdatenbank
+    Webshop --> Nutzer : Bestätigung
+
+    deactivate Webshop
+
+@enduml

@@ -4,7 +4,6 @@ entity User{
     * userid : number
     --
     * adressid : number
-    zahlungsdatenid : number
     * vorname : varchar
     * nachname : varhchar
     * emailadresse : varchar

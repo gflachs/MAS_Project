@@ -1,0 +1,26 @@
+@startuml User Zahlungsdaten
+
+class UserZahlungsdaten {
+    userid : int
+    zahlungsdatenid : int
+    status : Zahlungsdatenstatus
+    zahlungsartID : Zahlungsart
+    token : String
+}
+
+enum Zahlungsdatenstatus {
+    akitv
+    inaktiv
+}
+
+enum Zahlungsart {
+    Paypal
+    Kreditkarte
+    Debitkarte
+}
+
+UserZahlungsdaten o-- User
+UserZahlungsdaten o-- Zahlungsdaten
+UserZahlungsdaten o-- Zahlungsdatenstatus
+UserZahlungsdaten o-- Zahlungsart
+@enduml

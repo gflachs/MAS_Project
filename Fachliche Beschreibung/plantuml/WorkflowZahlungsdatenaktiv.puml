@@ -1,0 +1,16 @@
+@startuml aktiv
+
+    actor Nutzer
+    control Webshop
+    database Webshopdatenbank
+
+    Nutzer -> Webshop : Zahlungsdart als aktiv kennzeichnen
+    Webshop -> Webshopdatenbank : Zahlungsarten abrufen
+    Webshopdatenbank --> Webshop :Zahlungsarten
+    Webshop -> Webshop : aktive Zahlungsart deaktivieren
+    Webshop -> Webshop : neue Zahlungsart aktivieren
+    Webshop -> Webshopdatenbank : Änderung übermitteln
+    Webshopdatenbank --> Webshop : Bestätigen
+    Webshop --> Nutzer : Bestätigen
+
+@enduml

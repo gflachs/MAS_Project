@@ -37,7 +37,7 @@ Wenn ein Kunde also bereits eine 1 Monatsbox hat, welche 5 Produkte umfasst und 
 Der Import der Ware erfolgt dabei so, dass es zu so wenig wie möglich Lagerdauer und zu verwendende Lagerfläche kommt. So wird 2 Wochen bevor die entsprechende Aboboxen versendet werden, eine Sammelbestellung bei den Lieferanten ausgelöst. Sobald diese Ware angekommen ist, wird diese in die Boxen verpackt und zum Abozeitpunkt T-2 Tage versendet. Dadurch entstehen ein sehr geringer Bedarf an Lagerkapazitäten. 
 
 ## Prozesse
-### Bestellung über den Webshop
+## Bestellung über den Webshop
 Die Bestellung über den Webshop läuft im Regelfall folgendermaßen ab:  
 Ein Kunde betritt den Webshop und informiert sich über die Produkte.  
 Nach einiger Suche wählt der Kunde ein Produkt <span style="color:#ff3300">P</span> mit der Produktid <span style=color:pink>ID</span> aus. Er kommt nun auf die Produktseite.  
@@ -52,13 +52,15 @@ Dieses Objekt beinhaltet folgende Daten:
 - einen Preis <span style="color:#3333ff">G</span>
 - eine sessionale Verfügbarkeit <span style="color:#e600e6">V</span>
 - einen vorgeschlagenen Lieferintervall <span style="color:#4d9900">I</span>
-- eine vorgeschlagene Menge <span style="color:#00cccc">M</span>
 
 ![Produkt](http://www.plantuml.com/plantuml/svg/3SfHou8m583Xl_9z5zrw8hGWYD0e2b9AAwgRcFFabdEJxHpw-tdvlZp_sah33R8tVufe24i0BxvHgqbnpG6zT9RGKYHT3-tR2Aa2v6drEddtGKdG2srXDswZfSB9R9fXaCgZhjcsC1XXYNi38s-uesWOOqskGxjAgsDH5l4XcoVd-Bb8glnstUQNhDnlxeyV)
 
 Hat der Kunde während des Bestellprozesses Fragen zum Produkt oder zum Ablauf, so kann er jederzeit über die Infohotline den Kundenservice konaktieren.  
 
 Ist der Kunde mit dem Produkt <span style="color:#ff3300">P</span> zufrieden, und möchte dieses bestellen, so wählt er eine Menge und einen Lieferintervall und kann dieses nun seiner Abobox hinzufügen.  
+
+![Abobox]()
+
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
 Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#Registriervorgang)).  
 Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff3300">P</span> der Abobox mit der Menge <span style="color:#00cccc">M</span> und dem gewünschten Lieferintervall <span style="color:#4d9900">I</span> hinzugefügt.  
@@ -101,8 +103,16 @@ Ist die Emailadresse nicht vorhanden ist, bekommt der Nutzer eine Fehlermeldung 
 Ist der Nutzer vorhanden, so wird geprütft, ob das Passwort mit dem Passwort aus der Datenbank übereinstimmt.  
 Ist dies nicht der Fall, so wird eine Fehlermeldung ausgeben. Ansonsten wird eine Sessionid erzeugt und dem User zugesendet. Der Nutzer ist nun eingeloggt.
 
-## Zahlungsdaten hinzufügen
-Der Nutzer wird aufgefordter sich für eine Zahlungsmethode zu entscheiden. 
+## Zahlungsarten verwalten
+Der Nutzer hat die Möglichkeit seine bereits eingepflegten Zahlungsdaten zu verwalten und zu bearbeiten. Dabei kann er aus verschiedenen Aktionen wählen:  
+
+- Zahlungsart hinzufügen
+- Zahlungsart löschen
+- Zahlungsart bearbeiten
+- Zahlungsart als aktiv kennzeichnen
+
+### Zahlungsdaten hinzufügen
+Der Nutzer wird aufgefordter sich für eine Zahlungsmethode zu entscheiden.  
 Je nach Zahlungsmethode werden verschiedne Sachen abgefragt:
 - Paypal
     - Emailadresse
@@ -117,5 +127,110 @@ Je nach Zahlungsmethode werden verschiedne Sachen abgefragt:
     - IBAN
     - BIC
 
+![Zahlungsarten]()
+
 Der Nutzer gibt nun, basierend auf seiner Wahl entsprechende Daten bei dem Dienstleister ein. Bei erfolgreicher Prüfung bekommt der Webshop einen Verficationtoken des Dienstleisters übermittelt. Diesen hinterlegt er nun mit entsprechender Zahlungsart in der Datenbank.  
 Der Nutzer kann jetzt noch auswählen, ob dies seine aktive Zahlungsart sein soll.
+
+![Workflow Zahlungsarten hinzufügen]()
+
+### Zahlungsart löschen
+Wählt der Nutzer den Button *Zahlungsart löschen* aus, so wird er nochmals gefragt, ob er die Zahlungsart tatsächlich löschen möchte. Wenn der Nutzer dies bestätigt, wird geprüft, ob wenigstens eine weitere Zahlungsart im Kundenkonto hinterlegt ist. Ist dies nicht der Fall und der Kunde hat eine aktive Abobox, so wird dem Benutzer ein Error ausgegeben, mit dem Hinweis, dass mindestens eine aktive Zahlungsart im Konto hinterlegt sein muss.  
+Ansonsten werden die Zahlungsdaten aus dem Kundenkonto gelöscht.
+
+![Workflow Zahlungsdaten löschen]()
+
+### Zahlungsart bearbeiten
+Der Kunde bekommt die hinterlegten Zahlungsdaten angezeigt. Er hat nun die Möglichkeit, diese abzuändern und z.B. die Iban anzupassen. Nach erfolgter Änderung der Zahlungsdaten durchlaufen die einen erneuten Prüfungsprozess und bei erfolgreicher Verifikation wird die Zahlungsart mit dem entsprechend neu generierten Token in der Datenbank aktualisiert.  
+Schlägt die Prüfung fehlt, so wird der Kunde auf die fehlgeschlagene Prüfung aufmerksam gemacht und der Vorgang wird abgebrochen.
+
+![Workflow Zahlungsdaten bearbeiten]()
+
+### Zahlungsart als aktiv kennzeichnen
+Der Nutzer hat die Möglichkeit, eine Zahlungsart auszuwählen und diese als aktive Zahlungsart auszuwählen. Aktiv bedeutet, dass ab jetzt von dieser Zahlungsart abgebucht werden wird.  
+Wählt der Nutzer eine Zahlungsart als aktiv, so wird in der Datenbank ein entsprechender Eintrag hinterlegt, die Zahlungsart, welche bereits als aktiv gekennzeichnet ist, wird als inaktiv gekennzeichnet.
+
+![Workflow Zahlungsdaten als aktiv kennzeichnen]()
+
+
+## Wertschöpfungskette
+Produkte, welche auf dem Webshop gelistet sind, können von den Kunden in Form von Aboboxen erworben werden. Diese Produkte werden dann beim Lieferanten bestellten.  
+
+### 1. Listen von Produkten
+Die Zulieferer, welche bereits mit dem Unternehmen zusammenarbeiten, können ihre Produkte direkt einpflegen. Dazu öffnen sie ihr Webpanel und geben ihre Zugangsdaten ein. Nun können sie mit einem Klick auf den Button "Neues Produkt hinzufügen" das Formular aufrufen, welches sie ausfüllen müssen, damit dieses Produkt gelistet werden kann.  
+In dem Formular müssen sie folgende Daten angeben:  
+- Name des Produktes
+- Zusammensetzung (Inhaltsstoffe)
+- Preis
+- Lieferintervall
+- Sessionale Verfügbarkeiten
+- Lieferbare Menge
+- Transparenzdaten (Feld, Bauer etc.)
+- Ein oder mehrere Fotos des Produktes
+- Verwendung des Produktes
+
+Nachdem der Lieferant diese Daten eingepflegt hat, werden diese an den Webshop übermittelt. Dieser erstellt nun ein neues Angebot, welches die genannten Daten beinhaltet und speichert dieses in der Datenbank mit dem Status "Neu". Zusätzlich wird die Einkaufsabteilung über das Eintreffen eines neuen Angebots informiert.  
+Diese prüft nun das vorliegende Angebot und bestellt bei Intresse (Preis nicht zu hoch, passt ins Produktportfolio) ein Produktmuster beim Lieferanten. Der Status wird nun auf "Muster angefordert" gestellt. Ist nach 4 Wochen kein Muster eingetroffen wird der Status auf "Kein Muster" gestellt.  
+Nachdem das Muster eingetroffen wird, wird es an die Qualitätsprüfung weitergeleitet. Der Status ist nun "Prüfung".  
+Die Qualitätsprüfung prüft nun:  
+- die wesentlichen Eigenschaften des Produktes
+- die Einsatzmöglichkeiten des Produktes
+- die Transparenzdaten auf nachvollziehbarkeit
+
+Die Prüfungsergebnisse werden in der Datenbank gespeichert.  
+Kommt die Qualitätsabteilung zu dem Schluss, dass das Produkt nicht den Anforderungen entspricht, wird dem Liefernanten eine Absage erteilt, mit Feedback, was dieser an dem Produkt verbessern kann. Der Status des Angebots wird auf "Prüfung nicht bestanden" gestellt.  
+Ist das Produkt zur Zufriedenheit der Qualitätsprüfung, so wird eine Probe davon an das Labor verschickt. Der Status des Produktes ist nun "Laborprüfung".  
+Das Labor prüft das Produkt nun auf Unbedenklichkeit für den angegeben Verwendungzweck und prüft die angegeben Inhaltsstoffe erneut. Danach sendet dieses die Analys an die Qualitätsprüfung zurück. Die Anayse wird nun in der Datenbank hinterlegt.   
+Ist die Laboranalyse negativ ausgefallen, so wird dem Lieferanten der Mangel mitgeteilt, und der Status des Produktes auf "Laboranalyse nicht bestanden" gestellt.  
+Ist die Laboranalyse ohne Probleme erfolgt, so wird der Status des Angebots auf "angenommen" gestellt und die Einkaufsabteilung informiert.  
+Diese erstellt nun aus den vorliegenden Daten einen neuen Produkteintrag in der Datenbank und schaltet dieses Produkt frei.  
+Das Produkt bekommt nun den Status "aktiv" und ist ab jetzt im Webshop zu sehen.  
+
+Ist kein Lieferant eingepflegt oder möchte die Einkaufsabteilung das Portfolio erweitern, geht diese selbstständig auf die Suche nach Lieferanten. Das Schema bleibt dabei das gleiche, bis darauf, dass der Lieferant vorab bei Interesse als neuer Lieferant angelegt werden muss.
+
+### 1.1. Lieferant anlegen
+Um einen neuen Lieferanten im Webshop anzulegen, muss dieser einen Fragebogen ausfüllen. Darin vermerkt er folgende Daten:
+- Name
+- Anschrift
+- Telefonnummer
+- Email
+- Ansprechpartner
+
+Diese Daten werden nun in der Datenbank hinterlegt. Danach bekommt der Lieferant eine Email mit Zugangsdaten zum Webpanel, in welchem er seine Angebote einpflegen kann.
+
+### 2. [`Bestellung durch Kunde`](#Bestellung%20über%20Webshop)
+Diese kann immer und jederzeit erfolgen, siehe entsprechender Prozess
+
+### Bestellung bei Lieferanten
+Immer zum 10. jeden Monats wird der Bedarf an Produkten ermittelt. Dazu wird jede Abobox überprüft und die darin enthaltenen Produkte mit entsprechender Menge addiert. Dies geschieht vollautomatisch und wird vom System übernommen.  
+Nachdem eine entsprechende BANF vom System generiert wurde, welche die zu bestellenden Mengen und den damit verbunden Einkaufspreis (welcher aus der Produktdatenbank ermittelt wurde) beinhaltet, muss ein Mitarbeiter des Einkaufes diese gegenprüfen.  
+Stell er Mängel fest, so korrigiert er diese per Hand, ansonsten bestätigt er die Korrektheit der BANF.  
+Nun werden aus der BANF Anfragen an die einzelnen Händler generiert. Dies geschieht, indem dem jeweiligen Produkt der entsprechende Händler zugeorndet wird und eine neue Lieferanfrage in der Datenbank angelegt wird. Dieser beinhaltet die bestellte Menge, sowie den Einkaufspreis.  
+Der Lieferant bekommt diese Anfrage nun im Webpanel angezeigt. Zusätzlich wird er per Email benachrichtigt. Er muss diese Anfrage nun im Webpanel bestätigten oder ablehnen. Nimmt der Lieferant die Anfrage nicht innerhalb von 2 Tagen an, so wird diese automatisch abgelehnt und den Kunden mit entsprechenden Artikeln wird mitgeteilt, dass diese leider in diesem Intervall nicht lieferbar sind.  
+Haben alle Lieferanten ihre Anfragen bestätigt, spätestens jedoch zum 15. wird der Zahlungsprozess beim Kunden eingeleitet. Eine Stornierung der Aboboxen ist zu diesem Zeitpunkt nicht mehr möglich. Gleichzeitig werden die generierten Anfragen bei den Händlern bestätigt und ein Lieferauftrag generiert, welcher an die Spedition geschickt wird.  
+
+### Lieferung abwickeln
+Damit die Produkte nach Deutschland ins Lager gelangen können, ist es notwendig diese zu transportieren. Da auch die Zollabwicklung durchgeführt werden muss, hat sich die **Name folgt** dazu entschlossen, eine Importfirma zubeauftragen. Diese kümmert sich nicht nur darum, dass die Produkte beim Händler abgeholt werden, sondern führt auch die Zollabfertigung durch. Nachdem alle Händler ihre Anfragen bestätigt haben bzw. diese abgelehnt wurden, wird der Importfirma eine Liste mit allen Produkten, deren Menge, sowie der Anschrift der entsprechenden Lieferanten übermittelt. Diese Liste wird automatisch aus den Anfragen erzeugt.  
+Der Importeur bearbeitet diese Liste nun und gibt Rückmeldung, wann welches Produkt abgeholt wird. Diese Daten werden nun in die entsprechenden Lieferantenaufträge eingepflegt, sodass der Lieferant nachvollziehen kann, wann der Spediteur eintrifft.  
+
+### Lagern der Waren
+Nachdem der Importeur die Produkte erfolgreich nach Deutschland gebracht hat, werden diese im Zentrallager angenommen. Dabei bekommt jede Lieferung des Importeurs den Status "Qualitätprüfung". Dies bedeutet, dass diese Lieferung erst auf vollständigkeit, Qualität und unbedenklichkeit untersucht werden muss, bevor diese weiterverarbeitet werden kann.  
+Die Prüfung nimmt das Qualitätsmanagement vor. Des weiteren, wird von jedem Produkt ein Muster an das Labor geschickt.  
+Wenn das Labor Rückmeldung gibt, dass das Produkt einwandfrei ist und auch die Qualitätsprüfung keine Beanstandung hat, wird das entsprechende Produkt freigegeben und bekommt den Status "zur freien Verwendung". Sollten Mängel auftreten, wird es mit dem Status "Sperrbestand" versehen und an die Einkaufsabteilung eskaliert. Diese muss sich nun mit Importeur und Lieferant auseinandersetzen, um die Mängel zu besprechen.  
+
+### Box packen
+Am 25. jeden Monats werden die sogenannten Picker damit beauftragt, die Aboboxen zu packen. Dafür bekommen diese jeweils eine Box zugeteilt. Nun sucht der Picker im Lager die entsprechenden Waren mit entsprechender Menge zusammen und bestätigt jede Ware in seiner Pickerapp.  
+Abschließend verpackt der Picker die Waren in der Abobox und bestätigt, dass diese vollständig gepackt ist. Nun wird ein Versandlabel ausgedruckt, welches der Picker auf die Box klebt. Nachdem dies geschehen ist, ruft der Picker den nächsten Auftrag ab.
+
+### Versand der Boxen
+Sind alle Boxen gepackt, jedoch spätestens zum 28. jeden Monats, werden diese zur Post gebracht und versand. Der Kunde erhält nun eine Versandbenachrichtung mit entsprechendem Link.
+
+### Zahlung
+Sind alle Anfragen der Lieferanten bearbeitet, wird für jeden Kunden eine Rechnung generiert. Dabei werden momentan Rabatte, nicht verfügbare Produkte etc. berücksichtigt, sodass die ermittelte Rechnungssumme den Produkten entspricht, welche der Kunde in seiner Abobox finden wird. Der Kunde erhält nun eine Email mit der Rechnung und dem Hinweis, dass diese innerhalb der nächsten Tage von seinem Konto abgegbucht werden wird.  
+3 Tage nachdem die Email an den Kunden versendet wurde, werden die Zahlungen bei der Bank angewiesen.
+
+### Zahlung der Lieferanten
+Sind die Waren eingetroffen und haben den Status "freier Bestand" erhalten, so wird die Buchhaltung angewiesen, die entsprechende Rechnung des Lieferanten, welche er im Webpanel hochgeladen hat zu prüfen.  
+Bei fehlern auf der Rechnung wird der Lieferant kontaktiert und aufgefordert, seine Rechnung zu korrigieren.  
+Ist die Rechnung korrekt, weißt die Buchhaltung die Zahlung dieser an und gibt den Auftrag den Status "abgeschlossen".
+

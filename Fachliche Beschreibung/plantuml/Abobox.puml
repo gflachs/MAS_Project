@@ -1,0 +1,34 @@
+@startuml Abobox
+
+class Abobox {
+    p : orderedProdukt[*]
+
+}
+
+class orderedProdukt {
+    produkt : Produkt
+    menge : int
+    intervall : Lieferintervall
+}
+
+enum Lieferintervall {
+    1
+    2
+    3
+    4
+    5
+    6
+}
+
+class Produkt {
+    PB : Produktbeschreibung
+    TI : Transparenzinformationen
+    VT : Verwendung
+    G : Preis
+    V : Verfuegbarkeit[*]
+}
+
+Abobox o-- orderedProdukt : beinhaltet >
+orderedProdukt o-- Lieferintervall : bestimmt <
+orderedProdukt o-- Produkt : definiert <
+@enduml

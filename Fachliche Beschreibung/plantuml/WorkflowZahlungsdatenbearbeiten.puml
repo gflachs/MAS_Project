@@ -1,0 +1,46 @@
+@startuml zahlungsdaten_loeschen
+
+    actor Nutzer
+    control Webshop
+    database Webshopdatenbank
+    database Zahlungsdienstleister
+
+    skinparam responseMessageBelowArrow true
+    autonumber
+    activate Nutzer
+    Nutzer -> Webshop : Zahlungsdaten bearbeiten
+    activate Webshop
+    Webshop -> Webshopdatenbank : Zahlungsdaten abrufen
+    activate Webshopdatenbank
+    Webshopdatenbank --> Webshop : Zahlungsdaten
+    deactivate Webshopdatenbank
+    Webshop --> Nutzer : Zahlungsdaten
+    deactivate Webshop
+    loop Verification nicht erfolgreich
+        Nutzer -> Nutzer : Änderung vornehmen
+        Nutzer -> Webshop : Änderung übermitteln
+        activate Webshop
+        Webshop -> Zahlungsdienstleister : Änderung überprüfen
+        activate Zahlungsdienstleister
+        autonumber stop
+        alt  
+            break
+                Zahlungsdienstleister --> Webshop : True
+                
+            end
+        else
+            Zahlungsdienstleister --> Webshop : False
+            deactivate Zahlungsdienstleister
+            Webshop --> Nutzer : falsche Eingabe
+        end
+    end
+    autonumber resume
+    Webshop -> Webshopdatenbank : Update Zahlungsdaten
+    activate Webshopdatenbank
+    Webshopdatenbank --> Webshop : Änderung vorgenommen
+    deactivate Webshopdatenbank
+    Webshop --> Nutzer : Bestätigung
+
+    deactivate Webshop
+
+@enduml

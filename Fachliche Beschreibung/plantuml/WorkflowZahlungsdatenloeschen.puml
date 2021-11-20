@@ -1,0 +1,29 @@
+@startuml zahlungsdaten_hinzufuegen
+
+    actor Nutzer
+    control Webshop
+    database Webshopdatenbank
+
+    skinparam responseMessageBelowArrow true
+    autonumber
+    Nutzer -> Webshop : Zahlungsdaten löschen
+    Webshop -> Webshopdatenbank : Zahlungsdaten abrufen
+    Webshopdatenbank --> Webshop : Zahlungsdaten
+    Webshop -> Webshop : Zahlungsdaten prüfen
+    alt keine weiteren Zahlungsdaten vorhanden
+    autonumber stop
+        Webshop -> Webshop : Aboboxen prüfen
+        alt Abobox vorhanden
+            Webshop --> Nutzer : Error
+        else keine Abobox vorhanden
+            Webshop -> Webshopdatenbank : Daten löschen
+            Webshopdatenbank --> Webshop : Succes 
+            Webshop --> Nutzer : Bestätigung
+        end
+    else weitere Zahlungsdaten vorhanden
+        Webshop -> Webshopdatenbank : Daten löschen
+        Webshopdatenbank --> Webshop : Succes 
+        Webshop --> Nutzer : Bestätigung
+    end
+
+@enduml

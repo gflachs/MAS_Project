@@ -1,0 +1,33 @@
+@startuml Zahlungsarten
+
+
+class Paypal {
+    paypalId : int
+    emailAdresse : String
+    passwort : String
+}
+
+class Kreditkarte {
+    kreditKartenId : int
+    herausgeber : Kreditkartenausgeber
+    inhaber : String
+    kreditkartenNummer : int
+    ablaufdatum : Timestamp
+    csv : int
+}
+
+class Lastschrift {
+    lastschriftid : int
+    inhaber : String
+    iban : String
+    bic : String
+}
+
+enum Kreditkartenausgeber {
+    Visa
+    Master
+}
+
+Kreditkarte o-- Kreditkartenausgeber : < legt fest
+
+@enduml
