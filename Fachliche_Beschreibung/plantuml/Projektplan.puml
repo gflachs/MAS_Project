@@ -1,0 +1,17 @@
+@startgantt Projektplan
+language de
+printscale daily zoom 3
+Project starts 2021-11-24
+[Mockup Webshop] starts 2021-11-24
+[Mockup Webshop] ends 2021-11-28
+[Produkt listen] starts at [Mockup Webshop]'s end and ends 2021-12-3
+[Bestellung Kunde] starts at [Produkt listen]'s end and ends 2021-12-7
+[Registrierung] starts at [Produkt listen]'s end and ends at 2021-12-5
+[Login] starts at [Registrierung]'s end and ends at 2021-12-7
+[Zahlungsarten] starts at [Registrierung]'s end and ends at 2021-12-7
+[Bestellung Lieferanten] starts at [Bestellung Kunde]'s end and ends at 2021-12-10 
+[Lieferung] starts at [Bestellung Lieferanten]'s end and ends 2021-12-12
+[Lagern] starts at [Bestellung Lieferanten]'s end and ends 2021-12-12
+[Box packen] starts at [Lagern]'s end and ends 2021-12-15
+[Reklamation Kunde] starts at [Bestellung Kunde]'s end and ends at 2021-12-10
+@endgantt

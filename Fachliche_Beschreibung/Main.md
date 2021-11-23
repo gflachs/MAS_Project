@@ -239,7 +239,9 @@ Sind alle Boxen gepackt, jedoch spätestens zum 28. jeden Monats, werden diese z
 
 ### 8. Zahlung
 Sind alle Anfragen der Lieferanten bearbeitet, wird für jeden Kunden eine Rechnung generiert. Dabei werden momentan Rabatte, nicht verfügbare Produkte etc. berücksichtigt, sodass die ermittelte Rechnungssumme den Produkten entspricht, welche der Kunde in seiner Abobox finden wird. Der Kunde erhält nun eine Email mit der Rechnung und dem Hinweis, dass diese innerhalb der nächsten Tage von seinem Konto abgegbucht werden wird.  
-3 Tage nachdem die Email an den Kunden versendet wurde, werden die Zahlungen bei der Bank angewiesen.
+3 Tage nachdem die Email an den Kunden versendet wurde, werden die Zahlungen bei der Bank angewiesen.  
+Kann die Abbuchung nicht durchgeführt werden, da z.B. der Kunde nicht genügend Geld auf dem Konto hat, wird eine Mahnung an den Kunden generiert (Mahngebühren = 2.50 €) und an diesen versendet und der Prozess beginnt von vorne.  
+Wurden bereits drei Mahnungen an den Kunden versendet, so wird die Rechtsabteilung eingeschaltet, welche sich dann um den weiteren Prozess kümmert.
 
 ![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Kundenzahlung.png)
 
@@ -250,3 +252,25 @@ Ist die Rechnung korrekt, weißt die Buchhaltung die Zahlung dieser an und gibt 
 
 ![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Zahlung_Lieferant.png)
 
+## Kundenserviceprozesse
+Während des Betriebs des Webshops kann es zu vielen verschiedenen Fällen kommen, in welchem der Kunde Rückfragen hat und mit dem Kundenservice in Kontakt treten will. Nachfolgend ist ein Prozess genauer beschrieben:
+
+### Reklamation eines Produktes
+Hat der Kunde eine Beanstandung an einem Produkt, z.B. weil dieses während des Transports kaputt gegangen ist oder nicht die versprochenen Kriterien erfüllt, so kann er über den Webshop den Kundenservice kontaktieren. Dazu wählt der Kunde in seiner Bestellhistorie die entsprechende Abobox aus, um welche es geht und wählt darin das zu reklamierende Produkt.  
+Nachfolgend füllt er das Reklamationsformular aus:  
+- Grund für die Reklamation (Dropdown)
+- Kurze Beschreibung
+- Dateianhänge wie Fotos etc.
+
+Abschließend schickt der Kunde das Formular an den Kundenservice.  
+Der Webshop generiert nun aus diesem Formular automatisch ein neues Ticket für den Kundenservice.  
+Ein Mitarbeiter des Kundenservice nimmt dieses Ticket nun auf und startet die Bearbeitung. Zuerst prüft er, ob die Beschreibung ein Reklamationsgrund darstellt. Danach wird geprüft, ob die Fotos etc. den Sachverhalt ordentlich dokumentieren.  
+Kommt der Kundenservicemitarbeiter zu dem Schluss, dass hier kein Grund für eine Reklamation vorliegt, so kontaktiert er den Kunden teilt ihm dies begründet über das Ticket mit. Abschließend markiert er das Ticket als geschlossen.  
+Ist eine Reklamation nachvollziehbar, so erstellt der Mitarbeiter einen neuen Erstattungsauftrag und sendet diesen an die Buchhaltung. Zusätzlich informiert er den Kunden über die bevorstehende Erstattung. Außerdem hinterlegt in der Lieferantendatenbank einen Vermerk bezüglich der Erstattung. Abschließend markiert er das Ticket als erledigt.  
+Die Buchhaltung bearbeitet den Erstattungsantrag und überweist dem Kunden das Geld zurück. 
+
+![Kundenreklamation](/Fachliche_Beschreibung/bpmn/Kundenreklamation.png)
+
+## Projektplan
+
+![Projektplan]()
