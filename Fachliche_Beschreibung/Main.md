@@ -43,7 +43,7 @@ Ein Kunde betritt den Webshop und informiert sich über die Produkte.
 Nach einiger Suche wählt der Kunde ein Produkt <span style="color:#ff3300">P</span> mit der Produktid <span style=color:pink>ID</span> aus. Er kommt nun auf die Produktseite.  
 Nachfolgend fragt der Browser beim Webshop die <span style=color:pink>ID</span> and und erhält das Objekt <span style="color:#ff3300">P</span> zurück.  
 
-![Produktabruf](http://www.plantuml.com/plantuml/svg/5St1ge90583X_NsAUnTtwuasGH2baKYOY2PKcnZ7epCvpiZCEVJwsVQ3d_yGI7ZYoVpyQIiDTyZU_2gYEMm1l7X7WoR5BGVqqbb2Iv5q4moz4L85kCJri_JkXP9W4jf2kh3HKk7_UfLWaCgZRjaEC1jXloE8My_zqdGyKZGliYStejt5TLvKnQCvtTBiUAysTLucvp9FgYoxDXy0)
+![Produktabruf](/Fachliche_Beschreibung/plantuml/Images/AbrufProdukt/AbrufProdukt.svg)
 
 Dieses Objekt beinhaltet folgende Daten:  
 - Produktbeschreibung <span style="color:#b3b3ff">PB</span>
@@ -53,20 +53,20 @@ Dieses Objekt beinhaltet folgende Daten:
 - eine sessionale Verfügbarkeit <span style="color:#e600e6">V</span>
 - einen vorgeschlagenen Lieferintervall <span style="color:#4d9900">I</span>
 
-![Produkt](http://www.plantuml.com/plantuml/svg/3SfHou8m583Xl_9z5zrw8hGWYD0e2b9AAwgRcFFabdEJxHpw-tdvlZp_sah33R8tVufe24i0BxvHgqbnpG6zT9RGKYHT3-tR2Aa2v6drEddtGKdG2srXDswZfSB9R9fXaCgZhjcsC1XXYNi38s-uesWOOqskGxjAgsDH5l4XcoVd-Bb8glnstUQNhDnlxeyV)
+![Produkt](/Fachliche_Beschreibung/plantuml/Images/Produkt/Produkt.svg)
 
 Hat der Kunde während des Bestellprozesses Fragen zum Produkt oder zum Ablauf, so kann er jederzeit über die Infohotline den Kundenservice konaktieren.  
 
 Ist der Kunde mit dem Produkt <span style="color:#ff3300">P</span> zufrieden, und möchte dieses bestellen, so wählt er eine Menge und einen Lieferintervall und kann dieses nun seiner Abobox hinzufügen.  
 
-![Abobox](https://www.plantuml.com/plantuml/svg/5Ssn3W8X383XtQVGmPKQHwSx1pSJ4n_0GAy21WgXRVJnlPl-v5--ITGFjLfsXynORA5zKkro0HZ-wsBMPC641ZPMOdNOAiHtyPW4xlFpzHZjGwXGVMQuhRjaJ7Gydwuac0RbO1oX5y-R0dDeeVrStyI9U5dx1m00)
+![Abobox](/Fachliche_Beschreibung/plantuml/Images/Abobox/Abobox.svg)
 
 Ist der Kunde bereits registriert, aber noch nicht angemeldet, wird er nun zum Login aufgefordert.  
 Ist der Kunde nicht nicht registriert, so kann er dies nun nachholen (siehe Prozess [`Registriervorgang`](#registrierungsvorgang)).  
 Ist der Kunde erfolgreich eingeloggt, wird das Produkt <span style="color:#ff3300">P</span> der Abobox mit der Menge <span style="color:#00cccc">M</span> und dem gewünschten Lieferintervall <span style="color:#4d9900">I</span> hinzugefügt.  
 Der Kunde kann nun weitere Produkte auswählen und diese zu seiner Abobox hinzufügen.    
 
-![Produkt zu Abobox hinzufügen](http://www.plantuml.com/plantuml/png/5Sr1ImCn40NWUt-57hpkYDu4iHj5iRIbDeBLYoJPQHARdIp93Ch-UjFBCBptmLjMDeLbJ8lBI2x9W5BIHM2UwXr0CR-TZnp4IiNYCZ4ITowFu8_9k51Xq-llNSa_w1X64mcUMvoY2tXrSwsmkb0mMY4FKp9q7eB61pbnwsSfxVOss_pNdX1fbgEWH-gc9Xyudv3kUxtUxhUVN-f9hmwRDxLQFxxl3hTg__hneXTBfA7PVm00)       
+![Produkt zu Abobox hinzufügen](/Fachliche_Beschreibung/plantuml/Images/ProduktzurAboboxhinzufuegen/ProduktzurAboboxhinzufügen.svg)       
 
 Hat der Kunde seine Auswahl beendet, muss er anschließend seine neue Auswahl bestätigten. Dazu werden ihm alle Artikel in seiner Abobox angezeigt (inklusive Preis, Lieferintervall und Menge), wobei hier die neuen Artikel hervorgehoben werden. Zusätzlich sieht der Kunde auf einen Blick, welche **zusätzlichen Kosten** auf ihn zukommen.  
 Der Kunde wird nun aufgefordter, seine Änderung zu prüfen und zu bestätigten.  
@@ -90,7 +90,7 @@ Nach Eingabe der Daten wird der Nutzer nochmals aufgefordert diese zu überprüf
 Die Daten werden nun ans Backend übermittelt. Nun wird geprüft, ob bereits ein Nutzer mit dieser Emailadresse existiert. Ist dieser Fall, so wird eine Fehlermeldung an den Nutzer zurückgesendet. Er wird aufgefordert eine andere Emailadresse zu nutzen oder sich mit dem bereits existierenden Account einzuolggen ("Passwort vergessen?" - Hinweis).  
 Ist die E-Mail noch nicht vorhanden, so wird ein neues Userobject mit einer Userid, einer Adressid, einem Registrierungsdatum und einer Zahlungsdatenid (diese ist erstmal leer) erzeugt und in der Datenbank mit dem Status "pending" gespeichert.  
 
-![Userobjekt](http://www.plantuml.com/plantuml/svg/5Sszgi90443X_Zx5jR3DYALLjB0J1B6MpMJChipEBlE3hszI7JZDDvedzQZyjok273E5ydzsxtO2qFGTbk8vfZ1IRE8aFc2hiBmvOJQudH-lkxOFeKDDHU2wRYwOQNyyNCWmAvKfP87EIJO8daOwz8qSIUQrFm00)
+![Userobjekt](/Fachliche_Beschreibung/plantuml/Images/User/User.svg)
 
 Dem Nutzer wird nun eine Verficationemail zugesandt. Er hat nun 30 Tage Zeit um seinen Account über diese zu verifizieren.  
 Sollte nach 30 Tagen der Status des Nutzers immer noch auf pending, so wird dieser aus der Datenbank gelöscht.  
@@ -111,7 +111,7 @@ Der Nutzer hat die Möglichkeit seine bereits eingepflegten Zahlungsdaten zu ver
 - Zahlungsart bearbeiten
 - Zahlungsart als aktiv kennzeichnen
 
-![User Zahlungsdaten](https://www.plantuml.com/plantuml/svg/5Ssn2i9G343HtQ_GmRKHHwVgu2O8uk8YQHgR9sbQaZpyVTlfmbrE6ucUTTJDhXXfxNahcNES01n_pL1IQbU3dIPBjcne6c7uA984tCwFzzsdBrF2YCNWkcmj9Bm_7YuS9CwbgpR0h6Yh0izWVw7eCgF7P6lc5M_P-gL_)
+![User Zahlungsdaten](/Fachliche_Beschreibung/plantuml/Images/UserZahlungsdaten/UserZahlungsdaten.svg)
 
 ### Zahlungsdaten hinzufügen
 Der Nutzer wird aufgefordter sich für eine Zahlungsmethode zu entscheiden.  
@@ -129,30 +129,30 @@ Je nach Zahlungsmethode werden verschiedne Sachen abgefragt:
     - IBAN
     - BIC
 
-![Zahlungsarten](https://www.plantuml.com/plantuml/svg/5Ssnhi8m343H_Nt5Os2j4IDJOM13Gc9ZGQvhwY3NYM97_3xfTAMxdD43QxHL_tR9IDlC_n9H_0HGyJiiAQHDpRbIjc2BWV8AorkHnE5sVhpkDN-O0bPC1jU-DP7m_dYui9DKJbEp1OgYRGeyKRGFx-XGDdPactj_)
+![Zahlungsarten](/Fachliche_Beschreibung/plantuml/Images/Zahlungsart/Zahlungsarten.svg)
 
 Der Nutzer gibt nun, basierend auf seiner Wahl entsprechende Daten bei dem Dienstleister ein. Bei erfolgreicher Prüfung bekommt der Webshop einen Verficationtoken des Dienstleisters übermittelt. Diesen hinterlegt er nun mit entsprechender Zahlungsart in der Datenbank.  
 Der Nutzer kann jetzt noch auswählen, ob dies seine aktive Zahlungsart sein soll.
 
-![Workflow Zahlungsarten hinzufügen](https://www.plantuml.com/plantuml/svg/5Oun2y9034PtVuKEhequEbK7Dq5m45pacgQNqpHNxX8A_dhRwOFl3U-rrK8n7sMpIuhYFMtPRAedW1Bc9YPZxxnImQn6QWtc4U8W0Rd2xVnutql-41gC8IbSbriICksFXmjLv4AfSuqmIT3L0izSleFa-HLO5b3xOAISzEU3KoHjfhMb9UsN_GC0)
+![Workflow Zahlungsarten hinzufügen](/Fachliche_Beschreibung/plantuml/Images/WorkflowZahlungsdatenhinzufuegen/zahlungsdaten_hinzufuegen.svg)
 
 ### Zahlungsart löschen
 Wählt der Nutzer den Button *Zahlungsart löschen* aus, so wird er nochmals gefragt, ob er die Zahlungsart tatsächlich löschen möchte. Wenn der Nutzer dies bestätigt, wird geprüft, ob wenigstens eine weitere Zahlungsart im Kundenkonto hinterlegt ist. Ist dies nicht der Fall und der Kunde hat eine aktive Abobox, so wird dem Benutzer ein Error ausgegeben, mit dem Hinweis, dass mindestens eine aktive Zahlungsart im Konto hinterlegt sein muss.  
 Ansonsten werden die Zahlungsdaten aus dem Kundenkonto gelöscht.
 
-![Workflow Zahlungsdaten löschen](https://www.plantuml.com/plantuml/svg/5Ownoi9G38Nt_ob-1zT679sgWviWE0WkagPfxzKqjoIvzFLjfmFd7FY-rWCjwYH_kwmajUV_537x2S1mQSOSgNRLsQXei4P3PO9n4AJaS3i_tdSh7wQ02RF2TQqbK-BzyN1XfsISkweZp8AwKU1Px3j8MLwOP1syns2LidrPctaJQLdxDNy0)
+![Workflow Zahlungsdaten löschen](/Fachliche_Beschreibung/plantuml/Images/WorkflowZahlungsdatenloeschen/zahlungsdaten_hinzufuegen.svg)
 
 ### Zahlungsart bearbeiten
 Der Kunde bekommt die hinterlegten Zahlungsdaten angezeigt. Er hat nun die Möglichkeit, diese abzuändern und z.B. die Iban anzupassen. Nach erfolgter Änderung der Zahlungsdaten durchlaufen die einen erneuten Prüfungsprozess und bei erfolgreicher Verifikation wird die Zahlungsart mit dem entsprechend neu generierten Token in der Datenbank aktualisiert.  
 Schlägt die Prüfung fehlt, so wird der Kunde auf die fehlgeschlagene Prüfung aufmerksam gemacht und der Vorgang wird abgebrochen.
 
-![Workflow Zahlungsdaten bearbeiten](https://www.plantuml.com/plantuml/svg/5Ownpi8m38Jt_ob-1jOQCJ8L1ZOa90Oa5kIuRXDmdSfnrDSddUvqDtnVNnpDwon_kwGaTU3_wBwK4u3Xsat9Omsri55MP_MEyWpJA4YnmEtyUDyjVvWSPamArpPBeiZxu-72XQ9n2bKdM0Hrey0pstUKlBumIZlAWCuQ62rmQgrRDfMUTMZv0m00)
+![Workflow Zahlungsdaten bearbeiten](/Fachliche_Beschreibung/plantuml/Images/WorkflowZahlungsdatenbearbeiten/zahlungsdaten_loeschen.svg)
 
 ### Zahlungsart als aktiv kennzeichnen
 Der Nutzer hat die Möglichkeit, eine Zahlungsart auszuwählen und diese als aktive Zahlungsart auszuwählen. Aktiv bedeutet, dass ab jetzt von dieser Zahlungsart abgebucht werden wird.  
 Wählt der Nutzer eine Zahlungsart als aktiv, so wird in der Datenbank ein entsprechender Eintrag hinterlegt, die Zahlungsart, welche bereits als aktiv gekennzeichnet ist, wird als inaktiv gekennzeichnet.
 
-![Workflow Zahlungsdaten als aktiv kennzeichnen](https://www.plantuml.com/plantuml/svg/5Ownhi8m34NtznMFWRL6Z4o5WGq9YG691RcksuIwJXKxzFT9folTCvpJccFsCilVBYf9wVa_k2zs0iYuDcFqKBfYd2cfitf3QOPn4AHWS3i_tlUSFamECqQ5QxqbKk3zyN1Xev0vTaL7M0Hriy0pvMcGjBumI0NMexFYvF7RB5j5ozhN_G40)
+![Workflow Zahlungsdaten als aktiv kennzeichnen](/Fachliche_Beschreibung/plantuml/Images/WorkflowZahlungsdatenaktiv/aktiv.svg)
 
 
 ## Wertschöpfungskette
@@ -273,4 +273,4 @@ Die Buchhaltung bearbeitet den Erstattungsantrag und überweist dem Kunden das G
 
 ## Projektplan
 
-![Projektplan]()
+![Projektplan](/Fachliche_Beschreibung/plantuml/Images/Projektplan/Projektplan.svg)
