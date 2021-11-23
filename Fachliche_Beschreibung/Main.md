@@ -156,7 +156,9 @@ Wählt der Nutzer eine Zahlungsart als aktiv, so wird in der Datenbank ein entsp
 
 
 ## Wertschöpfungskette
-Produkte, welche auf dem Webshop gelistet sind, können von den Kunden in Form von Aboboxen erworben werden. Diese Produkte werden dann beim Lieferanten bestellten.  
+Produkte, welche auf dem Webshop gelistet sind, können von den Kunden in Form von Aboboxen erworben werden. Diese Produkte werden dann beim Lieferanten bestellten. 
+
+![Wertschöpfungskette](/Fachliche_Beschreibung/bpmn/Wertschöpfungskette.png)
 
 ### 1. Listen von Produkten
 Die Zulieferer, welche bereits mit dem Unternehmen zusammenarbeiten, können ihre Produkte direkt einpflegen. Dazu öffnen sie ihr Webpanel und geben ihre Zugangsdaten ein. Nun können sie mit einem Klick auf den Button "Neues Produkt hinzufügen" das Formular aufrufen, welches sie ausfüllen müssen, damit dieses Produkt gelistet werden kann.  
