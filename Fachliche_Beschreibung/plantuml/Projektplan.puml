@@ -14,4 +14,13 @@ Project starts 2021-11-24
 [Lagern] starts at [Bestellung Lieferanten]'s end and ends 2021-12-12
 [Box packen] starts at [Lagern]'s end and ends 2021-12-15
 [Reklamation Kunde] starts at [Bestellung Kunde]'s end and ends at 2021-12-10
+[Finalisierung Workflox] starts at [Box packen]'s end and ends at 2021-12-22
+[Entwicklerdoku] starts at [Finalisierung Workflox]'s end and ends at 2022-01-03
+[RPA-Doku] starts at [Finalisierung Workflox]'s end and ends at 2022-01-03
+[Leistungsabrechnung] starts at [Entwicklerdoku]'s end and  ends at 2022-01-12
+[Anwenderszenarien] starts at [Entwicklerdoku]'s end and  ends at 2022-01-12
+
+
+
+
 @endgantt
