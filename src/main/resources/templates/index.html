@@ -1,0 +1,28 @@
+<html>
+
+    <head>
+        <title>
+            Startseite
+        </title>
+        <link rel="stylesheet" th:href="@{/public/css/productcards.css}">
+    </head>
+
+    <body>
+        <div th:if="${products.empty}">
+            Keine Produkte vorhanden
+        </div>
+        <div class="card" th:each="product : ${products}">
+
+            <div class="imgBox">
+              <img th:src="@{${product.imageSrc}}" alt="product" class="mouse">
+            </div>
+          
+            <div class="contentBox">
+              <h3 th:text="${product.shortDescription}" ></h3>
+              <h2 class="price" th:text="${product.price} + €"></h2>
+              <a th:href="@{/products/{id}(id=${product.id})}" class="buy">Mehr Infos</a>
+            </div>
+          
+          </div>
+    </body>
+</html>

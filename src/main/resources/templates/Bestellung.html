@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <link rel="stylesheet" th:href="@{/public/css/Bestellung.css}">
+        
+        <link href="https://fonts.googleapis.com/css?family=Bentham|Playfair+Display|Raleway:400,500|Suranna|Trocchi" rel="stylesheet">
+        
+    </head>
+    <body>
+        <div th:if="${articles.empty}">
+            Keine Produkte vorhanden
+        </div>
+
+            <div id="container" th:each="article : ${articles}">	
+	
+                <!-- Start	Product details -->
+                <div class="product-details">
+                        
+                        <!-- 	Product Name -->
+                    <h1 th:text="${article.productdescription.produktname}"></h1>
+                
+                        
+                    
+                <!-- The most important information about the product -->
+                        <p class="information"><span th:text="${article.productdescription.description}"></span><br><span th:text="'Inhaltsstoffe: ' + ${article.productdescription.ingridients}"></span></p>
+                        
+                        
+                        
+                <!-- 		Control -->
+                    <div class="control">
+                    
+                        <label for="inp" class="inp">
+                            <div>
+                                <span class="price" name="price" th:text="${article.price}"></span>€  Total:<span name="total">0.00 </span>€
+                            </div>
+                            
+                            <input type="text" th:id="${article.articleId}" placeholder="0" name="inp" th:onchange="'calculateTotals('+${article.articleId}+')'">
+                            
+                            <span class="focus-bg"></span>
+                        </label>
+                    
+                    </div>
+                            
+                </div>
+                    
+                <!-- 	End	Product details   -->
+                    
+                    
+                    
+                <!-- 	Start product image & Information -->
+                    
+                <div class="product-image">
+                    
+                    <img th:src="${article.imageurl}" alt="Omar Dsoky">
+                    
+                <!-- 	product Information-->
+                    <div class="info">
+                        <h2>Transparenzinformationen</h2>
+                        <ul>
+                            <li><strong>Produzent: </strong><span th:text="${article.transparency.produzent}"></span></li>
+                            <li><strong>Produktionsort: </strong><span th:text="${article.transparency.produktionsort.street + ' ' + article.transparency.produktionsort.houseNumber + ',' + article.transparency.produktionsort.zipCode}"></span></li>
+                        
+                        </ul>
+                    </div>
+                </div>
+                <!--  End product image  -->
+                
+                
+            </div>
+            
+            
+        </div>
+ 
+            <!-- Start Button buying -->
+            <button class="btn" onclick="postOrder()">
+                <!-- 		the Price -->
+                <span class="price" id="checkout">0</span> €
+                <!-- 		shopping cart icon-->
+               
+                <!-- 		Buy Now / ADD to Cart-->
+                <span class="buy">Checkout</span>
+            </button>
+       
+        <script>
+            var prices = document.getElementsByName("price");
+            var totals = document.getElementsByName("total");
+
+            function calculateTotals(id) {
+                console.log(prices[id - 1].innerText);
+                totals[id-1].textContent = (prices[id-1].innerText * document.getElementById(id).value).toFixed(2);
+                var checkoutvalue = 0;
+                for (let i = 0; i < totals.length; i++) {
+                    
+                    checkoutvalue += 1*totals[i].innerText;
+                }
+                document.getElementById("checkout").innerText = checkoutvalue.toFixed(2);
+            }
+
+            function postOrder() {
+                let numbers = totals.length;
+                let orderJSON = { orderLineItems : [], valueInfo: { "serializationDataFormat": "application/json"}};
+                for (let i = 1; i < numbers+1; i++) {
+                    const element = document.getElementById(i);
+                    let orderAmount = element.value;
+                    if (orderAmount > 0) {
+                        orderJSON.orderLineItems.push({"articleId" : i, "amount" :  parseInt(orderAmount)});
+                    }                
+                    
+                }
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://localhost:8080", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    "messageName": "NewOrder",
+                    "processVariables": {
+                        orderJSON
+                    }
+                }));
+                console.log(JSON.stringify({
+                    "messageName": "NewOrder",
+                    "processVariables": {
+                        orderJSON
+                    }
+                }));
+            }
+        </script>
+    </body>
+</html>

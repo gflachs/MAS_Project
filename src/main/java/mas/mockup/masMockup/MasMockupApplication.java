@@ -8,6 +8,7 @@ public class MasMockupApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MasMockupApplication.class, args);
+
 	}
 
 }

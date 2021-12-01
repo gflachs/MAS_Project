@@ -55,9 +55,11 @@ Ist die Prüfung durchgeführt, so werden eventuelle Rabatte einberechnet und es
 
 Abschließend wird in der Datenbank die entsprechende Abobox aktualisiert.
 
+![Bestellung Kunde](./Fachliche_Beschreibung/bpmn/Bestellung_B2B.png)
+
 ## Wertschöpfungskette
 
-![Wertschöpfungskette](/Fachliche_Beschreibung/bpmn/Wertschöpfungskette_B2B.png)
+![Wertschöpfungskette](./Fachliche_Beschreibung/bpmn/Wertschöpfungskette_B2B.png)
 
 ### 1. Listen von Produkten
 Die Zulieferer, welche bereits mit dem Unternehmen zusammenarbeiten, können ihre Produkte direkt einpflegen. Dazu öffnen sie ihr Webpanel und geben ihre Zugangsdaten ein. Nun können sie mit einem Klick auf den Button "Neues Produkt hinzufügen" das Formular aufrufen, welches sie ausfüllen müssen, damit dieses Produkt gelistet werden kann.  
@@ -88,7 +90,7 @@ Das Produkt bekommt nun den Status "aktiv" und ist ab jetzt im Webshop zu sehen.
 
 Ist kein Lieferant eingepflegt oder möchte die Einkaufsabteilung das Portfolio erweitern, geht diese selbstständig auf die Suche nach Lieferanten. Das Schema bleibt dabei das gleiche, bis darauf, dass der Lieferant vorab bei Interesse als neuer Lieferant angelegt werden muss.
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Produkt_Listen.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Produkt_Listen.png)
 
 ### 1.1. Lieferant anlegen
 Um einen neuen Lieferanten im Webshop anzulegen, muss dieser einen Fragebogen ausfüllen. Darin vermerkt er folgende Daten:
@@ -108,26 +110,26 @@ Nun werden aus der BANF Anfragen an die einzelnen Händler generiert. Dies gesch
 Der Lieferant bekommt diese Anfrage nun im Webpanel angezeigt. Zusätzlich wird er per Email benachrichtigt. Er muss diese Anfrage nun im Webpanel bestätigten oder ablehnen. Nimmt der Lieferant die Anfrage nicht innerhalb von 2 Tagen an, so wird diese automatisch abgelehnt und den Kunden mit entsprechenden Artikeln wird mitgeteilt, dass diese leider in diesem Intervall nicht lieferbar sind.  
 Haben alle Lieferanten ihre Anfragen bestätigt oder abgelehnt, wird ein Lieferauftrag generiert, welcher an die Spedition geschickt wird.  
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Bestellung_Lieferant.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Bestellung_Lieferant.png)
 
 ### 4. Lieferung abwickeln
 Damit die Produkte nach Deutschland ins Lager gelangen können, ist es notwendig diese zu transportieren. Da auch die Zollabwicklung durchgeführt werden muss, hat sich die Naturnah GmbH dazu entschlossen, eine Importfirma zubeauftragen. Diese kümmert sich nicht nur darum, dass die Produkte beim Händler abgeholt werden, sondern führt auch die Zollabfertigung durch. Nachdem alle Händler ihre Anfragen bestätigt haben bzw. diese abgelehnt wurden, wird der Importfirma eine Liste mit allen Produkten, deren Menge, sowie der Anschrift der entsprechenden Lieferanten übermittelt. Diese Liste wird automatisch aus den Anfragen erzeugt.  
 Der Importeur bearbeitet diese Liste nun und gibt Rückmeldung, wann welches Produkt abgeholt wird. Diese Daten werden nun in die entsprechenden Lieferantenaufträge eingepflegt, sodass der Lieferant nachvollziehen kann, wann der Spediteur eintrifft.  
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Lieferung_abwickeln.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Lieferung_abwickeln.png)
 
 ### 5. Lagern der Waren
 Nachdem der Importeur die Produkte erfolgreich nach Deutschland gebracht hat, werden diese im Zentrallager angenommen. Dabei bekommt jede Lieferung des Importeurs den Status "Qualitätprüfung". Dies bedeutet, dass diese Lieferung erst auf vollständigkeit, Qualität und unbedenklichkeit untersucht werden muss, bevor diese weiterverarbeitet werden kann.  
 Die Prüfung nimmt das Qualitätsmanagement vor. Des weiteren, wird von jedem Produkt ein Muster an das Labor geschickt.  
 Wenn das Labor Rückmeldung gibt, dass das Produkt einwandfrei ist und auch die Qualitätsprüfung keine Beanstandung hat, wird das entsprechende Produkt freigegeben und bekommt den Status "zur freien Verwendung". Sollten Mängel auftreten, wird es mit dem Status "Sperrbestand" versehen und an die Einkaufsabteilung eskaliert. Diese muss sich nun mit Importeur und Lieferant auseinandersetzen, um die Mängel zu besprechen.  
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Lagerung.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Lagerung.png)
 
 ### 6. Box packen
 Am 25. jeden Monats werden die sogenannten Picker damit beauftragt, die Aboboxen zu packen. Dafür bekommen diese jeweils eine Box zugeteilt. Nun sucht der Picker im Lager die entsprechenden Waren mit entsprechender Menge zusammen und bestätigt jede Ware in seiner Pickerapp.  
 Abschließend verpackt der Picker die Waren in der Abobox und bestätigt, dass diese vollständig gepackt ist. Nun wird ein Versandlabel ausgedruckt, welches der Picker auf die Box klebt. Nachdem dies geschehen ist, ruft der Picker den nächsten Auftrag ab.
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Box_packen.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Box_packen.png)
 
 ### 8. Zahlung
 Sind alle Anfragen der Lieferanten bearbeitet, wird für jeden Kunden eine Rechnung generiert. Dabei werden momentan Rabatte, nicht verfügbare Produkte etc. berücksichtigt, sodass die ermittelte Rechnungssumme den Produkten entspricht, welche der Kunde in seiner Box finden wird. Der Kunde erhält nun eine Email mit der Rechnung und dem Hinweis, dass diese innerhalb der nächsten Tage von seinem Konto abgegbucht werden wird.  
@@ -135,14 +137,14 @@ Sind alle Anfragen der Lieferanten bearbeitet, wird für jeden Kunden eine Rechn
 Kann die Abbuchung nicht durchgeführt werden, da z.B. der Kunde nicht genügend Geld auf dem Konto hat, wird eine Mahnung an den Kunden generiert (Mahngebühren = 2.50 €) und an diesen versendet und der Prozess beginnt von vorne.  
 Wurden bereits drei Mahnungen an den Kunden versendet, so wird die Rechtsabteilung eingeschaltet, welche sich dann um den weiteren Prozess kümmert.
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Kundenzahlung.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Kundenzahlung.png)
 
 ### 9. Zahlung der Lieferanten
 Sind die Waren eingetroffen und haben den Status "freier Bestand" erhalten, so wird die Buchhaltung angewiesen, die entsprechende Rechnung des Lieferanten, welche er im Webpanel hochgeladen hat zu prüfen.  
 Bei fehlern auf der Rechnung wird der Lieferant kontaktiert und aufgefordert, seine Rechnung zu korrigieren.  
 Ist die Rechnung korrekt, weißt die Buchhaltung die Zahlung dieser an und gibt den Auftrag den Status "abgeschlossen".
 
-![Listen Lieferant](/Fachliche_Beschreibung/bpmn/Zahlung_Lieferant.png)
+![Listen Lieferant](./Fachliche_Beschreibung/bpmn/Zahlung_Lieferant.png)
 
 ## Kundenserviceprozesse
 Während des Betriebs des Webshops kann es zu vielen verschiedenen Fällen kommen, in welchem der Kunde Rückfragen hat und mit dem Kundenservice in Kontakt treten will. Nachfolgend ist ein Prozess genauer beschrieben:
@@ -161,11 +163,11 @@ Kommt der Kundenservicemitarbeiter zu dem Schluss, dass hier kein Grund für ein
 Ist eine Reklamation nachvollziehbar, so erstellt der Mitarbeiter einen neuen Erstattungsauftrag und sendet diesen an die Buchhaltung. Zusätzlich informiert er den Kunden über die bevorstehende Erstattung. Außerdem hinterlegt in der Lieferantendatenbank einen Vermerk bezüglich der Erstattung. Abschließend markiert er das Ticket als erledigt.  
 Die Buchhaltung bearbeitet den Erstattungsantrag und überweist dem Kunden das Geld zurück. 
 
-![Kundenreklamation](/Fachliche_Beschreibung/bpmn/Kundenreklamation.png)
+![Kundenreklamation](./Fachliche_Beschreibung/bpmn/Kundenreklamation.png)
 
 ## Projektplan
 
-![Projektplan](/Fachliche_Beschreibung/plantuml/Images/Projektplan/Projektplan.svg)
+![Projektplan](./Fachliche_Beschreibung/plantuml/Images/Projektplan/Projektplan.svg)
 
 ## Formulare
 

@@ -1,0 +1,128 @@
+<html>
+
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+       
+    </head>
+
+    <body>
+        
+      
+
+            
+        <form role="form" charset=utf-8 id="registrationform">
+            <div class="form-group">
+                <label for="AccountEmail">Email</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="AccountEmail" name="AccountEmail"
+                    readonly = "true" value="gregorflach2s@gmail.com"/>
+            </div>
+            <div class="form-group">
+                <label for="UstID">UstID</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="UstID" name="UstID"
+                     />
+            </div>
+            <div class="form-group">
+                <label for="Telefon">Telefon</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="Telefon" name="Telefon"
+                     />
+            </div>
+            <div class="form-group">
+                <label for="Vorname">Vorname</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="KontaktVorname" name="Vorname"
+                     />
+            </div>
+            <div class="form-group">
+                <label for="Nachname">Nachname</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="KontaktNachname" name="Nachname"
+                    />
+            </div>
+            <div class="form-group">
+                <label for="Telefonnummer">Kontaktnummer</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="Kontaktnummer" name="Telefonnummer"
+                     />
+            </div>
+            <div class="form-group">
+                <label for="Strasse">Straße</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="Strasse" name="Strasse"
+                     />
+            </div>
+            <div class="form-group">
+                <label for="Hausnummer">Hausnummer</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="Hausnummer" name="Hausnummer"
+                    />
+            </div>
+            <div class="form-group">
+                <label for="Postleitzahl">Postleitzahl</label> <input class="form-control"
+                    cam-variable-type="String" cam-variable-name="Postleitzahl" name="Postleitzahl"
+                     />
+            </div>
+
+        </form>
+
+        <script>
+
+            
+            var accountEmail = document.getElementsByName("AccountEmail")[0].value;
+            axios.get("http://localhost:8080/api/v1/accounts/" + accountEmail)
+            .then(response => {
+                /* var formgroup = createFormGroup();
+                var label = createLabelFor("AccountEmail");
+                var input = createInput("String","AccountEmail","Email","true");
+                appendNormalInput(formgroup,label,input, response.data.accountEmail);
+                formgroup = createFormGroup();
+                label = createLabelFor("USTID");
+                input = createInput("String", "USTID", "ustid", "true");
+                appendNormalInput(formgroup,label,input, response.data.ustID);
+                formgroup = createFormGroup();
+                label = createLabelFor("telefon");
+                input = createInput("String", "Telefon", "Telefon", "true");
+                appendNormalInput(formgroup,label,input, response.data.telefon);
+                
+
+                document.body.appendChild(document.createElement("hr"));
+
+                formgroup = createFormGroup();
+                label = createLabelFor("Vorname");
+                input = createInput("String", "ContactSurname", "Vorname", "true");
+                appendNormalInput(formgroup,label,input, response.data.contactPerson.surname);
+                formgroup = createFormGroup();
+                label = createLabelFor("Nachname");
+                input = createInput("String", "ContactLastname", "Nachname", "true");
+                appendNormalInput(formgroup,label,input, response.data.contactPerson.lastname);
+                formgroup = createFormGroup();
+                label = createLabelFor("Kontaktnummer");
+                input = createInput("String", "Contactnumber", "Konaktnummer", "true");
+                appendNormalInput(formgroup,label,input, response.data.contactPerson.telefonNumber); */
+                if (response.data != null) {
+                    document.getElementsByName("UstID")[0].value = response.data.ustID;
+                    document.getElementsByName("UstID")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Telefon")[0].value = response.data.telefon;
+                    document.getElementsByName("Telefon")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Vorname")[0].value = response.data.contactPerson.surname;
+                    document.getElementsByName("Vorname")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Nachname")[0].value = response.data.contactPerson.lastname;
+                    document.getElementsByName("Nachname")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Telefonnummer")[0].value = response.data.contactPerson.telefonNumber;
+                    document.getElementsByName("Telefonnummer")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Strasse")[0].value = response.data.deliveryAdress.street;
+                    document.getElementsByName("Strasse")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Hausnummer")[0].value = response.data.deliveryAdress.houseNumber;
+                    document.getElementsByName("Hausnummer")[0].setAttribute("readonly","true");
+                    document.getElementsByName("Postleitzahl")[0].value = response.data.deliveryAdress.zipCode;
+                    document.getElementsByName("Postleitzahl")[0].setAttribute("readonly","true");
+                }
+            }).catch(error => {
+                if (error.result) {
+                    console.log(error.result);
+                }else{
+                    console.log(error.message);
+                }
+            })
+            
+        </script>
+
+    </body>
+    
+
+</html>

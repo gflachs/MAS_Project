@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script>
+
+            var app = angular.module('myApp',[]);
+                app.controller('articlesController', function($scope,$http) {
+                    $scope.test = [{"test" : 123}];
+                    $scope.dataLoaded = false;
+                    $http.get("http://localhost:8080/api/v1/article").then(function(response){
+                        console.log("ok")
+                        $scope.articles = response.data;
+                       
+                        $scope.dataLoaded = true;
+                    },function(error){
+                        console.log(error.message);
+                    })
+
+                    
+
+            });
+            
+        </script>
+    </head>
+    <body>
+        
+        <div ng-app = "myApp" ng-controller="articlesController">
+        <div ng-if="dataLoaded==true">
+            <form role="form" charset=utf-8 id="bestellform">
+                <div class="form-group" ng-repeat="article in articles">
+                    <label for="Article">{{article.productdescription.produktname}}</label> <input class="form-control"
+                        cam-variable-type="String" cam-variable-name="article" + {{article.articleId}} name="Article"
+                        value={{article.price}} />
+                </div>
+            </form>
+        </div>
+    </div>
+        <script>
+           /*  function createFormGroup(){
+                let div = document.createElement("div");
+                div.setAttribute("class","form-group");
+                
+                return div;
+            }
+
+            function createLabelFor(labelName) {
+                let label = document.createElement("label");
+                label.setAttribute("for",labelName);
+                return label;
+            }
+
+            function createInput(t,varName,n,readonly) {
+                let input = document.createElement('input');
+                input.setAttribute("class", "form-control");
+                input.setAttribute("cam-variable-type",t);
+                input.setAttribute("cam-variable-name",varName);
+                input.setAttribute("name",n);
+                input.setAttribute("readonly",readonly);
+                return input;
+            }
+
+            function appendNormalInput(formgroup,label,input,value) {
+                label.appendChild(input);
+                formgroup.appendChild(label);
+                document.body.appendChild(formgroup);
+                input.value = value;
+            } */
+
+
+
+        </script>
+    </body>
+</html>
