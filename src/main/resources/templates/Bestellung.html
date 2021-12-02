@@ -69,6 +69,11 @@
             
             
         </div>
+
+        <div>
+            <label for="emailadress">Email: </label>
+            <input id="emailadress" type="email" name="emailadress"/>
+        </div>
  
             <!-- Start Button buying -->
             <button class="btn" onclick="postOrder()">
@@ -97,16 +102,16 @@
 
             function postOrder() {
                 let numbers = totals.length;
-                let orderJSON = { orderLineItems : [], valueInfo: { "serializationDataFormat": "application/json"}};
+                let orderJSON = {value:{email , orderLineItems : []},type : "String", valueInfo: { "serializationDataFormat": "application/json"}};
                 for (let i = 1; i < numbers+1; i++) {
                     const element = document.getElementById(i);
                     let orderAmount = element.value;
                     if (orderAmount > 0) {
-                        orderJSON.orderLineItems.push({"articleId" : i, "amount" :  parseInt(orderAmount)});
+                        orderJSON.value.orderLineItems.push({"articleId" : i, "amount" :  parseInt(orderAmount)});
                     }                
                     
                 }
-                
+                orderJSON.value.email = document.getElementById("emailadress").value; 
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "http://localhost:8080", true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -117,7 +122,7 @@
                     }
                 }));
                 console.log(JSON.stringify({
-                    "messageName": "NewOrder",
+                    "messageName": "NewOrderArrived",
                     "processVariables": {
                         orderJSON
                     }
