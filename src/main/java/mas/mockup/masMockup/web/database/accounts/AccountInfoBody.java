@@ -4,7 +4,7 @@ import mas.mockup.masMockup.web.database.accounts.adress.AdressBody;
 import mas.mockup.masMockup.web.database.accounts.contactPerson.ContactBody;
 
 public class AccountInfoBody {
-    
+
     private String accountEmail;
     private String ustID;
     private String telefon;
@@ -15,19 +15,17 @@ public class AccountInfoBody {
     public AccountInfoBody() {
     }
 
-
     public String getBankaccount() {
         return bankaccount;
     }
-
 
     public void setBankaccount(String bankaccount) {
         this.bankaccount = bankaccount;
     }
 
+    public AccountInfoBody(String accountEmail, String ustID, String telefon, ContactBody contactPerson,
+            AdressBody deliveryAdress, String bankaccount) {
 
-    public AccountInfoBody(String accountEmail, String ustID, String telefon, ContactBody contactPerson, AdressBody deliveryAdress, String bankaccount) {
-     
         this.accountEmail = accountEmail;
         this.ustID = ustID;
         this.telefon = telefon;
@@ -35,8 +33,6 @@ public class AccountInfoBody {
         this.deliveryAdress = deliveryAdress;
         this.setBankaccount(bankaccount);
     }
-
-
 
     public String getAccountEmail() {
         return this.accountEmail;
@@ -77,6 +73,5 @@ public class AccountInfoBody {
     public void setDeliveryAdress(AdressBody deliveryAdress) {
         this.deliveryAdress = deliveryAdress;
     }
-
 
 }

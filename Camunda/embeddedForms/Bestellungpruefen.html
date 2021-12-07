@@ -1,0 +1,94 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+    <script cam-script type="text/form-script">
+          inject(['$scope', '$http', function($scope, $http) {
+            var variableManager = camForm.variableManager;
+            $scope.orderConditions = {
+              storno: false,
+              shippingcosts: false,
+              discount : 0
+            };
+                      
+            // OnFormLoaded
+            camForm.on('form-loaded', function() {
+                      
+                
+              // Fetch Variables
+     
+              variableManager.fetchVariable('orderJSON'); // set by the engine
+        
+            });
+            
+            // OnVariablesFetched
+            camForm.on('variables-fetched', function() {
+
+                $scope.orderJSON = variableManager.variable('orderJSON').value;
+                $scope.articles = [];
+                console.log($scope.orderJSON);
+                let parsed = JSON.parse($scope.orderJSON);
+                console.log(parsed);
+                $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + parsed.email + "/orderAmount").then(function(response){
+                        console.log("ok")
+                        $scope.orderAmount = response.data;
+                       
+                       
+                    },function(error){
+                        console.log(error.message);
+                    })
+                for (let index = 0; index < parsed.orderLineItems.length; index++) {
+                    $http.get("https://projectmas.herokuapp.com/api/v1/article/" + parsed.orderLineItems[index].articleId).then(function(response){
+                        console.log("ok")
+                        $scope.articles[index] = response.data;
+                       
+                       
+                    },function(error){
+                        console.log(error.message);
+                    })
+    
+                } 
+             
+            });
+
+            camForm.on('submit', function (evt) {
+
+              variableManager.createVariable({
+                name: 'orderConditions',
+                type: 'json',
+                value: $scope.checkModel
+              });             		
+            });
+          }]);
+          </script>
+    
+    <div id="container" ng-repeat="article in articles">
+      <h1>{{article.productdescription.produktname}}</h1>
+      
+    </div>
+    <div class="form-group">
+      <label class="control-label">Anzahl der Bestellungen: </label>
+      <div class="controls">
+        <input type="text" name="orderAmount" class="form-control" ng-model="orderAmount" readonly="true"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Lieferkosten erlassen?</label>
+      <div class="controls">
+        <input type="checkbox" cam-variable-name="shippingscost" cam-variable-type="Boolean" name="shippingcost"
+          class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Bestellung stornieren?</label>
+      <div class="controls">
+        <input type="checkbox" cam-variable-name="storno" cam-variable-type="Boolean" name="storno"
+          class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Rabatt für die Bestellung</label>
+      <div class="controls">
+        <input type="text" cam-variable-name="discount" cam-variable-type="number" name="discount" class="form-control" />
+      </div>
+    </div>
+  <!--   <h1>{{mVariables.something}}</h1>
+    <p ng-bind="mVariables.something"></p> -->
+</form>
