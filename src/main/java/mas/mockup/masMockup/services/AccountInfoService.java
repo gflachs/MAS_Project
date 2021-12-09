@@ -28,7 +28,8 @@ public class AccountInfoService {
 
     public AccountInfo createFromBody(AccountInfoBody body) {
 
-        AccountInfoEntity entity = new AccountInfoEntity(body.getAccountEmail(), body.getUstID(), body.getTelefon(),
+        AccountInfoEntity entity = new AccountInfoEntity(body.getFirmenname(), body.getAccountEmail(), body.getUstID(),
+                body.getTelefon(),
                 ContactPersonService.bodyToEntity(body.getContactPerson()),
                 AdressService.bodyToEntity(body.getDeliveryAdress()), body.getBankaccount());
         entity = accountInfoRepository.save(entity);
@@ -41,7 +42,8 @@ public class AccountInfoService {
 
     public static AccountInfo entityToAccountInfo(AccountInfoEntity entity) {
 
-        return new AccountInfo(entity.getAccountID(), entity.getAccountEmail(), entity.getUstID(), entity.getTelefon(),
+        return new AccountInfo(entity.getAccountID(), entity.getFirmenname(), entity.getAccountEmail(),
+                entity.getUstID(), entity.getTelefon(),
                 ContactPersonService.EntityToContact(entity.getContactPerson()),
                 AdressService.entityToAdress(entity.getDeliveryAdress()), entity.getBankaccount());
     }

@@ -4,13 +4,16 @@ let taxNumber = execution.getVariable("taxid");
 let street = execution.getVariable("street");
 let bankaccount = execution.getVariable("bankaccount");
 let email = execution.getVariable("email");
-let name = execution.getVariable("name");
 let contactPhone = execution.getVariable("contactTelefon");
 let generalPhone = execution.getVariable("generalTelefon");
 let zipCode = execution.getVariable("zipCode");
 let houseNumber = execution.getVariable("number");
+let city = execution.getVariable("city");
+let country = execution.getVariable("country");
+let companyname = execution.getVariable("name");
 
 var accountInfo = {
+    "firmenname" : companyname,
     "accountEmail": email,
     "ustID" : taxNumber,
     "telefon" : generalPhone,
@@ -22,7 +25,9 @@ var accountInfo = {
     "deliveryAdress" : {
         "street" : street,
         "houseNumber" : houseNumber,
-        "zipCode" : zipCode
+        "zipCode" : zipCode,
+        "city" : city,
+        "country" : country
     },
     "bankaccount" : bankaccount
 };

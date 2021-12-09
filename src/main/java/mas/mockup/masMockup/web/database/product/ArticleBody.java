@@ -1,8 +1,5 @@
 package mas.mockup.masMockup.web.database.product;
 
-
-
-
 import mas.mockup.masMockup.web.database.product.description.ProductdescriptionBody;
 
 import mas.mockup.masMockup.web.database.product.transparency.TransparencyBody;
@@ -14,9 +11,48 @@ public class ArticleBody {
     private double price;
     private String imageurl;
     private int supplierID;
-
+    private int lagermenge;
+    private int mindestmenge;
+    private double einkaufspreis;
 
     public ArticleBody() {
+
+    }
+
+    public double getEinkaufspreis() {
+        return einkaufspreis;
+    }
+
+    public void setEinkaufspreis(double einkaufspreis) {
+        this.einkaufspreis = einkaufspreis;
+    }
+
+    public int getMindestmenge() {
+        return mindestmenge;
+    }
+
+    public void setMindestmenge(int mindestmenge) {
+        this.mindestmenge = mindestmenge;
+    }
+
+    public int getLagermenge() {
+        return lagermenge;
+    }
+
+    public void setLagermenge(int lagermenge) {
+        this.lagermenge = lagermenge;
+    }
+
+    public ArticleBody(TransparencyBody transparency, ProductdescriptionBody productdescription, double price,
+            String imageurl, int supplierID, int lagermenge, int mindestmenge, double einkaufspreis) {
+        this.transparency = transparency;
+        this.productdescription = productdescription;
+        this.price = price;
+        this.imageurl = imageurl;
+        this.supplierID = supplierID;
+        this.setLagermenge(lagermenge);
+        this.setMindestmenge(mindestmenge);
+        this.setEinkaufspreis(einkaufspreis);
     }
 
     public int getSupplierID() {
@@ -24,15 +60,6 @@ public class ArticleBody {
     }
 
     public void setSupplierID(int supplierID) {
-        this.supplierID = supplierID;
-    }
-
-    public ArticleBody(TransparencyBody transparency, ProductdescriptionBody productdescription, double price, String imageurl, int supplierID) {
-    
-        this.transparency = transparency;
-        this.productdescription = productdescription;
-        this.price = price;
-        this.imageurl = imageurl;
         this.supplierID = supplierID;
     }
 
@@ -68,7 +95,4 @@ public class ArticleBody {
         this.imageurl = imageurl;
     }
 
-
-
-    
 }

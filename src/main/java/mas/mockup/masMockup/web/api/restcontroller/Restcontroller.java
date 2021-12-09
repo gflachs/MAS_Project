@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,20 +22,23 @@ import mas.mockup.masMockup.services.OfferService;
 import mas.mockup.masMockup.services.OrderLineItemService;
 import mas.mockup.masMockup.services.OrderService;
 import mas.mockup.masMockup.services.SupplierService;
+import mas.mockup.masMockup.web.api.mailservice.EmailService;
+import mas.mockup.masMockup.web.api.mailservice.MailBody;
 import mas.mockup.masMockup.web.database.accounts.AccountInfo;
 import mas.mockup.masMockup.web.database.accounts.AccountInfoBody;
 import mas.mockup.masMockup.web.database.accounts.Supplier;
 import mas.mockup.masMockup.web.database.accounts.SupplierBody;
+import mas.mockup.masMockup.web.database.order.Order;
+import mas.mockup.masMockup.web.database.order.OrderBody;
+import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItem;
+import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItemBody;
+import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItemBodyOrder;
 import mas.mockup.masMockup.web.database.product.Article;
 import mas.mockup.masMockup.web.database.product.ArticleBody;
+import mas.mockup.masMockup.web.database.product.ArticleInfo;
 import mas.mockup.masMockup.web.database.product.Offer;
 import mas.mockup.masMockup.web.database.product.OfferBody;
 import mas.mockup.masMockup.web.database.product.offerStatus.OfferStatus;
-import mas.mockup.masMockup.web.database.product.order.Order;
-import mas.mockup.masMockup.web.database.product.order.OrderBody;
-import mas.mockup.masMockup.web.database.product.order.orderlineitem.OrderLineItem;
-import mas.mockup.masMockup.web.database.product.order.orderlineitem.OrderLineItemBody;
-import mas.mockup.masMockup.web.database.product.order.orderlineitem.OrderLineItemBodyOrder;
 
 @CrossOrigin("*")
 @RestController
@@ -46,16 +50,24 @@ public class Restcontroller {
     private final OfferService offerService;
     private final OrderLineItemService orderLineItemService;
     private final OrderService orderService;
+    private final EmailService emailService;
 
     public Restcontroller(AccountInfoService accountInfoService, SupplierService supplierService,
             ArticleService articleService, OfferService offerService, OrderLineItemService orderLineItemService,
-            OrderService orderService) {
+            OrderService orderService, EmailService emailService) {
         this.accountInfoService = accountInfoService;
         this.supplierService = supplierService;
         this.articleService = articleService;
         this.offerService = offerService;
         this.orderLineItemService = orderLineItemService;
         this.orderService = orderService;
+        this.emailService = emailService;
+    }
+
+    @PostMapping("/api/v1/sendMail")
+    ResponseEntity<Void> sendEmail(@RequestBody MailBody mailBody) {
+        emailService.sendSimpleMessage(mailBody);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/api/v1/accounts/{email}")
@@ -134,6 +146,21 @@ public class Restcontroller {
         return ResponseEntity.ok(articleService.findAll());
     }
 
+    @GetMapping(path = "/api/v1/articleInfo/{id}")
+    ResponseEntity<ArticleInfo> fetchArticleInfoById(@PathVariable(name = "id") int id) {
+        Article article = articleService.findById(id);
+        if (article == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(articleToArticleInfo(article));
+    }
+
+    @GetMapping(path = "/api/v1/articleInfo")
+    ResponseEntity<List<ArticleInfo>> fetchAllArticleInfos() {
+        return ResponseEntity
+                .ok(articleService.findAll().stream().map(a -> articleToArticleInfo(a)).collect(Collectors.toList()));
+    }
+
     @PostMapping(path = "/api/v1/article")
     ResponseEntity<URI> createArticle(@RequestBody ArticleBody body) throws URISyntaxException {
         Article article = articleService.createArticle(body);
@@ -182,14 +209,29 @@ public class Restcontroller {
     ResponseEntity<URI> createNewOrder(@RequestBody OrderBody orderBody) throws URISyntaxException {
         Order order = orderService.createOrder(orderBody);
         Set<OrderLineItem> orderLineItems = new HashSet<>();
+        String items = "";
+        double totalPrice = 0;
         for (OrderLineItemBodyOrder o : orderBody.getOrderLineItems()) {
             OrderLineItemBody body = new OrderLineItemBody(o.getArticleID(), o.getAmount(), o.getPrice(),
                     order.getOrderID(), o.getItemStatus());
             orderLineItems.add(orderLineItemService.createOrderLineItem(body));
+            Article article = articleService.findById(body.getArticleID());
+            items += article.getProductdescription().getProduktname() + "- Menge: " + body.getAmount() + " Preis: "
+                    + body.getPrice() + "\n";
+            totalPrice += body.getPrice() * body.getAmount();
         }
         order.setOrderLineItems(orderLineItems);
+        MailBody mailBody = new MailBody("werbungbraucheichnicht@gmail.com",
+                accountInfoService.findByID(order.getAcoountInfoID()).getAccountEmail(),
+                "Bestellbestätigung zu Bestellung Nummer " + order.getOrderID(),
+                EmailService.orderConfirmationTemplate(items, totalPrice).getText());
+        emailService.sendSimpleMessage(mailBody);
         URI uri = new URI("/api/v1/order/" + order.getOrderID());
         return ResponseEntity.created(uri).build();
     }
 
+    private ArticleInfo articleToArticleInfo(Article article) {
+        return new ArticleInfo(article.getArticleId(), article.getTransparency(), article.getProductdescription(),
+                article.getPrice(), article.getImageurl());
+    }
 }

@@ -1,7 +1,7 @@
-package mas.mockup.masMockup.web.database.product.order.orderlineitem.itemstatus;
+package mas.mockup.masMockup.web.database.banf.banfitem.itemstatus;
 
 public class ItemStatus {
-    
+
     private String itemStatus;
 
     public ItemStatus() {

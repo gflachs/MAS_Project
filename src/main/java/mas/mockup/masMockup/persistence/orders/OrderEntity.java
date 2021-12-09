@@ -1,12 +1,11 @@
 package mas.mockup.masMockup.persistence.orders;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,9 +18,14 @@ import mas.mockup.masMockup.persistence.orders.orderlineitem.OrderLineItemEntity
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderid")
     private int id;
+    @Column(name = "orderdatum")
+    private Date orderDate;
+    @Column(name = "rabatt")
+    private double rabatt;
+    @Column(name = "versandkosten")
+    private double versandkosten;
 
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private Set<OrderLineItemEntity> orderLineItems;
@@ -32,9 +36,42 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn(name = "accountid")
     private AccountInfoEntity accountInfoEntity;
-    
 
     public OrderEntity() {
+    }
+
+    public OrderEntity(int id, Date orderDate, double rabatt, double versandkosten, OrderStatusEntity orderStatusEntity,
+            AccountInfoEntity accountInfoEntity) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.rabatt = rabatt;
+        this.versandkosten = versandkosten;
+        this.orderStatusEntity = orderStatusEntity;
+        this.accountInfoEntity = accountInfoEntity;
+    }
+
+    public double getVersandkosten() {
+        return versandkosten;
+    }
+
+    public void setVersandkosten(double versandkosten) {
+        this.versandkosten = versandkosten;
+    }
+
+    public double getRabatt() {
+        return rabatt;
+    }
+
+    public void setRabatt(double rabatt) {
+        this.rabatt = rabatt;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public AccountInfoEntity getAccountInfoEntity() {
@@ -42,11 +79,6 @@ public class OrderEntity {
     }
 
     public void setAccountInfoEntity(AccountInfoEntity accountInfoEntity) {
-        this.accountInfoEntity = accountInfoEntity;
-    }
-
-    public OrderEntity(OrderStatusEntity orderStatusEntity, AccountInfoEntity accountInfoEntity) {
-        this.orderStatusEntity = orderStatusEntity;
         this.accountInfoEntity = accountInfoEntity;
     }
 

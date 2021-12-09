@@ -1,13 +1,13 @@
-package mas.mockup.masMockup.web.database.product.order;
+package mas.mockup.masMockup.web.database.banf;
 
-public class OrderStatus {
-    
+public class BanfStatus {
+
     private String orderStatus;
 
-    public OrderStatus() {
+    public BanfStatus() {
     }
 
-    public OrderStatus(String orderStatus) {
+    public BanfStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 

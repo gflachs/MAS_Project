@@ -13,7 +13,7 @@ import mas.mockup.masMockup.persistence.products.transperency.TransperencyEntity
 
 @Entity(name = "address")
 public class AdressEntity {
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "adressid")
@@ -28,45 +28,63 @@ public class AdressEntity {
     @Column(name = "postleitzahl")
     private String zipCode;
 
+    @Column(name = "stadt")
+    private String city;
+
+    @Column(name = "land")
+    private String country;
+
     @OneToOne(mappedBy = "produktionsort")
     private TransperencyEntity transperence;
 
     @OneToOne(mappedBy = "deliveryAdress")
     private SupplierEntity supplierEntity;
 
-    @OneToOne(mappedBy = "deliveryAdress")  
+    @OneToOne(mappedBy = "deliveryAdress")
     private AccountInfoEntity accountInfoEntity;
 
     public AdressEntity() {
     }
 
+    public AdressEntity(String street, String houseNumber, String zipCode, String city, String country) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public AccountInfoEntity getAccountInfoEntity() {
         return accountInfoEntity;
     }
 
-
     public void setAccountInfoEntity(AccountInfoEntity accountInfoEntity) {
         this.accountInfoEntity = accountInfoEntity;
     }
-
 
     public SupplierEntity getSupplierEntity() {
         return supplierEntity;
     }
 
-
     public void setSupplierEntity(SupplierEntity supplierEntity) {
         this.supplierEntity = supplierEntity;
     }
-
-
-    public AdressEntity(String street, String houseNumber, String zipCode) {
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.zipCode = zipCode;
-    }
-
 
     public int getAdressID() {
         return this.adressID;
@@ -96,13 +114,12 @@ public class AdressEntity {
         this.zipCode = zipCode;
     }
 
-    public void setTransperence (TransperencyEntity tEntity) {
+    public void setTransperence(TransperencyEntity tEntity) {
         this.transperence = tEntity;
     }
 
-    public TransperencyEntity getTransperenceEntity () {
+    public TransperencyEntity getTransperenceEntity() {
         return this.transperence;
     }
-
 
 }

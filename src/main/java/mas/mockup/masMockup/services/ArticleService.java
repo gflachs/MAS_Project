@@ -14,36 +14,38 @@ import mas.mockup.masMockup.web.database.product.ArticleBody;
 
 @Service
 public class ArticleService {
-    
+
     private ArticleRepository articleRepository;
     private SupplierService supplierService;
-
 
     public ArticleService(ArticleRepository articleRepository, SupplierService supplierService) {
         this.articleRepository = articleRepository;
         this.supplierService = supplierService;
     }
 
-    public Article createArticle (ArticleBody body) {
+    public Article createArticle(ArticleBody body) {
         ArticleEntity entity = bodyToEntity(body, supplierService);
         entity = articleRepository.save(entity);
         return entityToArticle(entity);
     }
 
-    public Article findById (int id) {
+    public Article findById(int id) {
         return entityToArticle(articleRepository.findById(id));
     }
 
-    public List<Article> findAll () {
+    public List<Article> findAll() {
         List<ArticleEntity> articleEntities = articleRepository.findAll();
         return articleEntities.stream().map(entity -> entityToArticle(entity)).collect(Collectors.toList());
     }
 
-    public static Article entityToArticle (ArticleEntity entity) {
-        return new Article(entity.getArticleId(), TransperencyService.entityToTrans(entity.getTransparency()), ProductDescriptionService.entityToProductDescription(entity.getProductdescription()), entity.getPrice(),entity.getImageurl(), entity.getSupplier().getAccountID());
+    public static Article entityToArticle(ArticleEntity entity) {
+        return new Article(entity.getArticleId(), TransperencyService.entityToTrans(entity.getTransparency()),
+                ProductDescriptionService.entityToProductDescription(entity.getProductdescription()), entity.getPrice(),
+                entity.getImageurl(), entity.getSupplier().getAccountID(), entity.getLagermenge(),
+                entity.getMindestmenge(), entity.getEinkaufspreis());
     }
 
-    public static Article entityToArticle (Optional<ArticleEntity> entity) {
+    public static Article entityToArticle(Optional<ArticleEntity> entity) {
         if (entity.isEmpty()) {
             return null;
         }
@@ -51,9 +53,11 @@ public class ArticleService {
         return entityToArticle(entity.get());
     }
 
-    public static ArticleEntity bodyToEntity (ArticleBody body, SupplierService supplierService) {
+    public static ArticleEntity bodyToEntity(ArticleBody body, SupplierService supplierService) {
         SupplierEntity supplier = supplierService.findByIDEntity(body.getSupplierID());
-        return new ArticleEntity(TransperencyService.bodyToEntity(body.getTransparency()), ProductDescriptionService.bodyToEntity(body.getProductdescription()), body.getPrice(), body.getImageurl(), supplier);
+        return new ArticleEntity(TransperencyService.bodyToEntity(body.getTransparency()),
+                ProductDescriptionService.bodyToEntity(body.getProductdescription()), body.getPrice(),
+                body.getImageurl(), supplier, body.getLagermenge(), body.getMindestmenge(), body.getEinkaufspreis());
     }
 
     public ArticleEntity findByIdToEntity(int articleID) {

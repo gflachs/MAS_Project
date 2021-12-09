@@ -1,20 +1,38 @@
 package mas.mockup.masMockup.web.database.accounts.adress;
 
 public class AdressBody {
-    
+
     private String street;
     private String houseNumber;
     private String zipCode;
+    private String city;
+    private String country;
 
     public AdressBody() {
     }
 
-
-    public AdressBody(String street, String houseNumber, String zipCode) {
-       
+    public AdressBody(String street, String houseNumber, String zipCode, String city, String country) {
         this.street = street;
         this.houseNumber = houseNumber;
         this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getStreet() {

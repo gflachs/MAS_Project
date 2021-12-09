@@ -16,17 +16,20 @@ import mas.mockup.masMockup.persistence.accounts.adress.AdressEntity;
 import mas.mockup.masMockup.persistence.accounts.contactPerson.ContactPersonEntity;
 import mas.mockup.masMockup.persistence.orders.OrderEntity;
 
-@Entity (name = "accounts")
+@Entity(name = "accounts")
 public class AccountInfoEntity {
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "accountid")
     private int accountID;
 
+    @Column(name = "firmenname")
+    private String firmenname;
+
     @Column(name = "email")
     private String accountEmail;
-    
+
     @Column(name = "ustid")
     private String ustID;
 
@@ -50,29 +53,9 @@ public class AccountInfoEntity {
     public AccountInfoEntity() {
     }
 
-
-    public Set<OrderEntity> getOrderEntities() {
-        return orderEntities;
-    }
-
-
-    public void setOrderEntities(Set<OrderEntity> orderEntities) {
-        this.orderEntities = orderEntities;
-    }
-
-
-    public String getBankaccount() {
-        return bankaccount;
-    }
-
-
-    public void setBankaccount(String bankaccount) {
-        this.bankaccount = bankaccount;
-    }
-
-
-    public AccountInfoEntity(String accountEmail, String ustID, String telefon, ContactPersonEntity contactPerson, AdressEntity deliveryAdress, String bankaccount) {
-     
+    public AccountInfoEntity(String firmenname, String accountEmail, String ustID, String telefon,
+            ContactPersonEntity contactPerson, AdressEntity deliveryAdress, String bankaccount) {
+        this.firmenname = firmenname;
         this.accountEmail = accountEmail;
         this.ustID = ustID;
         this.telefon = telefon;
@@ -81,12 +64,33 @@ public class AccountInfoEntity {
         this.bankaccount = bankaccount;
     }
 
+    public String getFirmenname() {
+        return firmenname;
+    }
+
+    public void setFirmenname(String firmenname) {
+        this.firmenname = firmenname;
+    }
+
+    public Set<OrderEntity> getOrderEntities() {
+        return orderEntities;
+    }
+
+    public void setOrderEntities(Set<OrderEntity> orderEntities) {
+        this.orderEntities = orderEntities;
+    }
+
+    public String getBankaccount() {
+        return bankaccount;
+    }
+
+    public void setBankaccount(String bankaccount) {
+        this.bankaccount = bankaccount;
+    }
 
     public int getAccountID() {
         return this.accountID;
     }
-
-
 
     public String getAccountEmail() {
         return this.accountEmail;

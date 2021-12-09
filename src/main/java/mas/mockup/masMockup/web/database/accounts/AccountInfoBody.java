@@ -5,6 +5,7 @@ import mas.mockup.masMockup.web.database.accounts.contactPerson.ContactBody;
 
 public class AccountInfoBody {
 
+    private String firmenname;
     private String accountEmail;
     private String ustID;
     private String telefon;
@@ -15,23 +16,31 @@ public class AccountInfoBody {
     public AccountInfoBody() {
     }
 
+    public AccountInfoBody(String firmenname, String accountEmail, String ustID, String telefon,
+            ContactBody contactPerson, AdressBody deliveryAdress, String bankaccount) {
+        this.firmenname = firmenname;
+        this.accountEmail = accountEmail;
+        this.ustID = ustID;
+        this.telefon = telefon;
+        this.contactPerson = contactPerson;
+        this.deliveryAdress = deliveryAdress;
+        this.bankaccount = bankaccount;
+    }
+
+    public String getFirmenname() {
+        return firmenname;
+    }
+
+    public void setFirmenname(String firmenname) {
+        this.firmenname = firmenname;
+    }
+
     public String getBankaccount() {
         return bankaccount;
     }
 
     public void setBankaccount(String bankaccount) {
         this.bankaccount = bankaccount;
-    }
-
-    public AccountInfoBody(String accountEmail, String ustID, String telefon, ContactBody contactPerson,
-            AdressBody deliveryAdress, String bankaccount) {
-
-        this.accountEmail = accountEmail;
-        this.ustID = ustID;
-        this.telefon = telefon;
-        this.contactPerson = contactPerson;
-        this.deliveryAdress = deliveryAdress;
-        this.setBankaccount(bankaccount);
     }
 
     public String getAccountEmail() {

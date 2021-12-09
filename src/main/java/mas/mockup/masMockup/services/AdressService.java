@@ -11,7 +11,7 @@ import mas.mockup.masMockup.web.database.accounts.adress.AdressBody;
 
 @Service
 public class AdressService {
-    
+
     private AdressRepository adressRepository;
 
     public AdressService(AdressRepository adressRepository) {
@@ -22,33 +22,33 @@ public class AdressService {
         return entityToAdress(adressRepository.findById(id));
     }
 
-    public AdressEntity createAdressToEntity (AdressBody body) {
+    public AdressEntity createAdressToEntity(AdressBody body) {
         AdressEntity entity = bodyToEntity(body);
         entity = adressRepository.save(entity);
         return entity;
     }
 
-    public Adress createAdressToAdress (AdressBody body) {
+    public Adress createAdressToAdress(AdressBody body) {
         AdressEntity entity = bodyToEntity(body);
         entity = adressRepository.save(entity);
         return entityToAdress(entity);
     }
 
-    
-
-    public static Adress entityToAdress (AdressEntity entity) {
-        return new Adress(entity.getAdressID(), entity.getStreet(), entity.getHouseNumber(), entity.getZipCode());
+    public static Adress entityToAdress(AdressEntity entity) {
+        return new Adress(entity.getAdressID(), entity.getStreet(), entity.getHouseNumber(), entity.getZipCode(),
+                entity.getCity(), entity.getCountry());
     }
 
-    public static Adress entityToAdress (Optional<AdressEntity> entity) {
+    public static Adress entityToAdress(Optional<AdressEntity> entity) {
         if (!entity.isPresent()) {
             return null;
         }
         return entityToAdress(entity.get());
     }
 
-    public static AdressEntity bodyToEntity (AdressBody body) {
-        return new AdressEntity(body.getStreet(), body.getHouseNumber(), body.getZipCode());
+    public static AdressEntity bodyToEntity(AdressBody body) {
+        return new AdressEntity(body.getStreet(), body.getHouseNumber(), body.getZipCode(), body.getCity(),
+                body.getCountry());
     }
 
 }

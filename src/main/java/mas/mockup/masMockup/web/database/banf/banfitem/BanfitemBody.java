@@ -1,23 +1,40 @@
-package mas.mockup.masMockup.web.database.product.order.orderlineitem;
+package mas.mockup.masMockup.web.database.banf.banfitem;
 
-import mas.mockup.masMockup.web.database.product.order.orderlineitem.itemstatus.ItemStatus;
+import mas.mockup.masMockup.web.database.order.orderlineitem.itemstatus.ItemStatus;
 
-public class OrderLineItemBodyOrder {
-    
+public class BanfitemBody {
+
     private int articleID;
     private int amount;
     private double price;
+    private int orderID;
     private ItemStatus itemStatus;
 
-
-    public OrderLineItemBodyOrder() {
-    }
-
-    public OrderLineItemBodyOrder(int articleID, int amount, double price, ItemStatus itemStatus) {
+    public BanfitemBody(int articleID, int amount, double price, int orderID, ItemStatus itemStatus) {
         this.articleID = articleID;
         this.amount = amount;
         this.price = price;
+        this.orderID = orderID;
         this.itemStatus = itemStatus;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+
+    public ItemStatus getItemStatus() {
+        return itemStatus;
+    }
+
+    public void setItemStatus(ItemStatus itemStatus) {
+        this.itemStatus = itemStatus;
+    }
+
+    public BanfitemBody() {
     }
 
     public int getArticleID() {
@@ -42,14 +59,6 @@ public class OrderLineItemBodyOrder {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public ItemStatus getItemStatus() {
-        return this.itemStatus;
-    }
-
-    public void setItemStatus(ItemStatus itemStatus) {
-        this.itemStatus = itemStatus;
     }
 
 }

@@ -3,64 +3,24 @@ package mas.mockup.masMockup.web.database.product;
 import mas.mockup.masMockup.web.database.product.description.Productdescription;
 import mas.mockup.masMockup.web.database.product.transparency.Transparency;
 
-public class Article {
+public class ArticleInfo {
 
     private int articleId;
     private Transparency transparency;
     private Productdescription productdescription;
     private double price;
     private String imageurl;
-    private int supplierID;
-    private int lagermenge;
-    private int mindestmenge;
-    private double einkaufspreis;
 
-    public Article(int articleId, Transparency transparency, Productdescription productdescription, double price,
-            String imageurl, int supplierID, int lagermenge, int mindestmenge, double einkaufspreis) {
+    public ArticleInfo() {
+    }
+
+    public ArticleInfo(int articleId, Transparency transparency, Productdescription productdescription, double price,
+            String imageurl) {
         this.articleId = articleId;
         this.transparency = transparency;
         this.productdescription = productdescription;
         this.price = price;
         this.imageurl = imageurl;
-        this.supplierID = supplierID;
-        this.lagermenge = lagermenge;
-        this.mindestmenge = mindestmenge;
-        this.einkaufspreis = einkaufspreis;
-    }
-
-    public Article() {
-    }
-
-    public double getEinkaufspreis() {
-        return einkaufspreis;
-    }
-
-    public void setEinkaufspreis(double einkaufspreis) {
-        this.einkaufspreis = einkaufspreis;
-    }
-
-    public int getMindestmenge() {
-        return mindestmenge;
-    }
-
-    public void setMindestmenge(int mindestmenge) {
-        this.mindestmenge = mindestmenge;
-    }
-
-    public int getLagermenge() {
-        return lagermenge;
-    }
-
-    public void setLagermenge(int lagermenge) {
-        this.lagermenge = lagermenge;
-    }
-
-    public int getSupplierID() {
-        return supplierID;
-    }
-
-    public void setSupplierID(int supplierID) {
-        this.supplierID = supplierID;
     }
 
     public int getArticleId() {

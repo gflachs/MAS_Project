@@ -4,8 +4,9 @@ import mas.mockup.masMockup.web.database.accounts.adress.Adress;
 import mas.mockup.masMockup.web.database.accounts.contactPerson.ContactPerson;
 
 public class AccountInfo {
-    
+
     private int accountID;
+    private String firmenname;
     private String accountEmail;
     private String ustID;
     private String telefon;
@@ -16,17 +17,25 @@ public class AccountInfo {
     public AccountInfo() {
     }
 
-
-    public AccountInfo(int accountID, String accountEmail, String ustID, String telefon, ContactPerson contactPerson, Adress deliveryAdress, String bankaccount) {
+    public AccountInfo(int accountID, String firmenname, String accountEmail, String ustID, String telefon,
+            ContactPerson contactPerson, Adress deliveryAdress, String bankaccount) {
         this.accountID = accountID;
+        this.firmenname = firmenname;
         this.accountEmail = accountEmail;
         this.ustID = ustID;
         this.telefon = telefon;
         this.contactPerson = contactPerson;
         this.deliveryAdress = deliveryAdress;
-        this.setBankaccount(bankaccount);
+        this.bankaccount = bankaccount;
     }
 
+    public String getFirmenname() {
+        return firmenname;
+    }
+
+    public void setFirmenname(String firmenname) {
+        this.firmenname = firmenname;
+    }
 
     public int getAccountID() {
         return this.accountID;
@@ -80,11 +89,8 @@ public class AccountInfo {
         return bankaccount;
     }
 
-
     public void setBankaccount(String bankaccount) {
         this.bankaccount = bankaccount;
     }
-
-
 
 }
