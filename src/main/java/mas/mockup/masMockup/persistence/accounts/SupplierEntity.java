@@ -16,17 +16,20 @@ import mas.mockup.masMockup.persistence.accounts.adress.AdressEntity;
 import mas.mockup.masMockup.persistence.accounts.contactPerson.ContactPersonEntity;
 import mas.mockup.masMockup.persistence.products.ArticleEntity;
 
-@Entity (name = "supplier")
+@Entity(name = "supplier")
 public class SupplierEntity {
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "supplierid")
     private int accountID;
 
+    @Column(name = "firmenname")
+    private String firmenname;
+
     @Column(name = "email")
     private String accountEmail;
-    
+
     @Column(name = "ustid")
     private String ustID;
 
@@ -50,43 +53,46 @@ public class SupplierEntity {
     public SupplierEntity() {
     }
 
+    public SupplierEntity(String firmenname, String accountEmail, String ustID, String telefon,
+            ContactPersonEntity contactPerson, AdressEntity deliveryAdress, String bankaccount) {
 
-    public Set<ArticleEntity> getArticles() {
-        return articles;
-    }
-
-
-    public void setArticles(Set<ArticleEntity> articles) {
-        this.articles = articles;
-    }
-
-
-    public String getBankaccount() {
-        return bankaccount;
-    }
-
-
-    public void setBankaccount(String bankaccount) {
-        this.bankaccount = bankaccount;
-    }
-
-
-    public SupplierEntity(String accountEmail, String ustID, String telefon, ContactPersonEntity contactPerson, AdressEntity deliveryAdress, String bankaccount) {
-     
+        this.firmenname = firmenname;
         this.accountEmail = accountEmail;
         this.ustID = ustID;
         this.telefon = telefon;
         this.contactPerson = contactPerson;
         this.deliveryAdress = deliveryAdress;
         this.bankaccount = bankaccount;
+
     }
 
+    public String getFirmenname() {
+        return firmenname;
+    }
+
+    public void setFirmenname(String firmenname) {
+        this.firmenname = firmenname;
+    }
+
+    public Set<ArticleEntity> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<ArticleEntity> articles) {
+        this.articles = articles;
+    }
+
+    public String getBankaccount() {
+        return bankaccount;
+    }
+
+    public void setBankaccount(String bankaccount) {
+        this.bankaccount = bankaccount;
+    }
 
     public int getAccountID() {
         return this.accountID;
     }
-
-
 
     public String getAccountEmail() {
         return this.accountEmail;

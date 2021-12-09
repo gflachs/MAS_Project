@@ -28,7 +28,8 @@ public class SupplierService {
     }
 
     public Supplier createFromBody(SupplierBody body) {
-        SupplierEntity entity = new SupplierEntity(body.getAccountEmail(), body.getUstID(), body.getTelefon(),
+        SupplierEntity entity = new SupplierEntity(body.getFirmenname(), body.getAccountEmail(), body.getUstID(),
+                body.getTelefon(),
                 ContactPersonService.bodyToEntity(body.getContactPerson()),
                 AdressService.bodyToEntity(body.getDeliveryAdress()), body.getBankaccount());
         entity = supplierRepository.save(entity);
@@ -60,7 +61,8 @@ public class SupplierService {
 
     public static Supplier entityToAccountInfo(SupplierEntity entity) {
 
-        return new Supplier(entity.getAccountID(), entity.getAccountEmail(), entity.getUstID(), entity.getTelefon(),
+        return new Supplier(entity.getAccountID(), entity.getFirmenname(), entity.getAccountEmail(), entity.getUstID(),
+                entity.getTelefon(),
                 ContactPersonService.EntityToContact(entity.getContactPerson()),
                 AdressService.entityToAdress(entity.getDeliveryAdress()), entity.getBankaccount());
     }
