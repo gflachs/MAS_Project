@@ -6,7 +6,7 @@
           $scope.orderConditions = {
             storno: false,
             shippingcosts: false,
-            discount : 0
+            discount : false
           };
           $scope.discount = 0;
           $scope.totalPrice = 0;
@@ -98,13 +98,13 @@
   </div>
   <div class="form-group">
       <div>
-        <label class="btn btn-primary" cam-variable-name="shippingscost" cam-variable-type="Boolean" uib-btn-checkbox>Lieferkosten erlassen</label>
+        <label class="btn btn-primary" cam-variable-name="shippingscost" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions">Lieferkosten erlassen</label>
       </div>
       <div>
-        <label class="btn btn-primary" cam-variable-name="storno" cam-variable-type="Boolean" uib-btn-checkbox>Order stornieren</label>
+        <label class="btn btn-primary" cam-variable-name="storno" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions">Order stornieren</label>
       </div>  
       <div>
-        <label class="btn btn-primary" cam-variable-name="rabattanfragen" cam-variable-type="Boolean" uib-btn-checkbox>Rabatt anfragen</label>
+        <label class="btn btn-primary" cam-variable-name="rabattanfragen" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions">Rabatt anfragen</label>
       </div>
   </div>
   <!-- <div class="form-group">
