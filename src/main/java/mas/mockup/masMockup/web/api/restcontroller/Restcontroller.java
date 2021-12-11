@@ -84,7 +84,7 @@ public class Restcontroller {
         return ResponseEntity.ok(accountInfoService.userExist(accountEmail));
     }
 
-    @PostMapping(path = "/api/v1/accounts")
+    @PostMapping(path = "/api/v1/accounts", produces = "application/json;charset=UTF-8")
     ResponseEntity<URI> createNewAccount(@RequestBody AccountInfoBody body) throws URISyntaxException {
         AccountInfo info = accountInfoService.createFromBody(body);
         URI uri = new URI("/api/v1/accounts/" + info.getAccountEmail());
