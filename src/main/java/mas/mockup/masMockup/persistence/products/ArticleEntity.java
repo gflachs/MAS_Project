@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import mas.mockup.masMockup.persistence.accounts.SupplierEntity;
+import mas.mockup.masMockup.persistence.banf.banfitem.BanfItemEntity;
 import mas.mockup.masMockup.persistence.orders.orderlineitem.OrderLineItemEntity;
 import mas.mockup.masMockup.persistence.products.description.DescriptionEntity;
 import mas.mockup.masMockup.persistence.products.transperency.TransperencyEntity;
@@ -49,7 +50,18 @@ public class ArticleEntity {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private Set<OrderLineItemEntity> orderLineItems;
 
+    @OneToMany(mappedBy = "article")
+    private Set<BanfItemEntity> banfItemEntities;
+
     public ArticleEntity() {
+    }
+
+    public Set<BanfItemEntity> getBanfItemEntities() {
+        return banfItemEntities;
+    }
+
+    public void setBanfItemEntities(Set<BanfItemEntity> banfItemEntities) {
+        this.banfItemEntities = banfItemEntities;
     }
 
     public ArticleEntity(TransperencyEntity transparency, DescriptionEntity productdescription, double price,

@@ -2,6 +2,7 @@ package mas.mockup.masMockup.web.api.restcontroller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import mas.mockup.masMockup.persistence.accounts.SupplierEntity;
+import mas.mockup.masMockup.persistence.products.ArticleEntity;
 import mas.mockup.masMockup.services.AccountInfoService;
 import mas.mockup.masMockup.services.ArticleService;
+import mas.mockup.masMockup.services.Bestellauftragsservice;
 import mas.mockup.masMockup.services.OfferService;
 import mas.mockup.masMockup.services.OrderLineItemService;
 import mas.mockup.masMockup.services.OrderService;
@@ -28,6 +32,13 @@ import mas.mockup.masMockup.web.database.accounts.AccountInfo;
 import mas.mockup.masMockup.web.database.accounts.AccountInfoBody;
 import mas.mockup.masMockup.web.database.accounts.Supplier;
 import mas.mockup.masMockup.web.database.accounts.SupplierBody;
+import mas.mockup.masMockup.web.database.banf.ImporteurBestellung;
+import mas.mockup.masMockup.web.database.banf.ImporteurBestellungBody;
+import mas.mockup.masMockup.web.database.banf.Lieferantenauftrag;
+import mas.mockup.masMockup.web.database.banf.LieferantenauftragBody;
+import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemBodyBanf;
+import mas.mockup.masMockup.web.database.banf.banfitem.Banfitem;
+import mas.mockup.masMockup.web.database.banf.banfitem.itemstatus.ItemStatus;
 import mas.mockup.masMockup.web.database.order.Order;
 import mas.mockup.masMockup.web.database.order.OrderBody;
 import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItem;
@@ -51,10 +62,11 @@ public class Restcontroller {
     private final OrderLineItemService orderLineItemService;
     private final OrderService orderService;
     private final EmailService emailService;
+    private final Bestellauftragsservice bestellauftragsservice;
 
     public Restcontroller(AccountInfoService accountInfoService, SupplierService supplierService,
             ArticleService articleService, OfferService offerService, OrderLineItemService orderLineItemService,
-            OrderService orderService, EmailService emailService) {
+            OrderService orderService, EmailService emailService, Bestellauftragsservice bestellauftragsservice) {
         this.accountInfoService = accountInfoService;
         this.supplierService = supplierService;
         this.articleService = articleService;
@@ -62,6 +74,7 @@ public class Restcontroller {
         this.orderLineItemService = orderLineItemService;
         this.orderService = orderService;
         this.emailService = emailService;
+        this.bestellauftragsservice = bestellauftragsservice;
     }
 
     @PostMapping("/api/v1/sendMail")
@@ -197,7 +210,7 @@ public class Restcontroller {
     }
 
     @GetMapping(path = "/api/v1/order/{id}")
-    ResponseEntity<Order> getOrderByID(@PathVariable(name = "id") int orderID) {
+    ResponseEntity<Order> getOrderByID(@PathVariable(name = "id") long orderID) {
         Order order = orderService.findById(orderID);
         if (order == null) {
             return ResponseEntity.notFound().build();
@@ -228,6 +241,87 @@ public class Restcontroller {
         emailService.sendSimpleMessage(mailBody);
         URI uri = new URI("/api/v1/order/" + order.getOrderID());
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping(path = "api/v1/banfitem/{id}")
+    ResponseEntity<Banfitem> fetchBanfItemById(@PathVariable(name = "id") int banfItemId) {
+        Banfitem item = bestellauftragsservice.findBanfItemById(banfItemId);
+        if (item == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(item);
+    }
+
+    @GetMapping(path = "api/v1/article/{articleid}/openBanf")
+    ResponseEntity<Boolean> checkBanfItemExistens(@PathVariable(name = "articleid") int articleID) {
+        return ResponseEntity.ok(articleService.checkOpenBanf(articleID));
+    }
+
+    @PostMapping(path = "api/v1/banfitem")
+    ResponseEntity<URI> createBanfItem(@RequestBody BanfItemBodyBanf body) throws URISyntaxException {
+        ArticleEntity articleEntity = articleService.findByIdToEntity(body.getArticleID());
+        Banfitem banfitem = bestellauftragsservice.createBanfItem(body, articleEntity);
+        URI uri = new URI("api/v1/banfitem/" + banfitem.getItemID());
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(path = "api/v1/banfitem/{id}")
+    ResponseEntity<Banfitem> updateBanfItemStatus(@PathVariable(name = "id") int banfItemId,
+            @RequestBody ItemStatus itemStatus) {
+        Banfitem banfitem = bestellauftragsservice.updateBanfItemStatus(banfItemId, itemStatus);
+        if (banfitem == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(banfitem);
+    }
+
+    @GetMapping(path = "api/v1/lieferantenauftrag/{id}")
+    ResponseEntity<Lieferantenauftrag> fetchLieferantenAuftragById(@PathVariable(name = "id") int id) {
+        Lieferantenauftrag bestellung = bestellauftragsservice.findLieferantenauftragById(id);
+        return bestellung == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bestellung);
+    }
+
+    @PostMapping(path = "api/v1/lieferantenauftrag")
+    ResponseEntity<URI> createLieferantenAuftrag(@RequestBody LieferantenauftragBody body) throws URISyntaxException {
+        SupplierEntity supplier = supplierService.findEntityById(body.getSupplierID());
+        Lieferantenauftrag lieferantenauftrag = bestellauftragsservice.createLieferantenauftrag(body, supplier);
+        URI uri = new URI("api/v1/lieferantenauftrag/" + lieferantenauftrag.getLieferauftragsID());
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(path = "api/v1/lieferantenauftrag/{id}/{date}")
+    ResponseEntity<Lieferantenauftrag> updateLieferantenAuftragDatum(
+            @PathVariable(name = "id") long lieferantenAuftragsid, @PathVariable(name = "date") Date date) {
+        Lieferantenauftrag auftrag = bestellauftragsservice.updateLieferauftragAbholDatumById(lieferantenAuftragsid,
+                date);
+        if (auftrag == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(auftrag);
+    }
+
+    @GetMapping(path = "api/v1/importeurauftrag/{id}")
+    ResponseEntity<ImporteurBestellung> fetchImporteurAuftragById(@PathVariable(name = "id") int id) {
+        ImporteurBestellung bestellung = bestellauftragsservice.findImporteurBestellungById(id);
+        return bestellung == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bestellung);
+    }
+
+    @PostMapping(path = "api/v1/importeurauftrag")
+    ResponseEntity<URI> createImporteurAuftrag(@RequestBody ImporteurBestellungBody body) throws URISyntaxException {
+        ImporteurBestellung importeurBestellung = bestellauftragsservice.createImporteurBestellung(body);
+        URI uri = new URI("api/v1/importeurauftrag/" + importeurBestellung.getBestellID());
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(path = "api/v1/importeurauftrag/{id}/geliefert")
+    ResponseEntity<ImporteurBestellung> setImporteurAuftragGeliefert(@PathVariable(name = "id") int auftragsID) {
+        ImporteurBestellung bestellung = bestellauftragsservice.setImportteurBestellungsGeliefert(auftragsID);
+
+        if (bestellung == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(bestellung);
     }
 
     private ArticleInfo articleToArticleInfo(Article article) {

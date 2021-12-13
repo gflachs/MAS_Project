@@ -1,6 +1,6 @@
 package mas.mockup.masMockup.web.database.banf.banfitem;
 
-import mas.mockup.masMockup.web.database.order.orderlineitem.itemstatus.ItemStatus;
+import mas.mockup.masMockup.web.database.banf.banfitem.itemstatus.ItemStatus;
 
 public class Banfitem {
 
@@ -8,24 +8,24 @@ public class Banfitem {
     private int articleID;
     private int amount;
     private double price;
-    private int orderID;
+    private long banfID;
     private ItemStatus itemStatus;
 
-    public Banfitem(int itemID, int articleID, int amount, double price, int orderId, ItemStatus itemStatus) {
+    public Banfitem(int itemID, int articleID, int amount, double price, long banfID, ItemStatus itemStatus) {
         this.itemID = itemID;
         this.articleID = articleID;
         this.amount = amount;
         this.price = price;
-        this.setOrderID(orderId);
+        this.setBanfID(banfID);
         this.itemStatus = itemStatus;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public long getBanfID() {
+        return banfID;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void setBanfID(long banfID) {
+        this.banfID = banfID;
     }
 
     public Banfitem() {

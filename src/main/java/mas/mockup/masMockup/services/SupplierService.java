@@ -27,6 +27,14 @@ public class SupplierService {
         return entityToAccountInfo(supplierRepository.findByaccountEmail(emailAdress));
     }
 
+    public SupplierEntity findEntityById(int supplierID) {
+        Optional<SupplierEntity> optional = supplierRepository.findById(supplierID);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        return optional.get();
+    }
+
     public Supplier createFromBody(SupplierBody body) {
         SupplierEntity entity = new SupplierEntity(body.getFirmenname(), body.getAccountEmail(), body.getUstID(),
                 body.getTelefon(),

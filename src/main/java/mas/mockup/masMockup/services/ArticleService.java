@@ -68,4 +68,12 @@ public class ArticleService {
         return optional.get();
     }
 
+    public Boolean checkOpenBanf(int id) {
+        Optional<ArticleEntity> optional = articleRepository.findById(id);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        return optional.get().getBanfItemEntities().size() > 0 ? true : false;
+    }
+
 }

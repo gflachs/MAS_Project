@@ -5,31 +5,19 @@ import java.util.Set;
 
 import mas.mockup.masMockup.web.database.banf.banfitem.Banfitem;
 
-public class Banf {
+public class LieferantenauftragBody {
 
-    private int banfID;
     private Date orderDate;
     private Set<Banfitem> banfItems;
     private int supplierID;
-    private BanfStatus status;
 
-    public Banf() {
+    public LieferantenauftragBody() {
     }
 
-    public Banf(int banfID, Date orderDate, Set<Banfitem> banfItems, int supplierID, BanfStatus status) {
-        this.banfID = banfID;
+    public LieferantenauftragBody(Date orderDate, Set<Banfitem> banfItems, int supplierID) {
         this.orderDate = orderDate;
         this.banfItems = banfItems;
         this.supplierID = supplierID;
-        this.status = status;
-    }
-
-    public int getBanfID() {
-        return this.banfID;
-    }
-
-    public void setBanfID(int banfID) {
-        this.banfID = banfID;
     }
 
     public Date getOrderDate() {
@@ -56,12 +44,9 @@ public class Banf {
         this.supplierID = supplierID;
     }
 
-    public BanfStatus getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(BanfStatus status) {
-        this.status = status;
+    public LieferantenauftragBody orderDate(Date orderDate) {
+        setOrderDate(orderDate);
+        return this;
     }
 
 }
