@@ -14,7 +14,7 @@ public interface BanfItemRepository extends JpaRepository<BanfItemEntity, Intege
 
     List<BanfItemEntity> findAllByItemStatus(ItemStatusEntity itemStatusEntity);
 
-    Optional<BanfItemEntity> findByItemStatusAndByArticle(ItemStatusEntity itemStatusEntity,
+    Optional<BanfItemEntity> findByItemStatusAndArticle(ItemStatusEntity itemStatusEntity,
             ArticleEntity articleEntity);
 
 }

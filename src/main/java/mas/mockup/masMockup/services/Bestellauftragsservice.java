@@ -148,7 +148,7 @@ public class Bestellauftragsservice {
 
     public Banfitem findBanfItemByStatusAndArticleEntity(ItemStatus itemStatus, ArticleEntity entity) {
         Optional<BanfItemEntity> optional = banfItemRepository
-                .findByItemStatusAndByArticle(new ItemStatusEntity(itemStatus.getItemStatus()), entity);
+                .findByItemStatusAndArticle(new ItemStatusEntity(itemStatus.getItemStatus()), entity);
         if (optional.isEmpty()) {
             return null;
         }

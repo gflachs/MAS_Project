@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemStatusRepository extends JpaRepository<ItemStatusEntity, String> {
+public interface BanfItemStatusRepository extends JpaRepository<ItemStatusEntity, String> {
 
 }
