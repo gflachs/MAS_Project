@@ -239,7 +239,7 @@ public class Restcontroller {
                 "Bestellbestätigung zu Bestellung Nummer " + order.getOrderID(),
                 EmailService.orderConfirmationTemplate(items, totalPrice).getText());
         emailService.sendSimpleMessage(mailBody);
-        URI uri = new URI("/api/v1/order/" + order.getOrderID());
+        URI uri = new URI("api/v1/order/" + order.getOrderID());
         return ResponseEntity.created(uri).build();
     }
 

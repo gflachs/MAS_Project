@@ -48,7 +48,7 @@
                         
               },function(error){
                 console.log(error.message);
-              })
+              });
 
               for (let index = 0; index < parsed.orderLineItems.length; index++) {
                   $http.get("https://projectmas.herokuapp.com/api/v1/article/" + parsed.orderLineItems[index].articleId).then(function(response){

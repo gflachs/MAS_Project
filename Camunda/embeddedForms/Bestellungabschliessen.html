@@ -38,7 +38,18 @@
                     data: JSON.stringify(order)
                 }
 
-                $http(req);
+                $http(req).then(function(response){
+                    order.orderID = response.data.split('/')[3];
+                },function(error){
+                    console.log(error.message);
+                });
+
+                variableManager.createVariable({
+                    name: 'order',
+                    type: 'json',
+                    value: order
+                }); 
+
             });
         }]);
   </script>
