@@ -7,10 +7,10 @@ public class OrderLineItemBody {
     private int articleID;
     private int amount;
     private double price;
-    private int orderID;
+    private long orderID;
     private ItemStatus itemStatus;
 
-    public OrderLineItemBody(int articleID, int amount, double price, int orderID, ItemStatus itemStatus) {
+    public OrderLineItemBody(int articleID, int amount, double price, long orderID, ItemStatus itemStatus) {
         this.articleID = articleID;
         this.amount = amount;
         this.price = price;
@@ -18,11 +18,11 @@ public class OrderLineItemBody {
         this.itemStatus = itemStatus;
     }
 
-    public int getOrderID() {
+    public long getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(long orderID) {
         this.orderID = orderID;
     }
 

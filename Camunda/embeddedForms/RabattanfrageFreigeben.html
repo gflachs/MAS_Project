@@ -1,0 +1,95 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+  <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.discount = 0;
+          $scope.totalPrice = 0;
+          $scope.discountColor = "#eb3434";   
+          $scope.discountApproved = false;
+          $scope.discountHoeheNew = 0;       
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+    
+            variableManager.fetchVariable('Orderinformationen'); 
+            variableManager.fetchVariable('discountHoehe'); 
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+              $scope.orderinformationen = variableManager.variable('Orderinformationen').value;
+              $scope.discountHoehe = variableManager.variable('discountHoehe').value;
+              console.log($scope.orderinformationen);
+              $scope.discountHoeheNew = $scope.discountHoehe;      
+              $scope.articles = $scope.orderinformationen.orderLineItems;
+              $scope.totalEinkauf = 0;
+              $scope.orderinformationen.totalAmount = 0;
+              for(let i=0; i < $scope.articles.length; i++) {
+                console.log($scope.articles[i].einkaufspreis);
+                console.log($scope.articles[i].amount);
+                $scope.totalEinkauf += $scope.articles[i].einkaufspreis * $scope.articles[i].amount;
+                $scope.orderinformationen.totalAmount += $scope.articles[i].amount;
+              }
+              $scope.totalPrice = $scope.orderinformationen.total;
+              $scope.orderAmount = $scope.orderinformationen.amount;
+            if($scope.orderAmount > 9) {
+              $scope.discountColor = "#045e07";
+            }
+             
+            
+            
+          });
+          camForm.on('submit', function (evt) {   
+            if($scope.discountApproved) {
+              $scope.orderinformationen.discount = $scope.discountHoeheNew;
+            }
+            variableManager.variableValue('Orderinformationen', $scope.orderinformationen);
+          });
+          
+        }]);
+  </script>
+  <div class="form-group">
+    <div class="form-group">
+      <label class="control-label">Einkaufspreis: </label>
+      <div class="controls">
+  
+        <p>{{totalEinkauf}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Gesamtpreis: </label>
+      <div class="controls">
+    
+        <p>{{totalPrice * (100-discountHoeheNew)/100}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Anzahl der Bestellungen: </label>
+      <div class="controls">
+        <p [style.background-color]={{discountColor}}>{{orderAmount}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Angefragter Rabatt: </label>
+      <div class="controls">
+        <p [style.background-color]={{discountColor}}>{{discountHoehe}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Neuer Rabatt für die Bestellung: </label>
+    <div class="controls">
+      <input type="number" ng-model="discountHoeheNew" name="discount" class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <div>
+      <label class="btn btn-primary" cam-variable-name="rabattanfragen" cam-variable-type="Boolean" uib-btn-checkbox
+        ng-Model="discountApproved">Anfrage genehmigen</label>
+    </div>
+  </div>
+</form>

@@ -8,10 +8,10 @@ public class OrderLineItem {
     private int articleID;
     private int amount;
     private double price;
-    private int orderID;
+    private long orderID;
     private ItemStatus itemStatus;
 
-    public OrderLineItem(int itemID, int articleID, int amount, double price, int orderId, ItemStatus itemStatus) {
+    public OrderLineItem(int itemID, int articleID, int amount, double price, long orderId, ItemStatus itemStatus) {
         this.itemID = itemID;
         this.articleID = articleID;
         this.amount = amount;
@@ -20,11 +20,11 @@ public class OrderLineItem {
         this.itemStatus = itemStatus;
     }
 
-    public int getOrderID() {
+    public long getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(long orderID) {
         this.orderID = orderID;
     }
 

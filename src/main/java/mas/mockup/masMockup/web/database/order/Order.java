@@ -7,7 +7,7 @@ import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItem;
 
 public class Order {
 
-    private int orderID;
+    private long orderID;
     private Date orderDate;
     private double rabatt;
     private double versandkosten;
@@ -18,7 +18,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int orderID, Date orderDate, double rabatt, double versandkosten, Set<OrderLineItem> orderLineItems,
+    public Order(long orderID, Date orderDate, double rabatt, double versandkosten, Set<OrderLineItem> orderLineItems,
             int acoountInfoID, OrderStatus status) {
         this.orderID = orderID;
         this.orderDate = orderDate;
@@ -61,7 +61,7 @@ public class Order {
         this.acoountInfoID = acoountInfoID;
     }
 
-    public int getOrderID() {
+    public long getOrderID() {
         return this.orderID;
     }
 

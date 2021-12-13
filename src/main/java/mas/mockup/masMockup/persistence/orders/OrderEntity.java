@@ -19,7 +19,7 @@ public class OrderEntity {
 
     @Id
     @Column(name = "orderid")
-    private int id;
+    private long id;
     @Column(name = "orderdatum")
     private Date orderDate;
     @Column(name = "rabatt")
@@ -40,7 +40,8 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(int id, Date orderDate, double rabatt, double versandkosten, OrderStatusEntity orderStatusEntity,
+    public OrderEntity(long id, Date orderDate, double rabatt, double versandkosten,
+            OrderStatusEntity orderStatusEntity,
             AccountInfoEntity accountInfoEntity) {
         this.id = id;
         this.orderDate = orderDate;
@@ -82,11 +83,11 @@ public class OrderEntity {
         this.accountInfoEntity = accountInfoEntity;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

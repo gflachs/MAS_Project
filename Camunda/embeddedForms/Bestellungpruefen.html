@@ -8,8 +8,8 @@
             shippingcosts: false,
             discount : false
           };
-          $scope.discount = 0;
           $scope.totalPrice = 0;
+          $scope.totalAmount = 0;
           $scope.calcTotal = function() {
             return $scope.totalPrice * (100 - $scope.discount)/100;
           }            
@@ -33,13 +33,23 @@
               let parsed = JSON.parse($scope.orderJSON);
               console.log(parsed);
               $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + parsed.email + "/orderAmount").then(function(response){
-                      console.log("ok")
-                      $scope.orderAmount = response.data;
-                      
-                      
-                  },function(error){
-                      console.log(error.message);
-                  })
+                
+                console.log("ok")
+                $scope.orderAmount = response.data;
+                        
+              },function(error){
+                console.log(error.message);
+              })
+
+              $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + parsed.email).then(function(response){
+                
+                console.log("ok")
+                $scope.accountInfo = response.data;
+                        
+              },function(error){
+                console.log(error.message);
+              })
+
               for (let index = 0; index < parsed.orderLineItems.length; index++) {
                   $http.get("https://projectmas.herokuapp.com/api/v1/article/" + parsed.orderLineItems[index].articleId).then(function(response){
                       console.log("ok")
@@ -47,6 +57,7 @@
                       $scope.articles[index].amount = parsed.orderLineItems[index].amount;
                       $scope.articles[index].total = $scope.articles[index].amount * $scope.articles[index].price;
                       $scope.totalPrice += $scope.articles[index].total;
+                      $scope.totalAmount += $scope.articles[index].amount;
                   },function(error){
                       console.log(error.message);
                   })
@@ -59,8 +70,23 @@
             variableManager.createVariable({
               name: 'Orderinformationen',
               type: 'json',
-              value: {orderLineItems : $scope.articles, amount : $scope.orderAmount, total : $scope.totalPrice}
+              value: {orderLineItems : $scope.articles, amount : $scope.orderAmount, total : $scope.totalPrice, discount : 0, articleAmount : $scope.totalAmount, accountInfo : $scope.accountInfo}
             }); 
+            variableManager.createVariable({
+              name: 'storno',
+              type: 'Boolean',
+              value: $scope.orderConditions.storno
+            }); 
+            variableManager.createVariable({
+              name: 'rabattanfragen',
+              type: 'Boolean',
+              value: $scope.orderConditions.discount
+            }); 
+            variableManager.createVariable({
+              name: 'shippingcosts',
+              type: 'Boolean',
+              value: $scope.orderConditions.shippingcosts
+            });
           });
         }]);
   </script>
@@ -80,8 +106,6 @@
         </uib-tabset>
       </div>
     </div>
-    <pre>{{orderConditions}}</pre>
-    <pre>{{calcTotal}}</pre>
     <div class="form-group">
       <label class="control-label">Gesamtpreis: </label>
       <div class="controls">
@@ -98,13 +122,13 @@
   </div>
   <div class="form-group">
       <div>
-        <label class="btn btn-primary" cam-variable-name="shippingscost" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions">Lieferkosten erlassen</label>
+        <label class="btn btn-primary" cam-variable-name="shippingcosts" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions.shippingcosts">Lieferkosten erlassen</label>
       </div>
       <div>
-        <label class="btn btn-primary" cam-variable-name="storno" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions">Order stornieren</label>
+        <label class="btn btn-primary" cam-variable-name="storno" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions.storno">Order stornieren</label>
       </div>  
       <div>
-        <label class="btn btn-primary" cam-variable-name="rabattanfragen" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions">Rabatt anfragen</label>
+        <label class="btn btn-primary" cam-variable-name="rabattanfragen" cam-variable-type="Boolean" uib-btn-checkbox ng-Model="orderConditions.discount">Rabatt anfragen</label>
       </div>
   </div>
   <!-- <div class="form-group">

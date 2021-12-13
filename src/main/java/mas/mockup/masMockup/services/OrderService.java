@@ -45,11 +45,11 @@ public class OrderService {
         return entityToOrder(orderEntity);
     }
 
-    public Order findById(int orderID) {
+    public Order findById(long orderID) {
         return entityToOrder(orderRepository.findById(orderID));
     }
 
-    public OrderEntity findByIdToEntity(int orderID) {
+    public OrderEntity findByIdToEntity(long orderID) {
         Optional<OrderEntity> optional = orderRepository.findById(orderID);
         return optional.isPresent() ? optional.get() : null;
     }
@@ -79,7 +79,7 @@ public class OrderService {
 
     public static OrderEntity bodyToEntity(OrderBody body, AccountInfoService accountInfoService) {
         AccountInfoEntity account = accountInfoService.findEntityByID(body.getAccountInfoID());
-        int id = account.hashCode() + body.hashCode();
+        long id = body.getOrderDate().getTime() + account.getAccountID();
         return new OrderEntity(id, body.getOrderDate(), body.getRabatt(), body.getVersandkosten(),
                 new OrderStatusEntity(body.getStatus().getOrderStatus()), account);
 
