@@ -258,11 +258,11 @@ public class Restcontroller {
     }
 
     @PostMapping(path = "api/v1/banfitem")
-    ResponseEntity<Integer> createBanfItem(@RequestBody BanfItemBodyBanf body) throws URISyntaxException {
+    ResponseEntity<Banfitem> createBanfItem(@RequestBody BanfItemBodyBanf body) throws URISyntaxException {
         ArticleEntity articleEntity = articleService.findByIdToEntity(body.getArticleID());
         Banfitem banfitem = bestellauftragsservice.createBanfItem(body, articleEntity);
         URI uri = new URI("api/v1/banfitem/" + banfitem.getItemID());
-        return ResponseEntity.created(uri).body(banfitem.getItemID());
+        return ResponseEntity.created(uri).body(banfitem);
     }
 
     @PutMapping(path = "api/v1/banfitem/{id}")
