@@ -190,8 +190,10 @@ public class Bestellauftragsservice {
     }
 
     public static Banfitem bIEntityToBI(BanfItemEntity entity) {
+        long lieferauftragsID = entity.getLieferauftragEntity() == null ? -1
+                : entity.getLieferauftragEntity().getLieferauftragsID();
         return new Banfitem(entity.getItemID(), entity.getArticle().getArticleId(), entity.getAmount(),
-                entity.getPrice(), entity.getLieferauftragEntity().getLieferauftragsID(),
+                entity.getPrice(), lieferauftragsID,
                 new ItemStatus(entity.getItemStatus().getItemStatus()));
     }
 

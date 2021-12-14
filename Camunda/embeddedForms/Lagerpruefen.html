@@ -4,7 +4,33 @@
         inject(['$scope', '$http', function($scope, $http) {
           var variableManager = camForm.variableManager;
           
-         
+          $scope.banf = [];
+          $scope.generateBanf = function() {
+            $scope.count = 0;
+            for (let index = 0; index < $scope.articles.length; index ++) {
+              if($scope.articles[index].bestellMenge > 0) {
+                let banfItem = {articleID : $scope.articles[index].articleId, amount : $scope.articles[index].articleId, price : $scope.articles[index].einkaufspreis, itemStatus : "erstellt"}
+                var req = {
+                    method: 'POST',
+                    url: 'https://projectmas.herokuapp.com/api/v1/banfitem',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Accept' : '*/*',
+                    'Access-Control-Expose-Headers':'Location'
+                    },
+                    data: JSON.stringify(banfItem)
+                }
+                $http(req).then(function(response){
+                  banfItem.itemID = response.data;
+                  $scope.banf[count] = banfItem;
+                  $scope.count += 1;
+                },function(error){
+                  console.log(error);
+                })
+              }
+            }
+          }
+
           camForm.on('form-loaded', function() {
                     
               
@@ -22,24 +48,26 @@
               
              
               
-             
+              try{
               $scope.articles = [];
               $scope.orderArticles = [];
               for (let index = 0; index < $scope.order.orderLineItems.length; index++) {
                   $http.get("https://projectmas.herokuapp.com/api/v1/article/" + $scope.order.orderLineItems[index].articleID ).then(function(response){
                     
                     $scope.articles[index] = response.data;
-                    
-                    
+                    $scope.articles[index].bestellteMenge = $scope.order.orderLineItems[index].amount;
+                    $scope.articles[index].shouldOrder = false;
                     if(($scope.articles[index].lagermenge - $scope.order.orderLineItems[index].amount)< $scope.articles[index].mindestmenge ) {
                       
                     $http.get("https://projectmas.herokuapp.com/api/v1/article/" + $scope.order.orderLineItems[index].articleID + "/openBanf").then(function(res) 
                     {
-                      var alreadyOrdered = res.data;
+                      var alreadyOrdered = parseInt(res.data);
+                      console.log(alreadyOrdered);
                       try{
+                        console.log($scope.articles[index].mindestmenge + $scope.articles[index].bestellteMenge - ($scope.articles[index].lagermenge + alreadyOrdered));
                       if($scope.articles[index].mindestmenge + $scope.articles[index].bestellteMenge - ($scope.articles[index].lagermenge + alreadyOrdered) >= 1){
                         $scope.articles[index].shouldOrder = true;
-                        $scope.articles[index].bestellteMenge = $scope.order.orderLineItems[index].amount;
+                        
                         $scope.articles[index].bereitsBestellt = alreadyOrdered;
                         $scope.articles[index].bestellMenge = $scope.articles[index].mindestmenge + $scope.articles[index].bestellteMenge - ($scope.articles[index].lagermenge + alreadyOrdered);
                       
@@ -63,6 +91,7 @@
                   
                 
               } 
+            }catch(error){console.log(error)}
           
           });
 
@@ -83,7 +112,7 @@
                         <p>Vom Kunden bestellte Anzahl: {{article.bestellteMenge}} </p>
                         <p>Lagermenge: {{article.lagermenge}}</p>
                         <p>Bereits nachbestellte Menge: {{article.bereitsBestellt}}</p>
-                        <div class="form-group" *ngIf="article.shouldOrder===true" >
+                        <div class="form-group" ng-if="article.shouldOrder=true" >
                           <label class="control-label">Zu bestellende Menge</label>
                             <div class="controls">
                               <input type="number" ng-model="article.bestellMenge"/>
@@ -93,7 +122,13 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+          <label class="control-label">Banf erstellen: </label>
+          <div class="controls">
         
+            <button type="button" class="btn btn-info" ng-click="generateBanf()">Generate Banf</button>
+          </div>
+        </div>
     <!-- <div class="form-group">
     <label class="control-label">Rabatt für die Bestellung</label>
     <div class="controls">
