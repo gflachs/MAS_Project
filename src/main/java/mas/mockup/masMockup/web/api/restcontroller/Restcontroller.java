@@ -219,7 +219,7 @@ public class Restcontroller {
     }
 
     @PostMapping(path = "/api/v1/order")
-    ResponseEntity<URI> createNewOrder(@RequestBody OrderBody orderBody) throws URISyntaxException {
+    ResponseEntity<Long> createNewOrder(@RequestBody OrderBody orderBody) throws URISyntaxException {
         Order order = orderService.createOrder(orderBody);
         Set<OrderLineItem> orderLineItems = new HashSet<>();
         String items = "";
@@ -240,7 +240,7 @@ public class Restcontroller {
                 EmailService.orderConfirmationTemplate(items, totalPrice).getText());
         emailService.sendSimpleMessage(mailBody);
         URI uri = new URI("api/v1/order/" + order.getOrderID());
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(order.getOrderID());
     }
 
     @GetMapping(path = "api/v1/banfitem/{id}")
