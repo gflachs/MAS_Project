@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import mas.mockup.masMockup.persistence.accounts.SupplierEntity;
+import mas.mockup.masMockup.persistence.banf.banfitem.BanfItemEntity;
 import mas.mockup.masMockup.persistence.products.ArticleEntity;
 import mas.mockup.masMockup.persistence.products.ArticleRepository;
 import mas.mockup.masMockup.web.database.product.Article;
@@ -68,12 +69,22 @@ public class ArticleService {
         return optional.get();
     }
 
-    public Boolean checkOpenBanf(int id) {
+    public int checkOpenBanf(int id) {
         Optional<ArticleEntity> optional = articleRepository.findById(id);
         if (optional.isEmpty()) {
-            return null;
+            return -1;
         }
-        return optional.get().getBanfItemEntities().size() > 0 ? true : false;
+        ArticleEntity articleEntity = optional.get();
+        int orderAmount = 0;
+        if (articleEntity.getBanfItemEntities().size() > 0) {
+            for (BanfItemEntity banfItemEntity : articleEntity.getBanfItemEntities()) {
+                if (!banfItemEntity.getItemStatus().getItemStatus().equals("freigegeben")
+                        && !banfItemEntity.getItemStatus().getItemStatus().equals("gesperrt")) {
+                    orderAmount += banfItemEntity.getAmount();
+                }
+            }
+        }
+        return orderAmount;
     }
 
 }

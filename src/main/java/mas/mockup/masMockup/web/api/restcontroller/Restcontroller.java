@@ -253,7 +253,7 @@ public class Restcontroller {
     }
 
     @GetMapping(path = "api/v1/article/{articleid}/openBanf")
-    ResponseEntity<Boolean> checkBanfItemExistens(@PathVariable(name = "articleid") int articleID) {
+    ResponseEntity<Integer> checkBanfItemExistens(@PathVariable(name = "articleid") int articleID) {
         return ResponseEntity.ok(articleService.checkOpenBanf(articleID));
     }
 

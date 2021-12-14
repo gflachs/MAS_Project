@@ -3,7 +3,44 @@
     <script cam-script type="text/form-script">
         inject(['$scope', '$http', function($scope, $http) {
             var variableManager = camForm.variableManager;
+            $scope.order = {};
+            $scope.orderID = "Bitte Order generieren";
+            $scope.generateOrder = function() {
+                $scope.orderID = "Bitte warten, generiere Order";
+                $scope.order.orderLineItems = [];
+                for (let index = 0; index < $scope.orderInformationen.orderLineItems.length; index++) {
+                    const element = $scope.orderInformationen.orderLineItems[index];
+                    $scope.order.orderLineItems.push({articleID : element.articleId, amount : element.amount, price: element.price, itemStatus : "erstellt"});
+                }
+                $scope.order.accountInfoID = $scope.orderInformationen.accountInfo.accountID;
+                $scope.order.status = "erstellt";
+                $scope.order.orderDate = new Date();
+                $scope.order.rabatt = $scope.orderInformationen.discount;
+                $scope.order.versandkosten = $scope.orderInformationen.shippingCosts;
 
+                var req = {
+                    method: 'POST',
+                    url: 'https://projectmas.herokuapp.com/api/v1/order',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Accept' : '*/*',
+                    'Access-Control-Expose-Headers':'Location'
+                    },
+                    data: JSON.stringify($scope.order)
+                }
+                $scope.orderID = "Bitte warten, sende Order an Server";
+                $http(req).then(function(response){
+                    try{
+                        console.log(response.data);
+                        $scope.order.orderID = response.data;
+                        $scope.orderID  = response.data;
+                    }catch(error){
+                        console.log(error.message);
+                    }
+                },function(error){
+                    console.log(error.message);
+                });
+            }
             camForm.on('form-loaded', function() {
     
                 variableManager.fetchVariable('Orderinformationen'); 
@@ -17,46 +54,12 @@
             });
 
             camForm.on('submit', function (evt) {   
-                let order = {};
-                order.orderLineItems = [];
-                for (let index = 0; index < $scope.orderInformationen.orderLineItems.length; index++) {
-                    const element = $scope.orderInformationen.orderLineItems[index];
-                    order.orderLineItems.push({articleID : element.articleId, amount : element.amount, price: element.price, itemStatus : "erstellt"});
-                }
-                order.accountInfoID = $scope.orderInformationen.accountInfo.accountID;
-                order.status = "erstellt";
-                order.orderDate = new Date();
-                order.rabatt = $scope.orderInformationen.discount;
-                order.versandkosten = $scope.orderInformationen.shippingCosts;
-
-                var req = {
-                    method: 'POST',
-                    url: 'https://projectmas.herokuapp.com/api/v1/order',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    'Accept' : '*/*',
-                    'Access-Control-Expose-Headers':'Location'
-                    },
-                    data: JSON.stringify(order)
-                }
-
-                $http(req).then(function(response){
-                    try{
-                    console.log(response);
-                    order.orderID = response.headers["Location"].split('/')[3];
-                    variableManager.createVariable({
-                        name: 'order',
-                        type: 'json',
-                        value: order
-                    }); 
-                }catch(error){
-                    console.log(error.message);
-                }
-                },function(error){
-                    console.log(error.message);
-                });
-
-                
+               
+                variableManager.createVariable({
+                            name: 'order',
+                            type: 'json',
+                            value: $scope.order
+                }); 
 
             });
         }]);
@@ -103,6 +106,20 @@
             <div class="controls">
         
                 <p>{{(orderInformationen.total * ((100-orderInformationen.discount)/100)  + orderInformationen.shippingCosts)}} €</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">OrderID: </label>
+            <div class="controls">
+        
+                <p>{{orderID}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Gesamtpreis: </label>
+            <div class="controls">
+        
+                <button type="button" class="btn btn-info" ng-click="generateOrder()">Generate Order</button>
             </div>
         </div>
     </div>
