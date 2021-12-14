@@ -293,11 +293,12 @@ public class Restcontroller {
     }
 
     @PostMapping(path = "api/v1/lieferantenauftrag")
-    ResponseEntity<URI> createLieferantenAuftrag(@RequestBody LieferantenauftragBody body) throws URISyntaxException {
+    ResponseEntity<Lieferantenauftrag> createLieferantenAuftrag(@RequestBody LieferantenauftragBody body)
+            throws URISyntaxException {
         SupplierEntity supplier = supplierService.findEntityById(body.getSupplierID());
         Lieferantenauftrag lieferantenauftrag = bestellauftragsservice.createLieferantenauftrag(body, supplier);
         URI uri = new URI("api/v1/lieferantenauftrag/" + lieferantenauftrag.getLieferauftragsID());
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(lieferantenauftrag);
     }
 
     @PutMapping(path = "api/v1/lieferantenauftrag/{id}/{date}")

@@ -3,31 +3,37 @@
     <script cam-script type="text/form-script">
         inject(['$scope', '$http', function($scope, $http) {
           var variableManager = camForm.variableManager;
-          
-          $scope.adjustBanf = function () {
+          $scope.lieferauftraege = [];
+          $scope.generiereLieferauftraege = function () {
+              let auftragsdictionary = {};
+              let lieferauftrag = [];
                 for(let i = 0;i< $scope.banf.length; i++) {
-                    let banfitem = {amount : $scope.banf[i].banf.amount, price : $scope.banf[i].banf.price};
-                    console.log(banfitem);
+                    auftragsdictionary[$scope.banf[i].supplierID].push($scope.banf[i].banf);
+                }
+                for(const element of Object.key(auftragsdictionary)) {
+                    lieferauftrag.push({orderDate : new Date(), banfItems : auftragsdictionary[element], supplierID : element});
+                    console.log(lieferauftrag);
+                }
+                for(const auftrag of lieferauftrag){
+
                     var req = {
-                        method: 'PUT',
-                        url: 'https://projectmas.herokuapp.com/api/v1/banfitem/' + $scope.banf[i].banf.itemID + '/priceAndamount',
+                        method: 'POST',
+                        url: 'https://projectmas.herokuapp.com/api/v1/lieferantenauftrag',
                         headers: {
                         'Content-Type': 'application/json',
                         'Accept' : '*/*',
                         'Access-Control-Expose-Headers':'Location'
                         },
-                        data: JSON.stringify(banfitem)
+                        data: JSON.stringify(auftrag)
                     }
                     $http(req).then(function(response){
-                        for(let i1 = 0;i1<$scope.banf.length;i1++) {
-                            if(response.data.itemID === $scope.banf[i1].banf.itemID) {
-                                $scope.banf[i1].banf = response.data;
-                            }
-                        }
+                        $scope.lieferauftraege.push(response);
                     },function(error){
                         console.log(error);
                     })
                 }
+                    
+                
           }
           camForm.on('form-loaded', function() {
     
@@ -79,7 +85,7 @@
         <div class="form-group">
             <label class="control-label">Banf anpassen: </label>
             <div class="controls">
-        
+
                 <button type="button" class="btn btn-info" ng-click="adjustBanf()">Banf anpassen</button>
             </div>
         </div>
