@@ -22,6 +22,7 @@ import mas.mockup.masMockup.web.database.banf.ImporteurBestellungBody;
 import mas.mockup.masMockup.web.database.banf.Lieferantenauftrag;
 import mas.mockup.masMockup.web.database.banf.LieferantenauftragBody;
 import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemBodyBanf;
+import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemChangePriceAndAmountRequest;
 import mas.mockup.masMockup.web.database.banf.banfitem.Banfitem;
 import mas.mockup.masMockup.web.database.banf.banfitem.itemstatus.ItemStatus;
 
@@ -108,6 +109,18 @@ public class Bestellauftragsservice {
         }
 
         return lAEntityToLA(optional.get());
+    }
+
+    public Banfitem updateBanfItem(int id, BanfItemChangePriceAndAmountRequest banfitem) {
+        Optional<BanfItemEntity> optional = banfItemRepository.findById(id);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        BanfItemEntity entity = optional.get();
+        entity.setAmount(banfitem.getAmount());
+        entity.setPrice(banfitem.getPrice());
+        entity = banfItemRepository.save(entity);
+        return bIEntityToBI(entity);
     }
 
     public Banfitem updateBanfItemLieferAuftrag(int id, LieferauftragEntity lieferauftragEntity) {

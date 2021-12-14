@@ -1,0 +1,58 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          
+          
+          camForm.on('form-loaded', function() {
+    
+            variableManager.fetchVariable('Banf'); // set by the engine
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            $scope.banf = variableManager.variable('Banf').value;
+            
+           
+          
+          });
+
+          camForm.on('submit', function (evt) {
+            
+            
+          });
+        }]);
+  </script>
+    <div class="form-group">
+        <label class="control-label">Banfinformationen: </label>
+        <div class="form-group">
+            <label class="control-label">Bestellte Artikel: </label>
+            <div class="controls">
+                <div ng-repeat="article in banf" ng-if="article.banf">
+                    <p>Artikelid: {{article.articleId}}</p>
+                    <p>Artikelname: {{article.productdescription.produktname}}</p>
+                    <p>Einkaufspreis: {{article.einkaufspreis}} €</p>
+                    <p>Lagermenge: {{article.lagermenge}}</p>
+                    <p>Bereits nachbestellte Menge: {{article.bereitsBestellt}}</p>
+                    <p>Angeforderte Menge: {{article.bestellMenge}}</p>
+                    <p>Bestellpreis: {{article.bestellMenge*article.einkaufspreis}} €</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Banf korrekt? </label>
+            <div class="controls">
+
+                <input type="checkbox" cam-variable-type="Boolean" cam-variable-name="banfkorrekt"/>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>

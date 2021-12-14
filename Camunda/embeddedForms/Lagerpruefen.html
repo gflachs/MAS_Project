@@ -4,12 +4,15 @@
         inject(['$scope', '$http', function($scope, $http) {
           var variableManager = camForm.variableManager;
           $scope.banfGenerated = false;
+          $scope.articleOrdered = false;
           
           $scope.generateBanf = function() {
             $scope.banfGenerated = true;
             $scope.count = 0;
+            $scope.banfCount = 0;
             for (let index = 0; index < $scope.articles.length; index ++) {
               if($scope.articles[index].bestellMenge > 0) {
+                $scope.articleOrdered = true;
                 let banfItem = {articleID : $scope.articles[index].articleId, amount : $scope.articles[index].bestellMenge, price : $scope.articles[index].einkaufspreis, itemStatus : "erstellt"}
                 var req = {
                     method: 'POST',
@@ -22,8 +25,14 @@
                     data: JSON.stringify(banfItem)
                 }
                 $http(req).then(function(response){
-                  banfItem.itemID = response.data;
-                  $scope.article[index].banf = banfItem; 
+                  $scope.banfCount += 1;
+                  let bI = response.data;
+                  for(let i=0; i < $scope.articles.length; i++) {
+                    if($scope.articles[i].articleId === bI.articleID) {
+                      $scope.articles[i].banf = bI;
+                      console.log($scope.articles[i]);
+                    }
+                  }
                 },function(error){
                   console.log(error);
                 })
@@ -104,6 +113,11 @@
                 type: 'json',
                 value: $scope.articles
               }); 
+              variableManager.createVariable({
+                name: 'articleOrdered',
+                type: 'Boolean',
+                value: $scope.articleOrdered
+              });
             }
             
           });
@@ -121,7 +135,7 @@
                         <p>Vom Kunden bestellte Anzahl: {{article.bestellteMenge}} </p>
                         <p>Lagermenge: {{article.lagermenge}}</p>
                         <p>Bereits nachbestellte Menge: {{article.bereitsBestellt}}</p>
-                        <div class="form-group" ng-if="article.shouldOrder==true" >
+                        <div class="form-group" >
                           <label class="control-label">Zu bestellende Menge</label>
                             <div class="controls">
                               <input type="number" ng-model="article.bestellMenge"/>
@@ -131,11 +145,19 @@
                 </div>
             </div>
         </div>
+        <div class="form-group" ng-if="banfCount">
+          <label class="control-label" >Artikel zu Banf hinzugefügt: </label>
+          <div class="controls">
+        
+            <p ng-if="banfCount > 0">{{banfCount}}</p>
+            <p ng-if="banfCount === 0">Keine Banf erstellt, da keine Artikel angefordert</p>
+          </div>
+        </div>
         <div class="form-group">
           <label class="control-label">Banf erstellen: </label>
           <div class="controls">
         
-            <button type="button" class="btn btn-info" ng-click="generateBanf()">Generate Banf</button>
+            <button type="button" class="btn btn-info" ng-click="generateBanf()">Banf generieren</button>
           </div>
         </div>
     <!-- <div class="form-group">

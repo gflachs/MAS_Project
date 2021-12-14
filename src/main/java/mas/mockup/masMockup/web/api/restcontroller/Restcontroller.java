@@ -37,6 +37,7 @@ import mas.mockup.masMockup.web.database.banf.ImporteurBestellungBody;
 import mas.mockup.masMockup.web.database.banf.Lieferantenauftrag;
 import mas.mockup.masMockup.web.database.banf.LieferantenauftragBody;
 import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemBodyBanf;
+import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemChangePriceAndAmountRequest;
 import mas.mockup.masMockup.web.database.banf.banfitem.Banfitem;
 import mas.mockup.masMockup.web.database.banf.banfitem.itemstatus.ItemStatus;
 import mas.mockup.masMockup.web.database.order.Order;
@@ -265,10 +266,20 @@ public class Restcontroller {
         return ResponseEntity.created(uri).body(banfitem);
     }
 
-    @PutMapping(path = "api/v1/banfitem/{id}")
+    @PutMapping(path = "api/v1/banfitem/{id}/status")
     ResponseEntity<Banfitem> updateBanfItemStatus(@PathVariable(name = "id") int banfItemId,
             @RequestBody ItemStatus itemStatus) {
         Banfitem banfitem = bestellauftragsservice.updateBanfItemStatus(banfItemId, itemStatus);
+        if (banfitem == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(banfitem);
+    }
+
+    @PutMapping(path = "api/v1/banfitem/{id}/priceAndamount")
+    ResponseEntity<Banfitem> updateBanfItemPriceAndAmount(@PathVariable(name = "id") int banfItemId,
+            @RequestBody BanfItemChangePriceAndAmountRequest banfItemChangePriceAndAmountRequest) {
+        Banfitem banfitem = bestellauftragsservice.updateBanfItem(banfItemId, banfItemChangePriceAndAmountRequest);
         if (banfitem == null) {
             return ResponseEntity.notFound().build();
         }

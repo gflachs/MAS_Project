@@ -1,0 +1,91 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          
+          $scope.adjustBanf = function () {
+                for(let i = 0;i< $scope.banf.length; i++) {
+                    let banfitem = {amount : $scope.banf[i].amount, price : $scope.banf[i].price};
+                    var req = {
+                        method: 'PUT',
+                        url: 'https://projectmas.herokuapp.com/api/v1/banfitem/' + $scope.banf[i].banf.itemID + '/priceAndamount',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'Accept' : '*/*',
+                        'Access-Control-Expose-Headers':'Location'
+                        },
+                        data: JSON.stringify(banfitem)
+                    }
+                    $http(req).then(function(response){
+                        for(let i = 0;i<$scope.banf.length;i++) {
+                            if(response.data.itemID === $scope.banf[i].banf.itemID) {
+                                $scope.banf[i].banf = response.data;
+                            }
+                        }
+                    },function(error){
+                        console.log(error);
+                    })
+                }
+          }
+          camForm.on('form-loaded', function() {
+    
+            variableManager.fetchVariable('Banf'); // set by the engine
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            $scope.banf = variableManager.variable('Banf').value;
+            
+           
+          
+          });
+
+          camForm.on('submit', function (evt) {
+            
+            
+          });
+        }]);
+  </script>
+    <div class="form-group">
+        <label class="control-label">Banfinformationen: </label>
+        <div class="form-group">
+            <label class="control-label">Bestellte Artikel: </label>
+            <div class="controls">
+                <div ng-repeat="article in banf" ng-if="article.banf">
+                    <p>Artikelid: {{article.articleId}}</p>
+                    <p>Artikelname: {{article.productdescription.produktname}}</p>
+                    <div class="form-group">
+                        <label class="control-label">Einkaufspreis: </label>
+                        <div class="controls">
+                            <input ng-model="article.banf.price" type="number">
+                        </div>
+                    </div>
+                    <p>Lagermenge: {{article.lagermenge}}</p>
+                    <p>Bereits nachbestellte Menge: {{article.bereitsBestellt}}</p>
+                    <div class="form-group">
+                        <label class="control-label">Bestellte Menge: </label>
+                        <div class="controls">
+                            <input ng-model="article.banf.amount" type="number">
+                        </div>
+                    </div>
+                    <p>Bestellpreis: {{article.banf.amount*article.banf.price}} €</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Banf anpassen: </label>
+            <div class="controls">
+        
+                <button type="button" class="btn btn-info" ng-click="adjustBanf()">Banf anpassen</button>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>
