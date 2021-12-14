@@ -119,7 +119,10 @@ public class Bestellauftragsservice {
         BanfItemEntity entity = optional.get();
         entity.setAmount(banfitem.getAmount());
         entity.setPrice(banfitem.getPrice());
+        System.out.println(banfitem.getAmount() + " " + banfitem.getPrice());
+        System.out.println(entity.getAmount() + " " + entity.getPrice());
         entity = banfItemRepository.save(entity);
+        System.out.println(entity.getAmount() + " " + entity.getPrice());
         return bIEntityToBI(entity);
     }
 
