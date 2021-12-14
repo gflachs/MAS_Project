@@ -201,7 +201,7 @@ public class Bestellauftragsservice {
     public static Lieferantenauftrag lAEntityToLA(LieferauftragEntity entity) {
         Set<Banfitem> banfitems = entity.getBanfItems() == null ? null
                 : entity.getBanfItems().stream().map(e -> bIEntityToBI(e)).collect(Collectors.toSet());
-        int importeurBestelungsid = entity.getImportBestellung() == null ? null
+        int importeurBestelungsid = entity.getImportBestellung() == null ? -1
                 : entity.getImportBestellung().getBestellID();
         return new Lieferantenauftrag(entity.getLieferauftragsID(), entity.getOrderDate(), banfitems,
                 entity.getSupplier().getAccountID(), entity.getAbholDatum(), importeurBestelungsid);
