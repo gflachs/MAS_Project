@@ -69,10 +69,11 @@ public class Bestellauftragsservice {
         LieferauftragEntity lieferauftragEntity = lABodyToEntity(body, supplier);
         lieferauftragEntity = lieferauftragRepository.save(lieferauftragEntity);
         Set<Banfitem> banfitems = new HashSet<>();
-        Lieferantenauftrag lieferantenauftrag = lAEntityToLA(lieferauftragEntity);
+
         for (Banfitem banfitem : body.getBanfItems()) {
             banfitems.add(updateBanfItemLieferAuftrag(banfitem.getItemID(), lieferauftragEntity));
         }
+        Lieferantenauftrag lieferantenauftrag = lAEntityToLA(lieferauftragEntity);
         lieferantenauftrag.setBanfItems(banfitems);
 
         return lieferantenauftrag;
@@ -198,7 +199,8 @@ public class Bestellauftragsservice {
     }
 
     public static Lieferantenauftrag lAEntityToLA(LieferauftragEntity entity) {
-        Set<Banfitem> banfitems = entity.getBanfItems().stream().map(e -> bIEntityToBI(e)).collect(Collectors.toSet());
+        Set<Banfitem> banfitems = entity.getBanfItems() == null ? null
+                : entity.getBanfItems().stream().map(e -> bIEntityToBI(e)).collect(Collectors.toSet());
         int importeurBestelungsid = entity.getImportBestellung() == null ? null
                 : entity.getImportBestellung().getBestellID();
         return new Lieferantenauftrag(entity.getLieferauftragsID(), entity.getOrderDate(), banfitems,

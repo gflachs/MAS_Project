@@ -8,9 +8,12 @@
               let auftragsdictionary = {};
               let lieferauftrag = [];
                 for(let i = 0;i< $scope.banf.length; i++) {
+                    if(auftragsdictionary[$scope.banf[i].supplierID] == null){
+                        auftragsdictionary[$scope.banf[i].supplierID] = [];
+                    }
                     auftragsdictionary[$scope.banf[i].supplierID].push($scope.banf[i].banf);
                 }
-                for(const element of Object.key(auftragsdictionary)) {
+                for(const element of Object.keys(auftragsdictionary)) {
                     lieferauftrag.push({orderDate : new Date(), banfItems : auftragsdictionary[element], supplierID : element});
                     console.log(lieferauftrag);
                 }
@@ -83,10 +86,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label">Banf anpassen: </label>
+            
             <div class="controls">
 
-                <button type="button" class="btn btn-info" ng-click="adjustBanf()">Banf anpassen</button>
+                <button type="button" class="btn btn-info" ng-click="generiereLieferauftraege()">Lieferaufträge erstellen</button>
             </div>
         </div>
         <!-- <div class="form-group">

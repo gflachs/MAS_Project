@@ -2,7 +2,7 @@
 
     <script cam-script type="text/form-script">
         inject(['$scope', '$http', function($scope, $http) {
-            evt.submitPrevented = true;
+           
             var variableManager = camForm.variableManager;
             $scope.order = {};
             $scope.orderID = "Bitte Order generieren";
@@ -41,7 +41,7 @@
                 },function(error){
                     console.log(error.message);
                 });
-                evt.submitPrevented = false;
+                
             }
             camForm.on('form-loaded', function() {
     
