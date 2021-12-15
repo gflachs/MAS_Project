@@ -30,7 +30,8 @@
                         data: JSON.stringify(auftrag)
                     }
                     $http(req).then(function(response){
-                        $scope.lieferauftraege.push(response);
+                        $scope.lieferauftraege.push(response.data);
+                        console.log($scope.lieferauftraege);
                     },function(error){
                         console.log(error);
                     })
@@ -54,37 +55,28 @@
           });
 
           camForm.on('submit', function (evt) {
-            
+            variableManager.createVariable({
+              name: 'Lieferauftraege',
+              type: 'json',
+              value: $scope.lieferauftraege
+            }); 
             
           });
         }]);
   </script>
-    <div class="form-group">
-        <label class="control-label">Banfinformationen: </label>
+    <div class="form-group" ng-if="lieferauftraege.length > 0">
+        <label class="control-label">Lieferaufträge </label>
         <div class="form-group">
-            <label class="control-label">Bestellte Artikel: </label>
+            <label class="control-label">Übersicht: </label>
             <div class="controls">
-                <div ng-repeat="article in banf" ng-if="article.banf">
-                    <p>Artikelid: {{article.articleId}}</p>
-                    <p>Artikelname: {{article.productdescription.produktname}}</p>
-                    <div class="form-group">
-                        <label class="control-label">Einkaufspreis: </label>
-                        <div class="controls">
-                            <input ng-model="article.banf.price" type="number">
-                        </div>
-                    </div>
-                    <p>Lagermenge: {{article.lagermenge}}</p>
-                    <p>Bereits nachbestellte Menge: {{article.bereitsBestellt}}</p>
-                    <div class="form-group">
-                        <label class="control-label">Bestellte Menge: </label>
-                        <div class="controls">
-                            <input ng-model="article.banf.amount" type="number">
-                        </div>
-                    </div>
-                    <p>Bestellpreis: {{article.banf.amount*article.banf.price}} €</p>
+                <div ng-repeat="auftrag in lieferauftraege" >
+                    <p>Auftragsid: {{auftrag.lieferauftragsID}}</p>
+                    <p>Anzahl an Banf - Positionen: {{auftrag.banfItems.length}}</p>
+                    <p>Zulieferer: {{auftrag.supplierID}}</p>
                 </div>
             </div>
         </div>
+    </div>
         <div class="form-group">
             
             <div class="controls">

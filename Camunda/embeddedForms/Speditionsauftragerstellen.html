@@ -1,0 +1,81 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.speditionsauftrag = {};
+          $scope.generiereSpeditionsauftrag = function () {
+             
+            var req = {
+                method: 'POST',
+                url: 'https://projectmas.herokuapp.com/api/v1/lieferantenauftrag',
+                headers: {
+                'Content-Type': 'application/json',
+                'Accept' : '*/*',
+                'Access-Control-Expose-Headers':'Location'
+                },
+                data: JSON.stringify($scope.lieferauftraege)
+            }
+            $http(req).then(function(response){
+                $scope.speditionsauftrag = response.data
+                console.log($scope.lieferauftraege);
+            },function(error){
+                console.log(error);
+            })
+                
+                    
+                
+          }
+          camForm.on('form-loaded', function() {
+    
+            variableManager.fetchVariable('Lieferauftraege');
+            variableManager.fetchVariable('Banf');
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            $scope.lieferauftraege = variableManager.variable('Lieferauftraege').value;
+            $scope.banf = variableManager.variable('Banf').value;
+           
+          
+          });
+
+          camForm.on('submit', function (evt) {
+            variableManager.createVariable({
+              name: 'Lieferauftraege',
+              type: 'json',
+              value: $scope.lieferauftraege
+            }); 
+            
+          });
+        }]);
+  </script>
+    <div class="form-group" ng-if="lieferauftraege.length > 0">
+        <label class="control-label">Lieferaufträge </label>
+        <div class="form-group">
+            <label class="control-label">Übersicht: </label>
+            <div class="controls">
+                <div ng-repeat="auftrag in lieferauftraege">
+                    <p>Auftragsid: {{auftrag.lieferauftragsID}}</p>
+                    <p>Anzahl an Banf - Positionen: {{auftrag.banfItems.length}}</p>
+                    <p>Zulieferer: {{auftrag.supplierID}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="controls">
+
+            <button type="button" class="btn btn-info" ng-click="generiereSpeditionsauftrag()">Speditionsauftrag erstellen</button>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>
