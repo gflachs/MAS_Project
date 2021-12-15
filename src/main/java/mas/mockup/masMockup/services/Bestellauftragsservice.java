@@ -193,8 +193,9 @@ public class Bestellauftragsservice {
     }
 
     public static ImporteurBestellung iBEntityToIB(ImporteuerBestellungEntity entity) {
-        Set<Lieferantenauftrag> lieferantenauftrags = entity.getLieferauftraege().stream().map(e -> lAEntityToLA(e))
-                .collect(Collectors.toSet());
+        Set<Lieferantenauftrag> lieferantenauftrags = entity.getLieferauftraege() == null ? null
+                : entity.getLieferauftraege().stream().map(e -> lAEntityToLA(e))
+                        .collect(Collectors.toSet());
         return new ImporteurBestellung(entity.getBestellID(), lieferantenauftrags, entity.getAbholDatum());
     }
 
