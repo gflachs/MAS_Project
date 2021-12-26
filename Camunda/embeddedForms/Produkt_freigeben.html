@@ -1,0 +1,61 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          
+          camForm.on('form-loaded', function() {
+            variableManager.fetchVariable('product');
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            
+            $scope.product = variableManager.variable('product').value;
+          
+          });
+
+          camForm.on('submit', function (evt) {
+            
+           
+            var req = {
+              method: 'PUT',
+              url: 'https://projectmas.herokuapp.com/api/v1/banfitemFreigeben/'+product.itemID,
+              headers: {
+              'Content-Type': 'application/json',
+              'Accept' : '*/*',
+              'Access-Control-Expose-Headers':'Location'
+              }
+            }
+            $http(req).then(function(response){console.log(response)},function(error){console.log(error)});
+          });
+        }]);
+  </script>
+    <div class="form-group" ng-if="product">
+        <label class="control-label">Speditionsauftrag </label>
+        <div class="form-group">
+            <label class="control-label">Übersicht: </label>
+            <div class="controls">
+                
+                <div>
+                    <p>ArticleName: {{product.article.productdescription.produktname}}</p>
+                    <p>Anzahl: {{product.amount}}</p>
+                    <select ng-model="product.itemStatus.itemStatus">
+                        <option>erstellt</option>
+                        <option>Qualitätsprüfung</option>
+                        <option>Freigegeben</option>
+                        <option>Sperrbestand</option>
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>

@@ -69,6 +69,10 @@ public class ArticleService {
         return optional.get();
     }
 
+    public void save(ArticleEntity entity) {
+        articleRepository.save(entity);
+    }
+
     public int checkOpenBanf(int id) {
         Optional<ArticleEntity> optional = articleRepository.findById(id);
         if (optional.isEmpty()) {
@@ -78,8 +82,8 @@ public class ArticleService {
         int orderAmount = 0;
         if (articleEntity.getBanfItemEntities().size() > 0) {
             for (BanfItemEntity banfItemEntity : articleEntity.getBanfItemEntities()) {
-                if (!banfItemEntity.getItemStatus().getItemStatus().equals("freigegeben")
-                        && !banfItemEntity.getItemStatus().getItemStatus().equals("gesperrt")) {
+                if (!banfItemEntity.getItemStatus().getItemStatus().equals("Freigegeben")
+                        && !banfItemEntity.getItemStatus().getItemStatus().equals("Sperrbestand")) {
                     orderAmount += banfItemEntity.getAmount();
                 }
             }

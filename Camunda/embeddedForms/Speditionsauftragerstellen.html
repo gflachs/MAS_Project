@@ -19,16 +19,22 @@
             }
             $http(req).then(function(response){
                 $scope.speditionsauftrag = response.data
-                console.log($scope.speditionsauftrag);
+                try{
                 for(let i=0;i<$scope.speditionsauftrag.lieferauftraege.length;i++) {
                     for(let ii=0;ii< $scope.speditionsauftrag.lieferauftraege[i].banfItems.length; ii++) {
-                        for(const article of Banf) {
+                        for(const article of $scope.banf) {
                             if (article.banf.itemID = $scope.speditionsauftrag.lieferauftraege[i].banfItems[ii].itemID) {
-                                $scope.speditionsauftrag[i].lieferauftraege.banfItems[ii].article = article;
+                                $scope.speditionsauftrag.lieferauftraege[i].banfItems[ii].article = article;
                             }
                         }
                     }
                 }
+            }catch(error){
+                console.log(error);
+            }
+
+                
+                console.log($scope.speditionsauftrag);
             },function(error){
                 console.log(error);
             })
@@ -62,12 +68,12 @@
           });
         }]);
   </script>
-    <div class="form-group" ng-if="speditionsauftrag.length > 0">
+    <div class="form-group" ng-if="speditionsauftrag">
         <label class="control-label">Speditionsauftrag </label>
         <div class="form-group">
             <label class="control-label">Übersicht: </label>
             <div class="controls">
-                <div ng-repeat="auftrag in lieferauftraege">
+                <div ng-repeat="auftrag in speditionsauftrag.lieferauftraege">
                     <p>Lieferauftrag Nummer: {{auftrag.lieferauftragsID}}</p>
                     <div ng-repeat="banfitem in auftrag.banfItems">
                     <p>ArticleName: {{banfitem.article.productdescription.produktname}}</p>

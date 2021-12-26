@@ -337,6 +337,12 @@ public class Restcontroller {
         return ResponseEntity.ok(bestellung);
     }
 
+    @PutMapping(path = "api/v1/banfitemFreigeben/{id}")
+    ResponseEntity<Void> banfItemFreigeben(@PathVariable int id) {
+        bestellauftragsservice.banfItemFreigeben(id);
+        return ResponseEntity.ok().build();
+    }
+
     private ArticleInfo articleToArticleInfo(Article article) {
         return new ArticleInfo(article.getArticleId(), article.getTransparency(), article.getProductdescription(),
                 article.getPrice(), article.getImageurl());

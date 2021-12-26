@@ -32,12 +32,15 @@ public class Bestellauftragsservice {
     private final ImporteurBestellungRepository importeurBestellungRepository;
     private final LieferauftragRepository lieferauftragRepository;
     private final BanfItemRepository banfItemRepository;
+    private final ArticleService articleService;
 
     public Bestellauftragsservice(ImporteurBestellungRepository importeurBestellungRepository,
-            LieferauftragRepository lieferauftragRepository, BanfItemRepository banfItemRepository) {
+            LieferauftragRepository lieferauftragRepository, BanfItemRepository banfItemRepository,
+            ArticleService articleService) {
         this.importeurBestellungRepository = importeurBestellungRepository;
         this.lieferauftragRepository = lieferauftragRepository;
         this.banfItemRepository = banfItemRepository;
+        this.articleService = articleService;
     }
 
     public ImporteurBestellung createImporteurBestellung(ImporteurBestellungBody body) {
@@ -110,6 +113,20 @@ public class Bestellauftragsservice {
         }
 
         return lAEntityToLA(optional.get());
+    }
+
+    public Banfitem banfItemFreigeben(int id) {
+        Optional<BanfItemEntity> optional = banfItemRepository.findById(id);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        BanfItemEntity entity = optional.get();
+        entity.setItemStatus(new ItemStatusEntity("Freigegeben"));
+        entity = banfItemRepository.save(entity);
+        ArticleEntity articleEntity = entity.getArticle();
+        articleEntity.setLagermenge(articleEntity.getLagermenge() + entity.getAmount());
+        articleService.save(articleEntity);
+        return bIEntityToBI(entity);
     }
 
     public Banfitem updateBanfItem(int id, BanfItemChangePriceAndAmountRequest banfitem) {
