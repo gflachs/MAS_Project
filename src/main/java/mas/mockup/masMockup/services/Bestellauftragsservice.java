@@ -1,5 +1,6 @@
 package mas.mockup.masMockup.services;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -126,6 +127,17 @@ public class Bestellauftragsservice {
         return lAEntityToLA(entity);
     }
 
+    public Lieferantenauftrag setRechnung(long id, File rechnung) {
+        Optional<LieferauftragEntity> optional = lieferauftragRepository.findById(id);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        LieferauftragEntity entity = optional.get();
+        entity.setRechnung(rechnung);
+        entity = lieferauftragRepository.save(entity);
+        return lAEntityToLA(entity);
+    }
+
     public Banfitem banfItemFreigeben(int id) {
         Optional<BanfItemEntity> optional = banfItemRepository.findById(id);
         if (optional.isEmpty()) {
@@ -218,9 +230,7 @@ public class Bestellauftragsservice {
 
     public static LieferauftragEntity lABodyToEntity(LieferantenauftragBody body, SupplierEntity supplier) {
         LieferauftragEntity entity = new LieferauftragEntity(body.getOrderDate(), supplier, null, null);
-        if (body.getRechnung() != null) {
-            entity.setRechnung(body.getRechnung());
-        }
+
         return entity;
     }
 

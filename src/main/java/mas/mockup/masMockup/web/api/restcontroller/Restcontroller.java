@@ -1,5 +1,6 @@
 package mas.mockup.masMockup.web.api.restcontroller;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -298,6 +299,12 @@ public class Restcontroller {
     @GetMapping(path = "api/v1/lieferantenauftrag/{id}/bezahlt")
     ResponseEntity<Lieferantenauftrag> setBezahlt(@PathVariable(name = "id") long id) {
         Lieferantenauftrag lA = bestellauftragsservice.setLieferantenauftragBezahlt(id);
+        return lA == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(lA);
+    }
+
+    @PutMapping(path = "api/v1/lieferantenauftrag/{id}/rechnung")
+    ResponseEntity<Lieferantenauftrag> setRechnung(@PathVariable(name = "id") long id, @RequestBody File rechnung) {
+        Lieferantenauftrag lA = bestellauftragsservice.setRechnung(id, rechnung);
         return lA == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(lA);
     }
 
