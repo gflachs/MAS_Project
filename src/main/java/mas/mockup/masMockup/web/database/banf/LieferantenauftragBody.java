@@ -1,5 +1,6 @@
 package mas.mockup.masMockup.web.database.banf;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Set;
 
@@ -10,14 +11,24 @@ public class LieferantenauftragBody {
     private Date orderDate;
     private Set<Banfitem> banfItems;
     private int supplierID;
+    private File rechnung;
 
     public LieferantenauftragBody() {
     }
 
-    public LieferantenauftragBody(Date orderDate, Set<Banfitem> banfItems, int supplierID) {
+    public File getRechnung() {
+        return rechnung;
+    }
+
+    public void setRechnung(File rechnung) {
+        this.rechnung = rechnung;
+    }
+
+    public LieferantenauftragBody(Date orderDate, Set<Banfitem> banfItems, int supplierID, File rechnung) {
         this.orderDate = orderDate;
         this.banfItems = banfItems;
         this.supplierID = supplierID;
+        this.setRechnung(rechnung);
     }
 
     public Date getOrderDate() {

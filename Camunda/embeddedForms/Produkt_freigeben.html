@@ -21,7 +21,7 @@
            
             var req = {
               method: 'PUT',
-              url: 'https://projectmas.herokuapp.com/api/v1/banfitemFreigeben/'+product.itemID,
+              url: 'https://projectmas.herokuapp.com/api/v1/banfitemFreigeben/'+$scope.product.itemID,
               headers: {
               'Content-Type': 'application/json',
               'Accept' : '*/*',
@@ -33,23 +33,19 @@
         }]);
   </script>
     <div class="form-group" ng-if="product">
-        <label class="control-label">Speditionsauftrag </label>
-        <div class="form-group">
-            <label class="control-label">Übersicht: </label>
-            <div class="controls">
-                
-                <div>
-                    <p>ArticleName: {{product.article.productdescription.produktname}}</p>
-                    <p>Anzahl: {{product.amount}}</p>
-                    <select ng-model="product.itemStatus.itemStatus">
-                        <option>erstellt</option>
-                        <option>Qualitätsprüfung</option>
-                        <option>Freigegeben</option>
-                        <option>Sperrbestand</option>
-                    </select>
-                </div>
-                
-            </div>
+        <label class="control-label">Übersicht: </label>
+        <div class="controls">
+            
+          <div>
+            <p>ArticleName: {{product.article.productdescription.produktname}}</p>
+            <p>Anzahl: {{product.amount}}</p>
+            <select ng-model="product.itemStatus.itemStatus">
+                <option>erstellt</option>
+                <option>Qualitätsprüfung</option>
+                <option>Freigegeben</option>
+                <option>Sperrbestand</option>
+            </select>
+          </div>
         </div>
     </div>
     <!-- <div class="form-group">

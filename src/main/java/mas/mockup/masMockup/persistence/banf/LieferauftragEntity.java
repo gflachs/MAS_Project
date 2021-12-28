@@ -1,5 +1,6 @@
 package mas.mockup.masMockup.persistence.banf;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Set;
 
@@ -31,11 +32,31 @@ public class LieferauftragEntity {
     private SupplierEntity supplier;
     @Column(name = "abholDatum")
     private Date abholDatum;
+    @Column(name = "bezahlt")
+    private boolean bezahlt;
+    @Column(name = "rechnung")
+    private File rechnung;
     @ManyToOne
     @JoinColumn(name = "importeurbestellungsid")
     ImporteuerBestellungEntity importBestellung;
 
     public LieferauftragEntity() {
+    }
+
+    public File getRechnung() {
+        return rechnung;
+    }
+
+    public void setRechnung(File rechnung) {
+        this.rechnung = rechnung;
+    }
+
+    public boolean isBezahlt() {
+        return bezahlt;
+    }
+
+    public void setBezahlt(boolean bezahlt) {
+        this.bezahlt = bezahlt;
     }
 
     public LieferauftragEntity(Date orderDate, SupplierEntity supplier,

@@ -2,6 +2,8 @@ package mas.mockup.masMockup.web.api.restcontroller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +38,7 @@ import mas.mockup.masMockup.web.database.banf.ImporteurBestellung;
 import mas.mockup.masMockup.web.database.banf.ImporteurBestellungBody;
 import mas.mockup.masMockup.web.database.banf.Lieferantenauftrag;
 import mas.mockup.masMockup.web.database.banf.LieferantenauftragBody;
+import mas.mockup.masMockup.web.database.banf.Lieferauftragsdate;
 import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemBodyBanf;
 import mas.mockup.masMockup.web.database.banf.banfitem.BanfItemChangePriceAndAmountRequest;
 import mas.mockup.masMockup.web.database.banf.banfitem.Banfitem;
@@ -292,6 +295,12 @@ public class Restcontroller {
         return bestellung == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bestellung);
     }
 
+    @GetMapping(path = "api/v1/lieferantenauftrag/{id}/bezahlt")
+    ResponseEntity<Lieferantenauftrag> setBezahlt(@PathVariable(name = "id") long id) {
+        Lieferantenauftrag lA = bestellauftragsservice.setLieferantenauftragBezahlt(id);
+        return lA == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(lA);
+    }
+
     @PostMapping(path = "api/v1/lieferantenauftrag")
     ResponseEntity<Lieferantenauftrag> createLieferantenAuftrag(@RequestBody LieferantenauftragBody body)
             throws URISyntaxException {
@@ -301,11 +310,21 @@ public class Restcontroller {
         return ResponseEntity.created(uri).body(lieferantenauftrag);
     }
 
-    @PutMapping(path = "api/v1/lieferantenauftrag/{id}/{date}")
+    @PutMapping(path = "api/v1/lieferantenauftragabholung/{id}")
     ResponseEntity<Lieferantenauftrag> updateLieferantenAuftragDatum(
-            @PathVariable(name = "id") long lieferantenAuftragsid, @PathVariable(name = "date") Date date) {
+            @PathVariable(name = "id") long lieferantenAuftragsid, @RequestBody Lieferauftragsdate date) {
+        System.out.println(date.getLieferauftragsDatum());
+        Date d = null;
+        try {
+
+            d = new SimpleDateFormat("mm/dd/yyyy HH:mm:ss").parse(date.getLieferauftragsDatum());
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+
         Lieferantenauftrag auftrag = bestellauftragsservice.updateLieferauftragAbholDatumById(lieferantenAuftragsid,
-                date);
+                d);
         if (auftrag == null) {
             return ResponseEntity.notFound().build();
         }

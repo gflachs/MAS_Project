@@ -115,6 +115,17 @@ public class Bestellauftragsservice {
         return lAEntityToLA(optional.get());
     }
 
+    public Lieferantenauftrag setLieferantenauftragBezahlt(long id) {
+        Optional<LieferauftragEntity> optional = lieferauftragRepository.findById(id);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        LieferauftragEntity entity = optional.get();
+        entity.setBezahlt(true);
+        entity = lieferauftragRepository.save(entity);
+        return lAEntityToLA(entity);
+    }
+
     public Banfitem banfItemFreigeben(int id) {
         Optional<BanfItemEntity> optional = banfItemRepository.findById(id);
         if (optional.isEmpty()) {
@@ -206,7 +217,11 @@ public class Bestellauftragsservice {
     }
 
     public static LieferauftragEntity lABodyToEntity(LieferantenauftragBody body, SupplierEntity supplier) {
-        return new LieferauftragEntity(body.getOrderDate(), supplier, null, null);
+        LieferauftragEntity entity = new LieferauftragEntity(body.getOrderDate(), supplier, null, null);
+        if (body.getRechnung() != null) {
+            entity.setRechnung(body.getRechnung());
+        }
+        return entity;
     }
 
     public static ImporteurBestellung iBEntityToIB(ImporteuerBestellungEntity entity) {
@@ -222,7 +237,8 @@ public class Bestellauftragsservice {
         int importeurBestelungsid = entity.getImportBestellung() == null ? -1
                 : entity.getImportBestellung().getBestellID();
         return new Lieferantenauftrag(entity.getLieferauftragsID(), entity.getOrderDate(), banfitems,
-                entity.getSupplier().getAccountID(), entity.getAbholDatum(), importeurBestelungsid);
+                entity.getSupplier().getAccountID(), entity.getAbholDatum(), importeurBestelungsid, entity.isBezahlt(),
+                entity.getRechnung());
     }
 
     public static Banfitem bIEntityToBI(BanfItemEntity entity) {

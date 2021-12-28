@@ -1,5 +1,6 @@
 package mas.mockup.masMockup.web.database.banf;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,26 +14,22 @@ public class Lieferantenauftrag {
     private int supplierID;
     private Date abholDatum;
     private int importeurBestellungsid;
+    private boolean bezahlt;
+    private File rechnung;
 
     public Lieferantenauftrag() {
     }
 
-    public int getImporteurBestellungsid() {
-        return importeurBestellungsid;
-    }
-
-    public void setImporteurBestellungsid(int importeurBestellungsid) {
-        this.importeurBestellungsid = importeurBestellungsid;
-    }
-
     public Lieferantenauftrag(long lieferauftragsID, Date orderDate, Set<Banfitem> banfItems, int supplierID,
-            Date abholDatum, int importeurBestellungsid) {
+            Date abholDatum, int importeurBestellungsid, boolean bezahlt, File rechnung) {
         this.lieferauftragsID = lieferauftragsID;
         this.orderDate = orderDate;
         this.banfItems = banfItems;
         this.supplierID = supplierID;
         this.abholDatum = abholDatum;
-        this.setImporteurBestellungsid(importeurBestellungsid);
+        this.importeurBestellungsid = importeurBestellungsid;
+        this.bezahlt = bezahlt;
+        this.rechnung = rechnung;
     }
 
     public long getLieferauftragsID() {
@@ -75,29 +72,32 @@ public class Lieferantenauftrag {
         this.abholDatum = abholDatum;
     }
 
-    public Lieferantenauftrag lieferauftragsID(long lieferauftragsID) {
-        setLieferauftragsID(lieferauftragsID);
-        return this;
+    public int getImporteurBestellungsid() {
+        return this.importeurBestellungsid;
     }
 
-    public Lieferantenauftrag orderDate(Date orderDate) {
-        setOrderDate(orderDate);
-        return this;
+    public void setImporteurBestellungsid(int importeurBestellungsid) {
+        this.importeurBestellungsid = importeurBestellungsid;
     }
 
-    public Lieferantenauftrag banfItems(Set<Banfitem> banfItems) {
-        setBanfItems(banfItems);
-        return this;
+    public boolean isBezahlt() {
+        return this.bezahlt;
     }
 
-    public Lieferantenauftrag supplierID(int supplierID) {
-        setSupplierID(supplierID);
-        return this;
+    public boolean getBezahlt() {
+        return this.bezahlt;
     }
 
-    public Lieferantenauftrag abholDatum(Date abholDatum) {
-        setAbholDatum(abholDatum);
-        return this;
+    public void setBezahlt(boolean bezahlt) {
+        this.bezahlt = bezahlt;
+    }
+
+    public File getRechnung() {
+        return this.rechnung;
+    }
+
+    public void setRechnung(File rechnung) {
+        this.rechnung = rechnung;
     }
 
 }
