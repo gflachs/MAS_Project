@@ -5,7 +5,8 @@
           var variableManager = camForm.variableManager;
           $scope.banfGenerated = false;
           $scope.articleOrdered = false;
-          
+          $scope.articles = [];
+          $scope.orderArticles = [];
           $scope.generateBanf = function() {
             $scope.banfGenerated = true;
             $scope.count = 0;
@@ -58,8 +59,7 @@
              
               
               try{
-              $scope.articles = [];
-              $scope.orderArticles = [];
+              
               for (let index = 0; index < $scope.order.orderLineItems.length; index++) {
                   $http.get("https://projectmas.herokuapp.com/api/v1/article/" + $scope.order.orderLineItems[index].articleID ).then(function(response){
                     

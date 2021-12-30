@@ -97,6 +97,15 @@ public class Restcontroller {
         return ResponseEntity.ok(info);
     }
 
+    @GetMapping(path = "/api/v1/accountsById/{id}")
+    ResponseEntity<AccountInfo> fetchAccountInfoByMail(@PathVariable(name = "id") int id) {
+        AccountInfo info = accountInfoService.findByID(id);
+        if (info == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(info);
+    }
+
     @GetMapping(path = "/api/v1/accounts/exists/{email}")
     ResponseEntity<Boolean> checkAccountExistens(@PathVariable(name = "email") String accountEmail) {
         return ResponseEntity.ok(accountInfoService.userExist(accountEmail));
