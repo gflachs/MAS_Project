@@ -3,7 +3,7 @@
     <script cam-script type="text/form-script">
         inject(['$scope', '$http', function($scope, $http) {
           var variableManager = camForm.variableManager;
-          $scope.rechnungKorrekt = false;
+          
           $scope.rechnung;
           camForm.on('form-loaded', function() {
     
@@ -20,17 +20,15 @@
           });
 
           camForm.on('submit', function (evt) {
-              var req = {
-              method: 'PUT',
-              url: 'https://projectmas.herokuapp.com/api/v1/lieferantenauftrag/'+$scope.lieferauftrag.lieferauftragsID,
-              headers: {
-              'Content-Type': 'application/json',
-              'Accept' : '*/*',
-              'Access-Control-Expose-Headers':'Location'
-              }, 
-              data : $scope.rechnung
-            }
-            $http(req).then(function(response){console.log(response)},function(error){console.log(error)});
+            
+            console.log($scope.reKo);
+            variableManager.createVariable({
+                    name: 'rechnungkorrekt',
+                    type: 'Boolean',
+                    value: $scope.reKo
+                    });
+            
+            //$http(req).then(function(response){console.log(response)},function(error){console.log(error)});
            
             
           });
@@ -56,17 +54,21 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label">Rechnung korrekt?</label>
-                    <div class="controls">
                 
-                        <label class="btn btn-primary" cam-variable-name="rechnungkorrekt" cam-variable-type="Boolean" uib-btn-checkbox
-                            ng-Model="rechnungKorrekt">Ist die Rechnung korrekt?</label>
-                
-                    </div>
-                </div>
             </div>
         </div>
+    </div>
+    <div class="form-group">
+    
+        <pre>{{reKo}}</pre>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" cam-variable-name="rabattanfragen" cam-variable-type="Boolean" ng-Model="reKo">
+                Open only one at a time
+            </label>
+        </div>
+    
+    
     </div>
     
 </form>

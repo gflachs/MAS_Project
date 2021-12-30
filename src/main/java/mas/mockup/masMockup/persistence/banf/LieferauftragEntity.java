@@ -65,6 +65,7 @@ public class LieferauftragEntity {
         this.supplier = supplier;
         this.abholDatum = abholDatum;
         this.importBestellung = importBestellung;
+        this.bezahlt = false;
     }
 
     public long getLieferauftragsID() {

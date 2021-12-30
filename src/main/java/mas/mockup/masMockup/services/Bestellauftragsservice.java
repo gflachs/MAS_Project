@@ -124,6 +124,7 @@ public class Bestellauftragsservice {
         LieferauftragEntity entity = optional.get();
         entity.setBezahlt(true);
         entity = lieferauftragRepository.save(entity);
+        entity.setBezahlt(true);
         return lAEntityToLA(entity);
     }
 
