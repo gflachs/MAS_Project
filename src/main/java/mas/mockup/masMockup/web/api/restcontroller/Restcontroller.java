@@ -251,7 +251,8 @@ public class Restcontroller {
         MailBody mailBody = new MailBody("werbungbraucheichnicht@gmail.com",
                 accountInfoService.findByID(order.getAcoountInfoID()).getAccountEmail(),
                 "Bestellbestätigung zu Bestellung Nummer " + order.getOrderID(),
-                EmailService.orderConfirmationTemplate(items, totalPrice).getText());
+                EmailService.orderConfirmationTemplate(items, totalPrice, order.getRabatt(), order.getVersandkosten())
+                        .getText());
         emailService.sendSimpleMessage(mailBody);
         URI uri = new URI("api/v1/order/" + order.getOrderID());
         return ResponseEntity.created(uri).body(order.getOrderID());
@@ -375,6 +376,15 @@ public class Restcontroller {
     @PutMapping(path = "api/v1/banfitemFreigeben/{id}")
     ResponseEntity<Void> banfItemFreigeben(@PathVariable int id) {
         bestellauftragsservice.banfItemFreigeben(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(path = "api/v1/sendAbsageSupplier/{id}")
+    ResponseEntity<Void> sendAbsageSupplier(@RequestBody String text, @PathVariable(name = "id") int id) {
+        Supplier supplier = supplierService.findByID(id);
+        MailBody mailBody = new MailBody("werbungbraucheichnicht@gmail.com", supplier.getAccountEmail(),
+                "Absage zu Ihrem Angebot", text);
+        emailService.sendSimpleMessage(mailBody);
         return ResponseEntity.ok().build();
     }
 

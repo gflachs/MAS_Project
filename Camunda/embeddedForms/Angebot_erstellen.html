@@ -1,0 +1,142 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.article = {transparency : {produzent : "", produktionsort : {street : "", housenumber: "", zipCode : "", city : "", country : ""}}, productdescription : {produktname: "", description : "", ingridients : ""}, price : 0.00, imageurl : "", supplierID : 0, lagermenge : 0, mindestmenge : 0, einkaufspreis : 0.00};     
+          $scope.supplierMail = "";
+          $scope.emailError = false;
+          $scope.fetchSupplierID = function() {
+              if($scope.supplierMail != "") {
+                  $http.get("https://projectmas.herokuapp.com/api/v1/supplierByMail/" + $scope.supplierMail).then(function(res) {
+                    let result = res.data;
+                    try{
+                        $scope.article.supplierID = result.accountID;
+                        console.log(result.accountID);
+                        if($scope.article.supplierID != 0) {
+                            $scope.emailError = false;
+                        }else{
+                            $scope.emailError=true;
+                        }
+                    }catch(error) {
+                        console.log(error);
+                        $scope.emailError = true;
+                    }
+                  }, function(error) {
+                        console.log(error);
+                        $scope.emailError = true;
+                  })
+              };
+          };
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+    
+           
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            
+          });
+
+          camForm.on('submit', function (evt) {   
+            variableManager.createVariable({
+              name: 'articleOffer',
+              type: 'json',
+              value: $scope.article
+            }); 
+            
+          });
+        }]);
+  </script>
+    
+    <div class="form-group">
+        <label class="control-label">Ihre Emailadresse mit welcher Sie bei uns registiert sind: </label>
+        <div class="controls">
+            <input type="text" ng-Model="supplierMail" ng-change="fetchSupplierID()">
+        </div>
+    </div>
+    <div ng-if="emailError==true">
+        <p>Diese EMail ist uns nicht bekannt!</p>
+    </div>
+    <div ng-if="article.supplierID!=0">
+        <div class="form-group">
+            <label class="control-label">Produktname </label>
+            <div class="controls">
+                <input type="text" ng-Model="article.productdescription.produktname"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produktbeschreibung </label>
+            <div class="controls">
+                <textarea type="text" ng-Model="article.productdescription.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Inhaltsstoffe </label>
+            <div class="controls">
+                <textarea type="text" ng-Model="article.productdescription.ingridients"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Einkaufpreis </label>
+            <div class="controls">
+                <input type="number" ng-Model="article.einkaufspreis"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produzentname </label>
+            <div class="controls">
+                <input type="text" ng-Model="article.transparency.produzent"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produzent Straße </label>
+            <div class="controls">
+                <input type="text" ng-Model="article.transparency.produktionsort.street"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produzent Hausnummer</label>
+            <div class="controls">
+                <input type="text" ng-Model="article.transparency.produktionsort.housenumber"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produzent Stadt</label>
+            <div class="controls">
+                <input type="text" ng-Model="article.transparency.produktionsort.city"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produzent Postleitzahl </label>
+            <div class="controls">
+                <input type="text" ng-Model="article.transparency.produktionsort.zipCode"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produzent Land</label>
+            <div class="controls">
+                <input type="text" ng-Model="article.transparency.produktionsort.country"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Bild URL</label>
+            <div class="controls">
+                <input type="text" ng-Model="article.imageurl"/>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>

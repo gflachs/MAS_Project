@@ -1,0 +1,127 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.article;
+          
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+            variableManager.fetchVariable('articleOffer');
+           
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+            $scope.article = variableManager.variable('articleOffer').value;
+            
+          });
+
+          camForm.on('submit', function (evt) {   
+            var req = {
+                        method: 'POST',
+                        url: 'https://projectmas.herokuapp.com/api/v1/article/',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'Accept' : '*/*',
+                        'Access-Control-Expose-Headers':'Location'
+                        },
+                        data: JSON.stringify($scope.article)
+                    }
+            $http(req).then(function(res){},function(error){console.log(error);});
+          });
+        }]);
+  </script>
+
+
+    <div class="form-group">
+        <label class="control-label">Produktname </label>
+        <div class="controls">
+            <p type="text">{{article.productdescription.produktname}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produktbeschreibung </label>
+        <div class="controls">
+            <p>{{article.productdescription.description}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Inhaltsstoffe </label>
+        <div class="controls">
+            <p>{{article.productdescription.ingridients}}</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Einkaufpreis </label>
+        <div class="controls">
+            <p>{{article.einkaufspreis}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produzentname </label>
+        <div class="controls">
+            <p>{{article.transparency.produzent}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produzent Straße </label>
+        <div class="controls">
+            <p>{{article.transparency.produktionsort.street}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produzent Hausnummer</label>
+        <div class="controls">
+            <p>{{article.transparency.produktionsort.housenumber}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produzent Stadt</label>
+        <div class="controls">
+            <p>{{article.transparency.produktionsort.city}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produzent Postleitzahl </label>
+        <div class="controls">
+            <p>{{article.transparency.produktionsort.zipCode}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Produzent Land</label>
+        <div class="controls">
+            <p>{{article.transparency.produktionsort.country}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Bild URL</label>
+        <div class="controls">
+            <img ng-src={{article.imageurl}}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Verkaufspreis</label>
+        <div class="controls">
+            <input type="text" ng-Model="article.price" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Mindestmenge die auf Lager sein soll</label>
+        <div class="controls">
+            <input type="text" ng-Model="article.mindestmenge" />
+        </div>
+    </div>
+    
+    <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>
