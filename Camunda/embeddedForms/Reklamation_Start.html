@@ -1,0 +1,77 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.order;
+          $scope.reklamation = {orderID : 0, article : {}}
+          $scope.orderError = false;
+          $scope.fetchOrder = function() {
+              if($scope.supplierMail != "") {
+                  $http.get("https://projectmas.herokuapp.com/api/v1/orderReklamtion/" + $scope.reklamation.orderID).then(function(res) {
+                    let result = res.data;
+                    try{
+                        $scope.order = result;
+                        console.log(result);
+                        $scope.orderError = false;
+                    }catch(error) {
+                        console.log(error);
+                        $scope.orderError = true;
+                    }
+                  }, function(error) {
+                        console.log(error);
+                        $scope.emailError = true;
+                  })
+              };
+          };
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+    
+           
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            
+          });
+
+          camForm.on('submit', function (evt) {   
+            variableManager.createVariable({
+              name: 'Reklamation',
+              type: 'json',
+              value: $scope.article
+            }); 
+            
+          });
+        }]);
+  </script>
+
+    <div class="form-group">
+        <label class="control-label">Ordernummer: </label>
+        <div class="controls">
+            <input type="text" ng-Model="reklamation.orderID" ng-change="fetchSupplierID()">
+        </div>
+    </div>
+    <div ng-if="emailError==true">
+        <p>Diese Orderid ist uns nicht bekannt!</p>
+    </div>
+    <div ng-repeat="article in order.articles">
+        <p>Artikelname: {{aticle.productdescription.produktname}}</p>
+        <p>Bestellte Anzahl: {{article.amount}}</p>
+        <input type="checkbox" ng-Model="article.reklamation">
+        <div ng-if="article.reklamation == true">
+            <textarea ng-Model="article.reklamationsgrund"></textarea>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+    <label class="control-label">Rabatt für die Bestellung</label>
+    <div class="controls">
+      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
+    </div>
+  </div> -->
+</form>

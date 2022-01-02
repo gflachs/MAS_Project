@@ -30,7 +30,7 @@
                         'Accept' : '*/*',
                         'Access-Control-Expose-Headers':'Location'
                         },
-                        data: JSON.stringify($scope.absageText);
+                        data: $scope.absageText
                     }
             $http(req).then(function(res){},function(error){console.log(error);});
           });
@@ -41,7 +41,7 @@
     <div class="form-group">
         <label class="control-label">Absagetext</label>
         <div class="controls">
-            <textarea type="text" ng-Model="article.productdescription.description"></textarea>
+            <textarea type="text" ng-Model="absageText"></textarea>
         </div>
     </div>
        

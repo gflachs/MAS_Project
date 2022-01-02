@@ -13,9 +13,12 @@ import mas.mockup.masMockup.persistence.accounts.AccountInfoEntity;
 import mas.mockup.masMockup.persistence.orders.OrderEntity;
 import mas.mockup.masMockup.persistence.orders.OrderRepository;
 import mas.mockup.masMockup.persistence.orders.OrderStatusEntity;
+import mas.mockup.masMockup.persistence.orders.orderlineitem.OrderLineItemEntity;
 import mas.mockup.masMockup.web.database.order.Order;
 import mas.mockup.masMockup.web.database.order.OrderBody;
+import mas.mockup.masMockup.web.database.order.OrderReklamtion;
 import mas.mockup.masMockup.web.database.order.OrderStatus;
+import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItemReklamation;
 
 @Service
 public class OrderService {
@@ -52,6 +55,29 @@ public class OrderService {
     public OrderEntity findByIdToEntity(long orderID) {
         Optional<OrderEntity> optional = orderRepository.findById(orderID);
         return optional.isPresent() ? optional.get() : null;
+    }
+
+    public OrderReklamtion getReklamationsInfo(long orderID) {
+        Optional<OrderEntity> optional = orderRepository.findById(orderID);
+        OrderEntity orderEntity;
+        if (optional.isEmpty()) {
+            return null;
+        }
+        orderEntity = optional.get();
+        Set<OrderLineItemEntity> orderLineItems = orderEntity.getOrderLineItems();
+        Set<OrderLineItemReklamation> orderLineItemReklamations = new HashSet<>();
+        for (OrderLineItemEntity entity : orderLineItems) {
+            orderLineItemReklamations.add(new OrderLineItemReklamation(entity.getItemID(),
+                    entity.getArticle().getProductdescription().getProduktname(), entity.getAmount(),
+                    entity.getPrice()));
+        }
+        OrderReklamtion orderReklamtion = new OrderReklamtion(orderID, orderEntity.getOrderDate(),
+                orderEntity.getRabatt(), orderEntity.getVersandkosten(),
+                orderLineItemReklamations,
+                orderEntity.getAccountInfoEntity().getAccountID(),
+                new OrderStatus(orderEntity.getStatus().getOrderStatus()));
+
+        return orderReklamtion;
     }
 
     public static Order entityToOrder(OrderEntity entity) {

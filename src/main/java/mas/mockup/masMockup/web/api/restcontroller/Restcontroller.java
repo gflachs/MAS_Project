@@ -46,6 +46,7 @@ import mas.mockup.masMockup.web.database.banf.banfitem.Banfitem;
 import mas.mockup.masMockup.web.database.banf.banfitem.itemstatus.ItemStatus;
 import mas.mockup.masMockup.web.database.order.Order;
 import mas.mockup.masMockup.web.database.order.OrderBody;
+import mas.mockup.masMockup.web.database.order.OrderReklamtion;
 import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItem;
 import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItemBody;
 import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItemBodyOrder;
@@ -386,6 +387,12 @@ public class Restcontroller {
                 "Absage zu Ihrem Angebot", text);
         emailService.sendSimpleMessage(mailBody);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(path = "api/v1/orderReklamtion/{id}")
+    ResponseEntity<OrderReklamtion> getOrderReklamation(@PathVariable(name = "id") long orderID) {
+        OrderReklamtion reklamtion = orderService.getReklamationsInfo(orderID);
+        return reklamtion == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(reklamtion);
     }
 
     private ArticleInfo articleToArticleInfo(Article article) {
