@@ -1,0 +1,57 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.article;
+          $scope.absageText;
+          $scope.account;
+          //OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+            variableManager.fetchVariable('Reklamation');
+           
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+            $scope.article = variableManager.variable('Reklamation').value;
+            $http.get("https://projectmas.herokuapp.com/api/v1/accountsById/" + $scope.article.acoountInfoID).then(function(res) {
+                $scope.account = res.data;
+                $scope.absageText = "Sehr geehrte/r Herr/Frau " + $scope.account.contactPerson.surname + " " + $scope.account.contactPerson.lastname +",\n leider können wir Ihre Reklamation aus folgendem Grund nicht wahrnehmen: ";
+            }, function(error){console.log(error)});
+          });
+
+          camForm.on('submit', function (evt) {   
+            var req = {
+                        method: 'POST',
+                        url: 'https://projectmas.herokuapp.com/api/v1/sendAbsageReklamation',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'Accept' : '*/*',
+                        'Access-Control-Expose-Headers':'Location'
+                        },
+                        data:  JSON.stringify({from : "werbungbraucheichnicht@gmail.com", to : $scope.account.accountEmail, subject : "Absage Reklamation " + $scope.article.orderID, text: $scope.absageText})
+                    };
+            $http(req).then(function(res){},function(error){console.log(error);});
+          });
+        }]);
+  </script>
+
+    <div class="form-group">
+        <label class="control-label">An</label>
+        <div class="controls">
+            <p>{{account.accountEmail}}</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Absagetext</label>
+        <div class="controls">
+            <textarea type="text" ng-Model="absageText"></textarea>
+        </div>
+    </div>
+</form>

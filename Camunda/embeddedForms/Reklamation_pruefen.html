@@ -1,0 +1,49 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.order;
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+            variableManager.fetchVariable('Reklamation');
+           
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+            $scope.order = variableManager.variable('Reklamation').value;
+            
+          });
+
+          camForm.on('submit', function (evt) {   
+            
+            
+          });
+        }]);
+  </script>
+
+    <div ng-repeat="article in order.orderLineItems">
+        <div ng-if="article.reklamation == true">
+            <p>Artikelname: {{article.artikelName}}</p>
+            <p>Bestellte Anzahl: {{article.amount}}</p>
+            <p>reklamationsgrund: {{article.reklamationsgrund}}</p>
+        </div>
+    
+    </div>
+
+    
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" cam-variable-name="reklamationerfolgreich" cam-variable-type="Boolean">
+                Reklamation annehmen?
+            </label>
+        </div>
+    </div>
+
+</form>

@@ -389,6 +389,12 @@ public class Restcontroller {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping(path = "api/v1/sendAbsageReklamation")
+    ResponseEntity<Void> sendAbsageReklamation(@RequestBody MailBody mailBody) {
+        emailService.sendSimpleMessage(mailBody);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(path = "api/v1/orderReklamtion/{id}")
     ResponseEntity<OrderReklamtion> getOrderReklamation(@PathVariable(name = "id") long orderID) {
         OrderReklamtion reklamtion = orderService.getReklamationsInfo(orderID);

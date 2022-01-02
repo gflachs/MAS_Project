@@ -20,7 +20,7 @@
                     }
                   }, function(error) {
                         console.log(error);
-                        $scope.emailError = true;
+                        $scope.orderError = true;
                   })
               };
           };
@@ -44,7 +44,7 @@
             variableManager.createVariable({
               name: 'Reklamation',
               type: 'json',
-              value: $scope.article
+              value: $scope.order
             }); 
             
           });
@@ -54,24 +54,39 @@
     <div class="form-group">
         <label class="control-label">Ordernummer: </label>
         <div class="controls">
-            <input type="text" ng-Model="reklamation.orderID" ng-change="fetchSupplierID()">
+            <input type="text" ng-Model="reklamation.orderID" ng-change="fetchOrder()">
         </div>
     </div>
-    <div ng-if="emailError==true">
+    <div ng-if="orderError==true">
         <p>Diese Orderid ist uns nicht bekannt!</p>
     </div>
-    <div ng-repeat="article in order.articles">
-        <p>Artikelname: {{aticle.productdescription.produktname}}</p>
+    <div ng-repeat="article in order.orderLineItems">
+        <p>Artikelname: {{article.artikelName}}</p>
         <p>Bestellte Anzahl: {{article.amount}}</p>
-        <input type="checkbox" ng-Model="article.reklamation">
+        <div class="form-group">
+            <label class="control-label">Reklamieren? </label>
+            <div class="controls">
+                <input type="checkbox" ng-Model="article.reklamation">
+            </div>
+        </div>
+        
         <div ng-if="article.reklamation == true">
-            <textarea ng-Model="article.reklamationsgrund"></textarea>
+            <div class="form-group">
+                <label class="control-label">Beschreibung? </label>
+                <div class="controls">
+                    <textarea ng-Model="article.reklamationsgrund"></textarea>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+    <div class="form-group" ng-if="order">
+        <label class="control-label">Foto </label>
+        <div class="controls">
+            <input type="file" cam-variable-name="attachment" cam-variable-type="File" cam-max-filesize="10000000" />
         </div>
     </div>
-    <!-- <div class="form-group">
-    <label class="control-label">Rabatt für die Bestellung</label>
-    <div class="controls">
-      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
-    </div>
-  </div> -->
+    
 </form>

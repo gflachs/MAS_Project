@@ -1,0 +1,69 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.order;
+          $scope.sum = 0;
+          $scope.account;
+          $scope.ueberwiesen = false;
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+            // Fetch Variables
+            variableManager.fetchVariable('Reklamation');
+           
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+            $scope.order = variableManager.variable('Reklamation').value;
+            for(let index = 0; index < $scope.order.orderLineItems.length;index++) {
+                if($scope.order.orderLineItems[index].reklamation == true) {
+                    $scope.sum += $scope.order.orderLineItems[index].amount * $scope.order.orderLineItems[index].price * (100-$scope.order.rabatt)/100;
+                }
+            }
+            $http.get("https://projectmas.herokuapp.com/api/v1/accountsById/" + $scope.order.acoountInfoID).then(function(res) {
+                $scope.account = res.data;
+            },function(error){
+                console.log(error);
+            })
+          });
+
+          camForm.on('submit', function (evt) {   
+            if($scope.ueberwiesen==false){
+                evt.submitPrevented = true;
+            }else{
+                evt.submitPrevented = false;
+            }
+            
+          });
+        }]);
+  </script>
+
+    
+
+    <div class="form-group">
+        <label class="control-label">Überweisungssumme </label>
+        <div class="controls">
+            <p>{{sum}}</p>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label class="control-label">IBAN </label>
+        <div class="controls">
+            <p>{{account.bankaccount}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-Model="ueberwiesen">
+                Überweisung durchgeführt?
+            </label>
+        </div>
+    </div>
+
+</form>
