@@ -4,7 +4,7 @@
         inject(['$scope', '$http', function($scope, $http) {
           var variableManager = camForm.variableManager;
           $scope.order;
-          $scope.reklamation = {orderID : 0, article : {}}
+          $scope.reklamation = {orderID : 0}
           $scope.orderError = false;
           $scope.fetchOrder = function() {
               if($scope.supplierMail != "") {
@@ -54,7 +54,7 @@
     <div class="form-group">
         <label class="control-label">Ordernummer: </label>
         <div class="controls">
-            <input type="text" ng-Model="reklamation.orderID" ng-change="fetchOrder()">
+            <input type="number" ng-Model="reklamation.orderID" ng-change="fetchOrder()" required="true">
         </div>
     </div>
     <div ng-if="orderError==true">
@@ -74,7 +74,7 @@
             <div class="form-group">
                 <label class="control-label">Beschreibung? </label>
                 <div class="controls">
-                    <textarea ng-Model="article.reklamationsgrund"></textarea>
+                    <textarea ng-Model="article.reklamationsgrund" required="true"></textarea>
                 </div>
             </div>
             

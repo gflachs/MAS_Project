@@ -104,21 +104,18 @@
           });
 
           camForm.on('submit', function (evt) {
-            if(!$scope.banfGenerated) {
-              evt.submitPrevented = true;
-            } else {
-              evt.submitPrevented = false;
-              variableManager.createVariable({
-                name: 'Banf',
-                type: 'json',
-                value: $scope.articles
-              }); 
-              variableManager.createVariable({
-                name: 'articleOrdered',
-                type: 'Boolean',
-                value: $scope.articleOrdered
-              });
-            }
+           
+            variableManager.createVariable({
+              name: 'Banf',
+              type: 'json',
+              value: $scope.articles
+            }); 
+            variableManager.createVariable({
+              name: 'articleOrdered',
+              type: 'Boolean',
+              value: $scope.articleOrdered
+            });
+          
             
           });
         }]);

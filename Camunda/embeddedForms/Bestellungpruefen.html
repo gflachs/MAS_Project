@@ -29,10 +29,7 @@
               $scope.orderJSON = variableManager.variable('orderJSON').value;
               $scope.articles = [];
               
-              console.log($scope.orderJSON);
-              let parsed = JSON.parse($scope.orderJSON);
-              console.log(parsed);
-              $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + parsed.email + "/orderAmount").then(function(response){
+              $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + $scope.orderJSON.email + "/orderAmount").then(function(response){
                 
                 console.log("ok")
                 $scope.orderAmount = response.data;
@@ -41,7 +38,7 @@
                 console.log(error.message);
               })
 
-              $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + parsed.email).then(function(response){
+              $http.get("https://projectmas.herokuapp.com/api/v1/accounts/" + $scope.orderJSON.email).then(function(response){
                 
                 console.log("ok")
                 $scope.accountInfo = response.data;
@@ -50,17 +47,13 @@
                 console.log(error.message);
               });
 
-              for (let index = 0; index < parsed.orderLineItems.length; index++) {
-                  $http.get("https://projectmas.herokuapp.com/api/v1/article/" + parsed.orderLineItems[index].articleId).then(function(response){
-                      console.log("ok")
-                      $scope.articles[index] = response.data;
-                      $scope.articles[index].amount = parsed.orderLineItems[index].amount;
-                      $scope.articles[index].total = $scope.articles[index].amount * $scope.articles[index].price;
-                      $scope.totalPrice += $scope.articles[index].total;
-                      $scope.totalAmount += $scope.articles[index].amount;
-                  },function(error){
-                      console.log(error.message);
-                  })
+              for (let index = 0; index < $scope.orderJSON.articles.length; index++) {
+                if($scope.orderJSON.articles[index].amount > 0) {
+                 
+                  $scope.articles.push($scope.orderJSON.articles[index]);
+                  $scope.totalPrice += $scope.orderJSON.articles[index].total;
+                  $scope.totalAmount += $scope.orderJSON.articles[index].amount;
+                }
   
               } 
             
@@ -100,7 +93,7 @@
             <p>Artikelid: {{article.articleId}}</p>
             <p>Artikelname: {{article.productdescription.produktname}}</p>
             <p>Artikelpreis: {{article.price}}</p>
-            <p>Georderte Anzahl: {{article.amount}} €</p>
+            <p>Georderte Anzahl: {{article.amount}}</p>
             <p>Gesamtpreis: {{article.total}} €</p>
           </uib-tab>
         </uib-tabset>

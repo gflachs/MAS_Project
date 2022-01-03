@@ -64,30 +64,25 @@
           });
         }]);
   </script>
-    <div class="form-group" ng-if="lieferauftraege.length > 0">
-        <label class="control-label">Lieferaufträge </label>
-        <div class="form-group">
-            <label class="control-label">Übersicht: </label>
-            <div class="controls">
-                <div ng-repeat="auftrag in lieferauftraege" >
-                    <p>Auftragsid: {{auftrag.lieferauftragsID}}</p>
-                    <p>Anzahl an Banf - Positionen: {{auftrag.banfItems.length}}</p>
-                    <p>Zulieferer: {{auftrag.supplierID}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-        <div class="form-group">
-            
-            <div class="controls">
+  <div class="form-group" ng-if="lieferauftraege.length > 0">
+      <label class="control-label">Lieferaufträge </label>
+      <div class="form-group">
+          <label class="control-label">Übersicht: </label>
+          <div class="controls">
+              <div ng-repeat="auftrag in lieferauftraege" >
+                  <p>Auftragsid: {{auftrag.lieferauftragsID}}</p>
+                  <p>Anzahl an Banf - Positionen: {{auftrag.banfItems.length}}</p>
+                  <p>Zulieferer: {{auftrag.supplierID}}</p>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="form-group" ng-if="lieferauftraege.length > 1">
+      
+      <div class="controls">
 
-                <button type="button" class="btn btn-info" ng-click="generiereLieferauftraege()">Lieferaufträge erstellen</button>
-            </div>
-        </div>
-        <!-- <div class="form-group">
-    <label class="control-label">Rabatt für die Bestellung</label>
-    <div class="controls">
-      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
-    </div>
-  </div> -->
+          <button type="button" class="btn btn-info" ng-click="generiereLieferauftraege()">Lieferaufträge erstellen</button>
+      </div>
+  </div>
+     
 </form>

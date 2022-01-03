@@ -1,0 +1,89 @@
+<form role="form" name="form" xmlns="http://www.w3.org/1999/html">
+
+    <script cam-script type="text/form-script">
+        inject(['$scope', '$http', function($scope, $http) {
+          var variableManager = camForm.variableManager;
+          $scope.orderJSON;
+          $scope.articles;   
+          $scope.email;
+          $scope.totalPrice = 0;
+          $http.get("https://projectmas.herokuapp.com/api/v1/article").then(function(res){
+                $scope.articles = res.data;
+            }, function(error){console.log(error);});
+          $scope.calcTotal = function() {
+            $scope.totalPrice = 0;
+            for(let index = 0; index < $scope.articles.length; index++) {
+                
+                if($scope.articles[index].amount == null){
+                    $scope.articles[index].amount = 0;
+                }
+                let article = $scope.articles[index];
+                $scope.articles[index].total =article.amount * article.price; 
+                console.log( article.amount + " " + article.price + " " + article.amount * article.price);
+                $scope.totalPrice += $scope.articles[index].total;
+            }
+            
+          }       
+          // OnFormLoaded
+          camForm.on('form-loaded', function() {
+                    
+              
+        
+      
+          });
+          
+          // OnVariablesFetched
+          camForm.on('variables-fetched', function() {
+
+            
+            
+          });
+
+          camForm.on('submit', function (evt) {   
+            variableManager.createVariable({
+              name: 'orderJSON',
+              type: 'json',
+              value: {articles : $scope.articles, email: $scope.email}
+            }); 
+          });
+        }]);
+  </script>
+    <div class="form-group">
+        <label class="control-label">Bestellformular: </label>
+        <div class="form-group">
+            <label class="control-label">Ihre Emailadresse: </label>
+            <div class="controls">
+                <input ng-Model="email" type="text" required="true">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Gesamtpreis: </label>
+            <div class="controls">
+        
+                <p>{{totalPrice}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Produkte: </label>
+            <div class="controls">
+                <uib-tabset>
+                    <uib-tab index="$index + 1" ng-repeat="article in articles"
+                        heading="{{article.productdescription.produktname}}">
+                        <p>Artikelname: {{article.productdescription.produktname}}</p>
+                        <p>Artikelpreis: {{article.price}}</p>
+                        <div class="form-group">
+                            <label class="control-label">Ordermenge: </label>
+                            <div class="controls">
+                                <input ng-Model="article.amount" type="number" ng-change="calcTotal()"/>
+                            </div>
+                        </div>
+                        <img ng-src={{article.imageurl}}>
+                        <p>Gesamtpreis: {{article.total}} €</p>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+        
+    </div>
+    
+</form>

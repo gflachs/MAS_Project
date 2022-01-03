@@ -56,7 +56,11 @@
             });
 
             camForm.on('submit', function (evt) {   
-               
+               if($scope.orderID ="Bitte Order generieren"){
+                   evt.submitPrevented = true;
+               }else{
+                   evt.submitPrevented = false;
+               }
                 variableManager.createVariable({
                             name: 'order',
                             type: 'json',

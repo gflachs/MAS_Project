@@ -14,6 +14,8 @@ import mas.mockup.masMockup.persistence.orders.OrderEntity;
 import mas.mockup.masMockup.persistence.orders.OrderRepository;
 import mas.mockup.masMockup.persistence.orders.OrderStatusEntity;
 import mas.mockup.masMockup.persistence.orders.orderlineitem.OrderLineItemEntity;
+import mas.mockup.masMockup.persistence.products.ArticleEntity;
+import mas.mockup.masMockup.persistence.products.ArticleRepository;
 import mas.mockup.masMockup.web.database.order.Order;
 import mas.mockup.masMockup.web.database.order.OrderBody;
 import mas.mockup.masMockup.web.database.order.OrderReklamtion;
@@ -23,11 +25,13 @@ import mas.mockup.masMockup.web.database.order.orderlineitem.OrderLineItemReklam
 @Service
 public class OrderService {
 
-    private OrderRepository orderRepository;
-    private AccountInfoService accountInfoService;
+    private final OrderRepository orderRepository;
+    private final ArticleRepository articleRepository;
+    private final AccountInfoService accountInfoService;
 
-    public OrderService(OrderRepository orderRepository, AccountInfoService accountInfoService) {
-
+    public OrderService(OrderRepository orderRepository, AccountInfoService accountInfoService,
+            ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
         this.orderRepository = orderRepository;
         this.accountInfoService = accountInfoService;
     }
@@ -55,6 +59,24 @@ public class OrderService {
     public OrderEntity findByIdToEntity(long orderID) {
         Optional<OrderEntity> optional = orderRepository.findById(orderID);
         return optional.isPresent() ? optional.get() : null;
+    }
+
+    public Order orderVersendet(long orderID) {
+        Optional<OrderEntity> optional = orderRepository.findById(orderID);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        OrderEntity entity = optional.get();
+        entity.setStatus(new OrderStatusEntity("versendet"));
+        entity.getOrderLineItems().forEach(e -> {
+
+            ArticleEntity entity2 = e.getArticle();
+            entity2.setLagermenge(entity2.getLagermenge() - e.getAmount());
+            entity2 = articleRepository.save(entity2);
+            e.setArticle(entity2);
+        });
+        entity = orderRepository.save(entity);
+        return entityToOrder(entity);
     }
 
     public OrderReklamtion getReklamationsInfo(long orderID) {

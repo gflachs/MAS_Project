@@ -21,7 +21,7 @@
             $scope.article = variableManager.variable('Reklamation').value;
             $http.get("https://projectmas.herokuapp.com/api/v1/accountsById/" + $scope.article.acoountInfoID).then(function(res) {
                 $scope.account = res.data;
-                $scope.absageText = "Sehr geehrte/r Herr/Frau " + $scope.account.contactPerson.surname + " " + $scope.account.contactPerson.lastname +",\n leider können wir Ihre Reklamation aus folgendem Grund nicht wahrnehmen: ";
+                $scope.absageText = "Sehr geehrte/r Herr/Frau " + $scope.account.contactPerson.surname + " " + $scope.account.contactPerson.lastname +",\nleider können wir Ihre Reklamation aus folgendem Grund nicht wahrnehmen: ";
             }, function(error){console.log(error)});
           });
 
@@ -51,7 +51,7 @@
     <div class="form-group">
         <label class="control-label">Absagetext</label>
         <div class="controls">
-            <textarea type="text" ng-Model="absageText"></textarea>
+            <textarea type="text" ng-Model="absageText" required="true"></textarea>
         </div>
     </div>
 </form>

@@ -401,6 +401,12 @@ public class Restcontroller {
         return reklamtion == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(reklamtion);
     }
 
+    @GetMapping(path = "api/v1/orderVersendet/{id}")
+    ResponseEntity<Order> setOrderversendet(@PathVariable(name = "id") long orderID) {
+        Order order = orderService.orderVersendet(orderID);
+        return order == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(order);
+    }
+
     private ArticleInfo articleToArticleInfo(Article article) {
         return new ArticleInfo(article.getArticleId(), article.getTransparency(), article.getProductdescription(),
                 article.getPrice(), article.getImageurl());

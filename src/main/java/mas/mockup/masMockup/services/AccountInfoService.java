@@ -37,7 +37,7 @@ public class AccountInfoService {
     }
 
     public boolean userExist(String email) {
-        return accountInfoRepository.existsByaccountEmail(email);
+        return accountInfoRepository.existsByaccountEmail(email.toLowerCase());
     }
 
     public static AccountInfo entityToAccountInfo(AccountInfoEntity entity) {

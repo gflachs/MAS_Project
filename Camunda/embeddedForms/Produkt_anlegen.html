@@ -100,7 +100,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label">Bild URL</label>
+        <label class="control-label">Bild</label>
         <div class="controls">
             <img ng-src={{article.imageurl}}>
         </div>
@@ -108,13 +108,13 @@
     <div class="form-group">
         <label class="control-label">Verkaufspreis</label>
         <div class="controls">
-            <input type="text" ng-Model="article.price" />
+            <input type="text" ng-Model="article.price" required="true"/>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label">Mindestmenge die auf Lager sein soll</label>
         <div class="controls">
-            <input type="text" ng-Model="article.mindestmenge" />
+            <input type="text" ng-Model="article.mindestmenge" required="true" />
         </div>
     </div>
     

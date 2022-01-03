@@ -58,7 +58,7 @@
     <div class="form-group">
         <label class="control-label">Ihre Emailadresse mit welcher Sie bei uns registiert sind: </label>
         <div class="controls">
-            <input type="text" ng-Model="supplierMail" ng-change="fetchSupplierID()">
+            <input type="text" ng-Model="supplierMail" ng-change="fetchSupplierID()" required="true">
         </div>
     </div>
     <div ng-if="emailError==true">
@@ -68,75 +68,70 @@
         <div class="form-group">
             <label class="control-label">Produktname </label>
             <div class="controls">
-                <input type="text" ng-Model="article.productdescription.produktname"/>
+                <input type="text" ng-Model="article.productdescription.produktname" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produktbeschreibung </label>
             <div class="controls">
-                <textarea type="text" ng-Model="article.productdescription.description"></textarea>
+                <textarea type="text" ng-Model="article.productdescription.description" required="true"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Inhaltsstoffe </label>
             <div class="controls">
-                <textarea type="text" ng-Model="article.productdescription.ingridients"></textarea>
+                <textarea type="text" ng-Model="article.productdescription.ingridients" required="true"></textarea>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">Einkaufpreis </label>
             <div class="controls">
-                <input type="number" ng-Model="article.einkaufspreis"/>
+                <input type="number" ng-Model="article.einkaufspreis" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produzentname </label>
             <div class="controls">
-                <input type="text" ng-Model="article.transparency.produzent"/>
+                <input type="text" ng-Model="article.transparency.produzent" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produzent Straße </label>
             <div class="controls">
-                <input type="text" ng-Model="article.transparency.produktionsort.street"/>
+                <input type="text" ng-Model="article.transparency.produktionsort.street" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produzent Hausnummer</label>
             <div class="controls">
-                <input type="text" ng-Model="article.transparency.produktionsort.housenumber"/>
+                <input type="text" ng-Model="article.transparency.produktionsort.housenumber" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produzent Stadt</label>
             <div class="controls">
-                <input type="text" ng-Model="article.transparency.produktionsort.city"/>
+                <input type="text" ng-Model="article.transparency.produktionsort.city" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produzent Postleitzahl </label>
             <div class="controls">
-                <input type="text" ng-Model="article.transparency.produktionsort.zipCode"/>
+                <input type="text" ng-Model="article.transparency.produktionsort.zipCode" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Produzent Land</label>
             <div class="controls">
-                <input type="text" ng-Model="article.transparency.produktionsort.country"/>
+                <input type="text" ng-Model="article.transparency.produktionsort.country" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Bild URL</label>
             <div class="controls">
-                <input type="text" ng-Model="article.imageurl"/>
+                <input type="text" ng-Model="article.imageurl" required="true"/>
             </div>
         </div>
     </div>
-    <!-- <div class="form-group">
-    <label class="control-label">Rabatt für die Bestellung</label>
-    <div class="controls">
-      <input type="number" cam-variable-name="discount" cam-variable-type="Double" name="discount" class="form-control" value="0" (onchange)="calculateTotal" />
-    </div>
-  </div> -->
+    
 </form>
