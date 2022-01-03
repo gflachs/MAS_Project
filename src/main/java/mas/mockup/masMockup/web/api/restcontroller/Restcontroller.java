@@ -115,6 +115,9 @@ public class Restcontroller {
     @PostMapping(path = "/api/v1/accounts", produces = "application/json;charset=UTF-8")
     ResponseEntity<URI> createNewAccount(@RequestBody AccountInfoBody body) throws URISyntaxException {
         AccountInfo info = accountInfoService.createFromBody(body);
+        MailBody mailBody = new MailBody("Kundenservice", info.getAccountEmail(),
+                "Herzlich Willkommen bei der NaturNah GmbH",
+                "Sehr geehrte Damen und Herren,\nvielen Dank für Ihre Registrierung bei der NaturNah GmbH. Wir freuen uns auf eine erfoglreiche Zusammenarbeit. Bitte geben Sie ab jetzt bei jeder Bestellung Ihre Emailadresse an.\n\nIhre NaturNah GmbH");
         URI uri = new URI("/api/v1/accounts/" + info.getAccountEmail());
         return ResponseEntity.created(uri).build();
     }
