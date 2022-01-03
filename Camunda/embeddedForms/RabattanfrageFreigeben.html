@@ -32,6 +32,7 @@
                 console.log($scope.articles[i].einkaufspreis);
                 console.log($scope.articles[i].amount);
                 $scope.totalEinkauf += $scope.articles[i].einkaufspreis * $scope.articles[i].amount;
+                $scope.totalEinkauf = $scope.totalEinkauf.toFixed(2);
                 $scope.orderinformationen.totalAmount += $scope.articles[i].amount;
               }
               $scope.totalPrice = $scope.orderinformationen.total;
@@ -64,7 +65,7 @@
       <label class="control-label">Gesamtpreis: </label>
       <div class="controls">
     
-        <p>{{totalPrice * (100-discountHoeheNew)/100}}</p>
+        <p>{{(totalPrice * (100-discountHoeheNew)/100).toFixed(2)}}</p>
       </div>
     </div>
     <div class="form-group">

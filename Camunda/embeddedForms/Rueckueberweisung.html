@@ -40,13 +40,13 @@
 
                 var req = {
                         method: 'POST',
-                        url: 'https://projectmas.herokuapp.com//api/v1/sendMail',
+                        url: 'https://projectmas.herokuapp.com/api/v1/sendMail',
                         headers: {
                         'Content-Type': 'application/json',
                         'Accept' : '*/*',
                         'Access-Control-Expose-Headers':'Location'
                         },
-                        data: JSON.stringify({from : "Kundenservice", to : $scope.accountEmail, subject : "Erstattung Ihrer Reklamation zu Order: " + $scope.order.orderID, text : "Guten Tag,\nwir haben eine Erstattung für Ihre Reklamation i.H.v. " + $scope.sum + " veranlasst."})
+                        data: JSON.stringify({from : "Kundenservice", to : $scope.account.accountEmail, subject : "Erstattung Ihrer Reklamation zu Order: " + $scope.order.orderID, text : "Guten Tag,\nwir haben eine Erstattung für Ihre Reklamation i.H.v. " + $scope.sum + " veranlasst."})
                     }
                     $http(req).then(function(response){
                         

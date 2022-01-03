@@ -111,7 +111,7 @@
             <label class="control-label">Gesamtpreis: </label>
             <div class="controls">
         
-                <p>{{(orderInformationen.total * ((100-orderInformationen.discount)/100)  + orderInformationen.shippingCosts)}} €</p>
+                <p>{{(orderInformationen.total * ((100-orderInformationen.discount)/100)  + orderInformationen.shippingCosts).toFixed(2)}} €</p>
             </div>
         </div>
         <div class="form-group">

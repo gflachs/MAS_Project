@@ -1,5 +1,8 @@
 package mas.mockup.masMockup.web.api.mailservice;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,7 +26,10 @@ public class EmailService {
         if (versandkosten != 0) {
             text += "Zuzüglich Versandkosten i.H.v.: " + versandkosten + " €\n";
         }
-        text += "Gesamtsumme= " + totalPrice * (100 - rabatt) / 100 + versandkosten + " €\n";
+        text += "Gesamtsumme= "
+                + new BigDecimal(totalPrice * (100 - rabatt) / 100 + versandkosten).setScale(2, RoundingMode.CEILING)
+                        .floatValue()
+                + " €\n";
         text += "Wir buchen den Betrag innerhalb der nächsten Tage von Ihrem Konto ab";
         message.setText(text);
         return message;

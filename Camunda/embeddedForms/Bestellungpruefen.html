@@ -51,7 +51,7 @@
                 if($scope.orderJSON.articles[index].amount > 0) {
                  
                   $scope.articles.push($scope.orderJSON.articles[index]);
-                  $scope.totalPrice += $scope.orderJSON.articles[index].total;
+                  $scope.totalPrice += $scope.orderJSON.articles[index].total.toFixed(2);
                   $scope.totalAmount += $scope.orderJSON.articles[index].amount;
                 }
   
@@ -63,7 +63,7 @@
             variableManager.createVariable({
               name: 'Orderinformationen',
               type: 'json',
-              value: {orderLineItems : $scope.articles, amount : $scope.orderAmount, total : $scope.totalPrice, discount : 0, articleAmount : $scope.totalAmount, accountInfo : $scope.accountInfo}
+              value: {orderLineItems : $scope.articles, amount : $scope.orderAmount, total : $scope.totalPrice.toFixed(2), discount : 0, articleAmount : $scope.totalAmount, accountInfo : $scope.accountInfo}
             }); 
             variableManager.createVariable({
               name: 'storno',
@@ -94,7 +94,7 @@
             <p>Artikelname: {{article.productdescription.produktname}}</p>
             <p>Artikelpreis: {{article.price}}</p>
             <p>Georderte Anzahl: {{article.amount}}</p>
-            <p>Gesamtpreis: {{article.total}} €</p>
+            <p>Gesamtpreis: {{article.total.toFixed(2)}} €</p>
           </uib-tab>
         </uib-tabset>
       </div>
@@ -103,7 +103,7 @@
       <label class="control-label">Gesamtpreis: </label>
       <div class="controls">
         
-        <p>{{totalPrice}}</p>
+        <p>{{totalPrice.toFixed(2)}}</p>
       </div>
     </div>
     <div class="form-group">

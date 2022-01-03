@@ -41,7 +41,7 @@
       <label class="control-label">Gesamtpreis: </label>
       <div class="controls">
         
-        <p>{{totalPrice * (100-discount)/100}}</p>
+        <p>{{(totalPrice * (100-discount)/100).toFixed(2)}}</p>
       </div>
     </div>
     <div class="form-group">
