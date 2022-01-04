@@ -23,7 +23,7 @@
                 for(let i=0;i<$scope.speditionsauftrag.lieferauftraege.length;i++) {
                     for(let ii=0;ii< $scope.speditionsauftrag.lieferauftraege[i].banfItems.length; ii++) {
                         for(const article of $scope.banf) {
-                            if (article.banf.itemID = $scope.speditionsauftrag.lieferauftraege[i].banfItems[ii].itemID) {
+                            if (article.banf.itemID == $scope.speditionsauftrag.lieferauftraege[i].banfItems[ii].itemID) {
                                 $scope.speditionsauftrag.lieferauftraege[i].banfItems[ii].article = article;
                             }
                         }

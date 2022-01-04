@@ -18,6 +18,7 @@ import mas.mockup.masMockup.persistence.banf.banfitem.BanfItemEntity;
 import mas.mockup.masMockup.persistence.banf.banfitem.BanfItemRepository;
 import mas.mockup.masMockup.persistence.banf.banfitem.itemstatus.ItemStatusEntity;
 import mas.mockup.masMockup.persistence.products.ArticleEntity;
+import mas.mockup.masMockup.web.database.accounts.Supplier;
 import mas.mockup.masMockup.web.database.banf.ImporteurBestellung;
 import mas.mockup.masMockup.web.database.banf.ImporteurBestellungBody;
 import mas.mockup.masMockup.web.database.banf.Lieferantenauftrag;
@@ -247,8 +248,9 @@ public class Bestellauftragsservice {
                 : entity.getBanfItems().stream().map(e -> bIEntityToBI(e)).collect(Collectors.toSet());
         int importeurBestelungsid = entity.getImportBestellung() == null ? -1
                 : entity.getImportBestellung().getBestellID();
+        Supplier supplier = SupplierService.entityToAccountInfo(entity.getSupplier());
         return new Lieferantenauftrag(entity.getLieferauftragsID(), entity.getOrderDate(), banfitems,
-                entity.getSupplier().getAccountID(), entity.getAbholDatum(), importeurBestelungsid, entity.isBezahlt(),
+                supplier, entity.getAbholDatum(), importeurBestelungsid, entity.isBezahlt(),
                 entity.getRechnung());
     }
 

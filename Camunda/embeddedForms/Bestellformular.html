@@ -21,7 +21,7 @@
                 $scope.articles[index].total =article.amount * article.price; 
                 console.log( article.amount + " " + article.price + " " + article.amount * article.price);
                 $scope.totalPrice += $scope.articles[index].total;
-                $scope.totalPrice = $scope.totalPrice.toFixed(2);
+                $scope.totalPrice = Math.round(($scope.totalPrice + Number.EPSILON) * 100) / 100;
             }
             
           }       
@@ -61,7 +61,7 @@
             <label class="control-label">Gesamtpreis: </label>
             <div class="controls">
         
-                <p>{{totalPrice}}</p>
+                <p>{{totalPrice}} €</p>
             </div>
         </div>
         <div class="form-group">
@@ -72,6 +72,9 @@
                         heading="{{article.productdescription.produktname}}">
                         <p>Artikelname: {{article.productdescription.produktname}}</p>
                         <p>Artikelpreis: {{article.price}}</p>
+                        <p>Beschreibung: {{article.productdescription.description}}</p>
+                        <p>Inhaltsstoffe: {{article.productdescription.ingridients}}</p>
+                        <p>Produzent: {{article.transparency.produzent + "," + article.transparency.produktionsort.street + " " + article.transparency.produktionsort.houseNumber + "," + article.transparency.produktionsort.zipCode + " " + article.transparency.produktionsort.city + " " + article.transparency.produktionsort.country}}</p>
                         <div class="form-group">
                             <label class="control-label">Ordermenge: </label>
                             <div class="controls">

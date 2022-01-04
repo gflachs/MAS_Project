@@ -41,13 +41,13 @@
       <label class="control-label">Gesamtpreis: </label>
       <div class="controls">
         
-        <p>{{(totalPrice * (100-discount)/100).toFixed(2)}}</p>
+        <p>{{(totalPrice * (100-discount)/100)}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label">Anzahl der Bestellungen: </label>
       <div class="controls">
-        <p ng-style="{'background-color':discountColor">{{orderAmount}}</p>
+        <p ng-style="{'background-color':discountColor}">{{orderAmount}}</p>
       </div>
     </div>
   </div>

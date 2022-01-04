@@ -6,8 +6,10 @@
             var variableManager = camForm.variableManager;
             $scope.order = {};
             $scope.orderID = "Bitte Order generieren";
+            $scope.preventSubmit = true;
             $scope.generateOrder = function() {
                 $scope.orderID = "Bitte warten, generiere Order";
+                $scope.preventSubmit = false;
                 $scope.order.orderLineItems = [];
                 for (let index = 0; index < $scope.orderInformationen.orderLineItems.length; index++) {
                     const element = $scope.orderInformationen.orderLineItems[index];
@@ -56,11 +58,9 @@
             });
 
             camForm.on('submit', function (evt) {   
-               if($scope.orderID ="Bitte Order generieren"){
-                   evt.submitPrevented = true;
-               }else{
-                   evt.submitPrevented = false;
-               }
+               
+                evt.submitPrevented = $scope.preventSubmit;
+               
                 variableManager.createVariable({
                             name: 'order',
                             type: 'json',
@@ -81,7 +81,7 @@
                         <p>Artikelid: {{article.articleId}}</p>
                         <p>Artikelname: {{article.productdescription.produktname}}</p>
                         <p>Artikelpreis: {{article.price}}</p>
-                        <p>Georderte Anzahl: {{article.amount}} €</p>
+                        <p>Georderte Anzahl: {{article.amount}}</p>
                         <p>Gesamtpreis: {{article.total}} €</p>
                     </uib-tab>
                 </uib-tabset>
@@ -111,7 +111,7 @@
             <label class="control-label">Gesamtpreis: </label>
             <div class="controls">
         
-                <p>{{(orderInformationen.total * ((100-orderInformationen.discount)/100)  + orderInformationen.shippingCosts).toFixed(2)}} €</p>
+                <p>{{orderInformationen.total * ((100-orderInformationen.discount)/100)  + orderInformationen.shippingCosts}} €</p>
             </div>
         </div>
         <div class="form-group">

@@ -1,49 +1,17 @@
-let lastName = execution.getVariable("lastName");
-let firstName = execution.getVariable("sureName");
-let taxNumber = execution.getVariable("taxid");
-let street = execution.getVariable("street");
-let bankaccount = execution.getVariable("bankaccount");
-let email = execution.getVariable("email");
-let contactPhone = execution.getVariable("contactTelefon");
-let generalPhone = execution.getVariable("generalTelefon");
-let zipCode = execution.getVariable("zipCode");
-let houseNumber = execution.getVariable("number");
-let city = execution.getVariable("city");
-let country = execution.getVariable("country");
-let companyname = execution.getVariable("name");
+let order = execution.getVariable("lieferauftrag");
 
-var accountInfo = {
-    "firmenname" : companyname,
-    "accountEmail": email,
-    "ustID" : taxNumber,
-    "telefon" : generalPhone,
-    "contactPerson" : {
-        "surname" : firstName,
-        "lastname" : lastName,
-        "telefonNumber" : contactPhone
-    },
-    "deliveryAdress" : {
-        "street" : street,
-        "houseNumber" : houseNumber,
-        "zipCode" : zipCode,
-        "city" : city,
-        "country" : country
-    },
-    "bankaccount" : bankaccount
-};
-
-
+order = JSON.parse(order);
 contentType =  "application/json";
-    var con = new java.net.URL("https://projectmas.herokuapp.com/api/v1/accounts").openConnection();
+    var con = new java.net.URL("https://hooks.slack.com/services/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").openConnection();
 
     con.requestMethod = "POST";
     con.setRequestProperty("Content-Type", contentType);
-
+    con.setRequestProperty("Authorization", "Y0ptqMpChiQ7o99pS2Ygp7jL");
     // Send post request
     con.setDoOutput(true);
 
 var wr = new java.io.DataOutputStream(con.getOutputStream());
-    wr.writeBytes(JSON.stringify(accountInfo));
+    wr.writeBytes(JSON.stringify({"channel": "C02S8KD4U3H", "text" : "Bitte die Kundenzahlung zum Auftrag: " + order.orderID + " durchfuehren"}));
     wr.flush();
     wr.close();
 
@@ -56,4 +24,3 @@ var wr = new java.io.DataOutputStream(con.getOutputStream());
     }
     inReader.close();
 
-execution.setVariable("res",response.toString());

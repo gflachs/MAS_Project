@@ -72,12 +72,12 @@
               <div ng-repeat="auftrag in lieferauftraege" >
                   <p>Auftragsid: {{auftrag.lieferauftragsID}}</p>
                   <p>Anzahl an Banf - Positionen: {{auftrag.banfItems.length}}</p>
-                  <p>Zulieferer: {{auftrag.supplierID}}</p>
+                  <p>Zulieferer: {{auftrag.supplier.firmenname}}</p>
               </div>
           </div>
       </div>
   </div>
-  <div class="form-group" ng-if="lieferauftraege.length > 1">
+  <div class="form-group" ng-if="lieferauftraege.length < 1">
       
       <div class="controls">
 

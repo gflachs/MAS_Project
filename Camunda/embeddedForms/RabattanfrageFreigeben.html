@@ -32,7 +32,7 @@
                 console.log($scope.articles[i].einkaufspreis);
                 console.log($scope.articles[i].amount);
                 $scope.totalEinkauf += $scope.articles[i].einkaufspreis * $scope.articles[i].amount;
-                $scope.totalEinkauf = $scope.totalEinkauf.toFixed(2);
+                $scope.totalEinkauf = Math.round(($scope.totalEinkauf + Number.EPSILON) * 100) / 100
                 $scope.orderinformationen.totalAmount += $scope.articles[i].amount;
               }
               $scope.totalPrice = $scope.orderinformationen.total;
@@ -65,19 +65,19 @@
       <label class="control-label">Gesamtpreis: </label>
       <div class="controls">
     
-        <p>{{(totalPrice * (100-discountHoeheNew)/100).toFixed(2)}}</p>
+        <p>{{(totalPrice * (100-discountHoeheNew)/100)}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label">Anzahl der Bestellungen: </label>
       <div class="controls">
-        <p [style.background-color]={{discountColor}}>{{orderAmount}}</p>
+        <p ng-style="{'background-color':discountColor}">{{orderAmount}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label">Angefragter Rabatt: </label>
       <div class="controls">
-        <p ng-style="{'background-color':discountColor">{{orderAmount}}</p>
+        <p>{{discountHoehe}}</p>
       </div>
     </div>
   </div>
